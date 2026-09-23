@@ -74,15 +74,6 @@ main{margin-left:322px;width:auto;padding:32px 32px 64px;min-width:0}
 .lang-btn{border:0;background:transparent;color:var(--color-muted);font:inherit;font-family:ui-monospace,monospace;font-size:10px;padding:3px 8px;border-radius:9999px;cursor:pointer;transition:background .15s,color .15s;letter-spacing:0.03em}
 .lang-btn:hover{color:var(--color-ink)}
 .lang-btn[aria-pressed="true"]{background:var(--color-ink);color:var(--color-ground)}
-.sidebar-user{display:flex;align-items:center;gap:10px;padding:8px;border-radius:18px;background:rgba(255,255,255,0.03);border:1px solid var(--color-line)}
-.sidebar-user .u-avatar{width:32px;height:32px;line-height:0;flex-shrink:0;border-radius:50%;overflow:hidden;background:var(--color-ground)}
-.sidebar-user .u-avatar svg{width:100%;height:100%;display:block}
-.sidebar-user .u-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-.sidebar-user .u-meta{min-width:0;flex:1;display:flex;flex-direction:column}
-.sidebar-user .u-name{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sidebar-user .u-sub{font-size:10px;color:var(--color-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sidebar-user .u-out{border:0;background:transparent;color:var(--color-muted);font:inherit;font-size:14px;cursor:pointer;padding:2px 6px;border-radius:6px;transition:background .15s,color .15s}
-.sidebar-user .u-out:hover{color:var(--color-ink);background:rgba(255,255,255,.06)}
 .tour-restart-btn{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;background:transparent;color:var(--color-muted);border:1px dashed var(--color-line);border-radius:12px;font:inherit;font-size:11px;cursor:pointer;transition:all .15s;margin-top:4px}
 .tour-restart-btn:hover{color:var(--color-ink);border-color:#3a3a42;background:rgba(255,255,255,.03)}
 .tour-restart-btn .arrow{font-size:9px;transition:transform .2s}
@@ -126,28 +117,6 @@ main{margin-left:322px;width:auto;padding:32px 32px 64px;min-width:0}
 .tab-pane{display:none}
 .tab-pane.is-active{display:block;animation:paneIn .28s ease both}
 @keyframes paneIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.reg-overlay{position:fixed;inset:0;z-index:2000;background:var(--color-ground);display:grid;place-items:center;padding:24px;overflow:auto}
-.reg-overlay[hidden]{display:none}
-.reg-bg{position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(34,158,217,0.10),transparent 45%),radial-gradient(circle at 80% 70%,rgba(255,255,255,0.04),transparent 45%);pointer-events:none}
-.reg-card{position:relative;width:100%;max-width:440px;background:var(--color-raised);border:1px solid var(--color-line);border-radius:22px;padding:36px 32px 28px;box-shadow:0 40px 80px -20px rgba(0,0,0,.6);text-align:center}
-.reg-brand{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:22px}
-.reg-avatar{width:84px;height:84px;line-height:0;border-radius:20px;overflow:hidden;border:1px solid var(--color-line);background:var(--color-ground);padding:4px}
-.reg-avatar img{width:100%;height:100%;object-fit:cover;border-radius:16px;display:block}
-.reg-brand-text h1{font-size:24px;margin:0 0 6px;letter-spacing:-0.025em}
-.reg-brand-text p{margin:0;font-size:12px;color:var(--color-muted);font-family:ui-monospace,monospace}
-.reg-info{font-size:13px;color:var(--color-muted);line-height:1.6;margin:0 0 24px;max-width:40ch;margin-left:auto;margin-right:auto}
-.reg-info strong{color:var(--color-ink);font-weight:500}
-.tg-btn-wrap{display:flex;justify-content:center;margin:0 auto 8px;min-height:52px;align-items:center;flex-direction:column;gap:10px}
-.tg-btn-wrap iframe{border-radius:10px !important}
-.tg-auth-button{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 22px;min-height:46px;background:linear-gradient(135deg,#229ED9 0%,#1d8dc0 100%);color:#ffffff;border:0;border-radius:10px;font:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:transform .15s,box-shadow .15s,opacity .15s;box-shadow:0 10px 24px -8px rgba(34,158,217,.55)}
-.tg-auth-button:hover{transform:translateY(-1px);box-shadow:0 14px 28px -8px rgba(34,158,217,.65)}
-.tg-auth-button:active{transform:translateY(0)}
-.tg-auth-button svg{width:18px;height:18px}
-.reg-divider{display:flex;align-items:center;gap:10px;margin:18px 0 14px;color:var(--color-muted);font-size:11px;font-family:ui-monospace,monospace}
-.reg-divider::before,.reg-divider::after{content:"";flex:1;height:1px;background:var(--color-line)}
-.reg-skip{background:transparent;border:0;color:var(--color-muted);font:inherit;font-size:12px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
-.reg-skip:hover{color:var(--color-ink)}
-.reg-note{font-size:11px;color:var(--color-muted);text-align:center;margin-top:16px;line-height:1.5}
 .theme-studio{background:var(--color-raised);border:1px solid var(--color-line);border-radius:20px;padding:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
 @media (max-width: 900px){.theme-studio{grid-template-columns:1fr}}
 .theme-block h3{font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-muted);margin:0 0 10px}
@@ -571,28 +540,6 @@ main{margin-left:322px;width:auto;padding:32px 32px 64px;min-width:0}
 </style>
 </head>
 <body>
-<div class="reg-overlay" id="reg-overlay" role="dialog" aria-modal="true" aria-labelledby="reg-title">
-  <div class="reg-bg"></div>
-  <div class="reg-card">
-    <div class="reg-brand">
-      <div class="reg-avatar">
-        <img src="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png" alt="Broot">
-      </div>
-      <div class="reg-brand-text">
-        <h1 id="reg-title">Broot</h1>
-        <p data-i18n="reg.subtitle">живой редактор аватаров</p>
-      </div>
-    </div>
-    <p class="reg-info" data-i18n-html="reg.info">Войдите через <strong>Telegram</strong>, чтобы сохранить свой Broot-профиль. Или продолжите как гость — все данные останутся в браузере.</p>
-    <div class="tg-btn-wrap" id="tg-btn-wrap">
-      <script async src="https://oauth.telegram.org/js/telegram-login.js?6" data-client-id="8842784777" data-onauth="onTelegramAuth" data-request-access="write"></script>
-      <button class="tg-auth-button" data-i18n="reg.tg">Sign In with Telegram</button>
-    </div>
-    <div class="reg-divider" data-i18n="reg.or">или</div>
-    <button type="button" class="reg-skip" id="reg-skip" data-i18n="reg.skip">Продолжить как гость</button>
-    <p class="reg-note" data-i18n-html="reg.note">Данные хранятся только в вашем браузере (localStorage).<br>Мы не отправляем ничего на сервер.</p>
-  </div>
-</div>
 
 <div class="app-shell" id="app-shell">
   <aside class="sidebar" aria-label="Broot">
@@ -606,14 +553,6 @@ main{margin-left:322px;width:auto;padding:32px 32px 64px;min-width:0}
         </div>
         <span class="count" id="preset-count">0</span>
       </div>
-    </div>
-    <div class="sidebar-user" id="sidebar-user" hidden>
-      <div class="u-avatar" id="sidebar-user-avatar"></div>
-      <div class="u-meta">
-        <span class="u-name" id="sidebar-user-name">—</span>
-        <span class="u-sub" id="sidebar-user-sub">—</span>
-      </div>
-      <button type="button" class="u-out" id="sidebar-user-out" title="Выйти" aria-label="Выйти" data-i18n-title="sidebar.logout">⎋</button>
     </div>
     <button type="button" class="tour-restart-btn" id="restart-tour" data-i18n-title="tour.restart">
       <span class="arrow">▶</span> <span data-i18n="tour.restart">Пройти тур</span>
@@ -1393,19 +1332,10 @@ const NOCODB_TABLE_URL=NOCODB_BASE_URL+"/api/v2/tables/"+NOCODB_TABLE_ID+"/recor
 const I18N = {
   ru: {
     "app.title": "Редактор - Broot Avatar",
-    "reg.subtitle": "живой редактор аватаров",
-    "reg.info": "Войдите через <strong>Telegram</strong>, чтобы сохранить свой Broot-профиль. Или продолжите как гость — все данные останутся в браузере.",
-    "reg.tg": "Sign In with Telegram",
-    "reg.or": "или",
-    "reg.skip": "Продолжить как гость",
-    "reg.note": "Данные хранятся только в вашем браузере (localStorage).<br>Мы не отправляем ничего на сервер.",
     "sidebar.logout": "Выйти",
     "sidebar.savePreset": "Save preset",
     "sidebar.saved": "Сохранённые broot'ы",
     "sidebar.empty": "Пока пусто.<br>Нажмите «Save preset».",
-    "sidebar.guest": "гость",
-    "sidebar.telegram": "Telegram",
-    "sidebar.localProfile": "локальный профиль",
     "nav.editor": "Редактор",
     "nav.gallery": "Галерея",
     "nav.galleryHint": "Стена персонажей. Кликните по пустой ячейке — добавить своего.",
@@ -1627,10 +1557,8 @@ const I18N = {
     "prompt.deletePreset": "Удалить пресет «NAME»?",
     "prompt.emptyCell": "Поставить вашего Broot в эту ячейку?",
     "alert.saveFail": "Не удалось сохранить в галерею:\nMESSAGE\n\nПроверьте, что в таблице NocoDB есть поля:\nuser_name, broot_name, broot_avatar_link, broot_avtor_name.",
-    "alert.tgError": "Ошибка входа через Telegram: ",
     "save.saving": "Сохранение…",
     "save.saved": "✓ Сохранено",
-    "save.unsaved": "↗ Сохранить в галерею",
     "preset.default": "Default",
     "preset.friendly": "Friendly",
     "preset.focused": "Focused",
@@ -1767,19 +1695,10 @@ const I18N = {
   },
   en: {
     "app.title": "Editor - Broot Avatar",
-    "reg.subtitle": "living avatar editor",
-    "reg.info": "Sign in with <strong>Telegram</strong> to save your Broot profile. Or continue as guest — all data stays in your browser.",
-    "reg.tg": "Sign In with Telegram",
-    "reg.or": "or",
-    "reg.skip": "Continue as guest",
-    "reg.note": "Data is stored only in your browser (localStorage).<br>We don't send anything to the server.",
     "sidebar.logout": "Log out",
     "sidebar.savePreset": "Save preset",
     "sidebar.saved": "Saved broots",
     "sidebar.empty": "Empty for now.<br>Click «Save preset».",
-    "sidebar.guest": "guest",
-    "sidebar.telegram": "Telegram",
-    "sidebar.localProfile": "local profile",
     "nav.editor": "Editor",
     "nav.gallery": "Gallery",
     "nav.galleryHint": "Wall of characters. Click an empty cell to add yours.",
@@ -2001,10 +1920,8 @@ const I18N = {
     "prompt.deletePreset": "Delete preset «NAME»?",
     "prompt.emptyCell": "Place your Broot in this cell?",
     "alert.saveFail": "Failed to save to the gallery:\nMESSAGE\n\nCheck that your NocoDB table has fields:\nuser_name, broot_name, broot_avatar_link, broot_avtor_name.",
-    "alert.tgError": "Telegram login error: ",
     "save.saving": "Saving…",
     "save.saved": "✓ Saved",
-    "save.unsaved": "↗ Save to gallery",
     "preset.default": "Default",
     "preset.friendly": "Friendly",
     "preset.focused": "Focused",
@@ -2141,19 +2058,10 @@ const I18N = {
   },
   fr: {
     "app.title": "Éditeur - Broot Avatar",
-    "reg.subtitle": "éditeur d'avatars vivants",
-    "reg.info": "Connectez-vous avec <strong>Telegram</strong> pour enregistrer votre profil Broot. Ou continuez en tant qu'invité — toutes les données restent dans le navigateur.",
-    "reg.tg": "Se connecter avec Telegram",
-    "reg.or": "ou",
-    "reg.skip": "Continuer en tant qu'invité",
-    "reg.note": "Les données sont stockées uniquement dans votre navigateur (localStorage).<br>Nous n'envoyons rien au serveur.",
     "sidebar.logout": "Se déconnecter",
     "sidebar.savePreset": "Enregistrer le preset",
     "sidebar.saved": "Broots enregistrés",
     "sidebar.empty": "Vide pour l'instant.<br>Cliquez sur « Enregistrer le preset ».",
-    "sidebar.guest": "invité",
-    "sidebar.telegram": "Telegram",
-    "sidebar.localProfile": "profil local",
     "nav.editor": "Éditeur",
     "nav.gallery": "Galerie",
     "nav.galleryHint": "Mur de personnages. Cliquez sur une cellule vide pour ajouter le vôtre.",
@@ -2375,10 +2283,8 @@ const I18N = {
     "prompt.deletePreset": "Supprimer le preset « NAME » ?",
     "prompt.emptyCell": "Placer votre Broot dans cette cellule ?",
     "alert.saveFail": "Échec de l'enregistrement dans la galerie :\nMESSAGE\n\nVérifiez que votre table NocoDB contient les champs :\nuser_name, broot_name, broot_avatar_link, broot_avtor_name.",
-    "alert.tgError": "Erreur de connexion Telegram : ",
     "save.saving": "Enregistrement…",
     "save.saved": "✓ Enregistré",
-    "save.unsaved": "↗ Enregistrer dans la galerie",
     "preset.default": "Default",
     "preset.friendly": "Friendly",
     "preset.focused": "Focused",
@@ -2540,8 +2446,6 @@ function t(key, params) {
 function applyI18n() {
   document.documentElement.lang = currentLang;
   document.title = t("app.title");
-  const metaTitle = document.querySelector('meta[property="og:title"]');
-  if (metaTitle) metaTitle.content = t("app.title");
 
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const v = t(el.getAttribute("data-i18n"));
@@ -2571,7 +2475,6 @@ function setLanguage(lang) {
   currentLang = lang;
   try { localStorage.setItem("broot_lang", lang); } catch (e) {}
   applyI18n();
-  // Re-render dynamic content that embeds translated text
   renderAll();
   renderThemeStudio();
   renderTeam();
@@ -4718,13 +4621,10 @@ async function saveToGallery(){
   const btn=document.getElementById("save-to-gallery");
   if(!btn)return;
 
-  const user=(typeof getStoredUser==="function")?getStoredUser():null;
-  let author=user&&(user.name||user.username)?(user.name||user.username):"";
-  if(!author){
-    const input=prompt(t("prompt.author"),"");
-    if(input===null)return;
-    author=(input||"").trim()||t("prompt.anon");
-  }
+  let author="";
+  const input=prompt(t("prompt.author"),"");
+  if(input===null)return;
+  author=(input||"").trim()||t("prompt.anon");
 
   const brootName=(state.name||"").trim()||"broot";
 
@@ -4778,108 +4678,6 @@ function wireGallery(){
       if(galleryModalIdx>=0)shareGalleryItem(galleryModalIdx);
     });
   }
-}
-
-const REG_KEY="broot_user";
-
-function getStoredUser(){
-  try{return JSON.parse(localStorage.getItem(REG_KEY)||"null")}catch(e){return null}
-}
-function setStoredUser(u){try{localStorage.setItem(REG_KEY,JSON.stringify(u))}catch(e){}}
-function clearStoredUser(){try{localStorage.removeItem(REG_KEY)}catch(e){}}
-
-function showRegistration(){
-  document.getElementById("reg-overlay").hidden=false;
-  document.getElementById("app-shell").style.visibility="hidden";
-}
-function hideRegistration(){
-  document.getElementById("reg-overlay").hidden=true;
-  document.getElementById("app-shell").style.visibility="visible";
-  maybeStartTour();
-}
-
-function applyUser(user){
-  const sidebarUser=document.getElementById("sidebar-user");
-  if(!user){sidebarUser.hidden=true;return}
-  sidebarUser.hidden=false;
-  document.getElementById("sidebar-user-name").textContent=user.name||t("sidebar.guest");
-  document.getElementById("sidebar-user-sub").textContent=
-    user.telegram
-      ?(user.username?"@"+user.username:t("sidebar.telegram"))
-      :(user.email?user.email:t("sidebar.localProfile"));
-
-  const avatarSlot=document.getElementById("sidebar-user-avatar");
-  if(user.picture){
-    avatarSlot.innerHTML=`<img src="${escapeHtml(user.picture)}" alt="${escapeHtml(user.name||"user")}">`;
-  }else{
-    const seed=user.name||user.username||"guest";
-    avatarSlot.innerHTML=buildSvg({
-      phasesKey:"user-avatar-"+seed,
-      expressionId:"idle"
-    },makePreset(seed,{
-      hue:autoHueFromName(seed),autoHue:false,
-      saturation:55,lightness:65,tone:"custom"
-    }));
-  }
-  if(state.name==="halo"&&user.name){
-    state.name=user.name;
-    const seedInput=document.getElementById("seed-input");
-    if(seedInput)seedInput.value=user.name;
-  }
-}
-
-window.onTelegramAuth=function(data){
-  console.log("[Telegram auth]",data);
-
-  if(data&&data.error){
-    alert(t("alert.tgError")+data.error);
-    return;
-  }
-
-  let u=data&&data.user?data.user:null;
-  if(!u&&data&&data.id_token){
-    try{
-      const payload=JSON.parse(atob(data.id_token.split(".")[1].replace(/-/g,"+").replace(/_/g,"/")));
-      u={
-        id:payload.id||payload.sub,
-        name:payload.name,
-        username:payload.preferred_username,
-        picture:payload.picture
-      };
-    }catch(e){console.warn("id_token decode failed",e)}
-  }
-
-  if(!u){
-    u={name:"Telegram user",telegram:true,raw:data};
-  }
-
-  const user={
-    name:u.name||(u.first_name?(u.first_name+(u.last_name?" "+u.last_name:"")):null)||u.preferred_username||"Telegram user",
-    username:u.username||u.preferred_username||null,
-    email:u.email||null,
-    picture:u.picture||u.photo_url||null,
-    id:u.id||null,
-    telegram:true
-  };
-
-  setStoredUser(user);
-  applyUser(user);
-  hideRegistration();
-  renderAll();
-};
-
-function wireRegistration(){
-  document.getElementById("reg-skip").addEventListener("click",()=>{
-    clearStoredUser();
-    applyUser(null);
-    hideRegistration();
-    renderAll();
-  });
-  document.getElementById("sidebar-user-out").addEventListener("click",()=>{
-    clearStoredUser();
-    applyUser(null);
-    showRegistration();
-  });
 }
 
 function wireResizers(){
@@ -5318,7 +5116,6 @@ wireTones();
 wireColorPicker();
 wirePngPanel();
 wireResizers();
-wireRegistration();
 wireCollapsibles();
 wireAdvancedWindow();
 wireAdvSliders();
@@ -5328,6 +5125,7 @@ wireGallery();
 wireKeyboard();
 wireTour();
 pushHistory();
+maybeStartTour();
 
 const openAdvBtn=document.getElementById("open-advanced");
 if(openAdvBtn)openAdvBtn.addEventListener("click",openAdvanced);
@@ -5379,13 +5177,6 @@ document.addEventListener("click",e=>{
   }
 });
 
-const storedUser=getStoredUser();
-if(storedUser){
-  applyUser(storedUser);
-  hideRegistration();
-}else{
-  showRegistration();
-}
 setTimeout(()=>{renderAll();updateHistoryButtons()},0);
 </script>
 </body>
