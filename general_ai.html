@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
-<title>Broot — редактор + компоненты + состояния + выражения</title>
+<title>Broot — редактор + темы + команда</title>
+<link rel="icon" type="image/png" href="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png">
+<link rel="apple-touch-icon" href="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png">
+<link rel="shortcut icon" href="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png">
+<meta property="og:image" content="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png">
 
 <style>
   :root {
@@ -23,6 +27,11 @@
     color: var(--color-ink);
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  body.has-gradient {
+    background-attachment: fixed;
+    background-image: var(--app-gradient);
   }
 
   /* ============ Движок ============ */
@@ -44,7 +53,6 @@
   @property --mo-track-hold { syntax:"<number>"; inherits:true; initial-value:0 }
 
   .mo-root, .mo-breathe, .mo-bob { transform-box: view-box; transform-origin: center; }
-
   .mo-root {
     --mo-amp: 0;
     --mo-morph: calc(.4s * var(--mo-rate, 1));
@@ -68,7 +76,6 @@
   }
   .mo-body { fill: var(--mo-head); transition: fill var(--mo-morph) var(--mo-morph-ease); }
   .mo-eyes { fill: var(--mo-eye);  transition: fill var(--mo-morph) var(--mo-morph-ease); }
-
   @keyframes mo-shake {
     0%, to { translate: calc(.62px * var(--mo-shake)) calc(-.34px * var(--mo-shake)); }
     25%    { translate: calc(-.7px * var(--mo-shake)) calc(.22px * var(--mo-shake)); }
@@ -77,16 +84,10 @@
   }
   .mo-root.mo-expr { --mo-morph: calc(.3s * var(--mo-rate, 1)); --mo-morph-ease: cubic-bezier(.45, .05, .5, 1); }
   .mo-root.mo-always { --mo-amp: 1; }
-
   .mo-breathe { animation: mo-breathe calc(2.8s * var(--mo-rate, 1)) calc(var(--mo-phase, 0s) * var(--mo-rate, 1)) infinite alternate ease-in-out; }
   @keyframes mo-breathe { to { transform: scaleX(calc(1 + .022 * var(--mo-amp))) scaleY(calc(1 - .018 * var(--mo-amp))); } }
-
-  .mo-bob {
-    translate: 0 calc(var(--mo-bdy) * 1px);
-    animation: mo-bob calc(3.4s * var(--mo-rate, 1)) calc(var(--mo-bob-phase, 0s) * var(--mo-rate, 1)) infinite alternate ease-in-out;
-  }
+  .mo-bob { translate: 0 calc(var(--mo-bdy) * 1px); animation: mo-bob calc(3.4s * var(--mo-rate, 1)) calc(var(--mo-bob-phase, 0s) * var(--mo-rate, 1)) infinite alternate ease-in-out; }
   @keyframes mo-bob { 0% { transform: translateY(0); } to { transform: translateY(calc(-1.1px * var(--mo-amp))); } }
-
   .mo-eye {
     transform-box: view-box;
     --mo-sel: calc((var(--mo-wrap, 1) + 1) / 2);
@@ -102,7 +103,6 @@
   }
   @container style(--mo-rock: 0) { .mo-eye { animation-name: none; } }
   @keyframes mo-rock { 0%, to { --mo-rockp: 1; } 50% { --mo-rockp: -1; } }
-
   .mo-eye > * {
     transform-box: fill-box; transform-origin: center;
     animation-name: mo-blink, mo-wrap;
@@ -134,12 +134,10 @@
     80.5%, 98.5%{ scale: calc(1 - .022 * var(--mo-look-mx, 1.4) * var(--mo-amp) + .01 * var(--mo-look-x, 1.4) * var(--mo-wrap, 1) * var(--mo-amp)) calc(1 - .0045 * var(--mo-look-my, 1.1) * var(--mo-amp)); rotate: calc(.135deg * var(--mo-look-x, 1.4) * var(--mo-look-y, 1.1) * var(--mo-wrap, 1) * var(--mo-amp)); }
     to { scale: 1; rotate: none; }
   }
-
   @media (prefers-reduced-motion: reduce) {
     .mo-root, .mo-breathe, .mo-bob, .mo-eyes, .mo-eye, .mo-eye > * { animation: none; transition: none; }
     .mo-body { transition: none; }
   }
-
   .mo-root .mo-eye {
     --mo-gz-dx: calc(var(--mo-gz-dx1, 0) + (var(--mo-gz-dx2, 0) - var(--mo-gz-dx1, 0)) * var(--mo-sel));
     --mo-gz-dy: calc(var(--mo-gz-dy1, 0) + (var(--mo-gz-dy2, 0) - var(--mo-gz-dy1, 0)) * var(--mo-sel));
@@ -161,20 +159,13 @@
     --mo-look-my: calc(var(--mo-look-seed-my, 1.1) * (1 - var(--mo-track-hold)));
   }
 
-  /* ============ Разметка ============ */
-  main { width: 100%; padding: 32px 32px 64px; }
-  @media (max-width: 720px) { main { padding: 24px 16px 48px; } }
-
+  /* ============ Общее ============ */
   h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 500; letter-spacing: -0.035em; margin: 0 0 8px; }
   h2 { font-size: 15px; font-weight: 500; margin: 0 0 4px; letter-spacing: -0.01em; }
   h3 { font-size: 16px; font-weight: 500; margin: 0; letter-spacing: -0.02em; }
   .lead { color: var(--color-muted); font-size: 14px; line-height: 1.6; margin: 0 0 32px; max-width: 80ch; }
-
   section { margin-bottom: 48px; }
-  section > header {
-    display: flex; align-items: baseline; justify-content: space-between;
-    gap: 16px; margin-bottom: 16px;
-  }
+  section > header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
   .pill {
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 11px; color: var(--color-muted);
@@ -183,58 +174,384 @@
     border-radius: 9999px; padding: 3px 9px; white-space: nowrap;
   }
 
-  /* ============ Редактор ============ */
-  .editor {
-    display: grid;
-    grid-template-columns: minmax(300px, 360px) minmax(380px, 1fr) minmax(360px, 1.1fr);
-    gap: 24px;
+  /* ============ Каркас ============ */
+  .app-shell {
+    display: block;
+    min-height: 100vh;
+  }
+  main {
+    margin-left: 322px;
+    width: auto;
+    padding: 32px 32px 64px;
+    min-width: 0;
+  }
+  @media (max-width: 1100px) {
+    main { margin-left: 0; padding: 24px 16px 48px; }
+  }
+
+  /* ============ Сайдбар — фиксированный островок ============ */
+  .sidebar {
+    position: fixed;
+    left: 16px; top: 16px;
+    width: 290px;
+    height: calc(100vh - 32px);
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 30px;
+    padding: 16px 12px 18px;
+    overflow-y: auto;
+    display: flex; flex-direction: column; gap: 12px;
+    z-index: 100;
+    box-shadow: 0 24px 60px -24px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.02) inset;
+  }
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 3px; }
+
+  @media (max-width: 1100px) {
+    .sidebar {
+      position: static;
+      width: calc(100% - 24px);
+      height: auto;
+      max-height: none;
+      margin: 12px;
+      border-radius: 30px;
+    }
+  }
+
+  .sidebar-brand { display: flex; align-items: center; justify-content: space-between; padding: 6px 10px 0; }
+  .sidebar-brand h2 { font-size: 14px; font-weight: 500; letter-spacing: -0.01em; margin: 0; }
+  .sidebar-brand .count { font-family: ui-monospace, monospace; font-size: 10px; color: var(--color-muted); }
+
+  .sidebar-user {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px; border-radius: 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--color-line);
+  }
+  .sidebar-user .u-avatar {
+    width: 32px; height: 32px; line-height: 0; flex-shrink: 0;
+    border-radius: 50%; overflow: hidden; background: var(--color-ground);
+  }
+  .sidebar-user .u-avatar svg { width: 100%; height: 100%; display: block; }
+  .sidebar-user .u-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .sidebar-user .u-meta { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+  .sidebar-user .u-name { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sidebar-user .u-sub { font-size: 10px; color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sidebar-user .u-out {
+    border: 0; background: transparent; color: var(--color-muted);
+    font: inherit; font-size: 14px; cursor: pointer; padding: 2px 6px;
+    border-radius: 6px; transition: background .15s, color .15s;
+  }
+  .sidebar-user .u-out:hover { color: var(--color-ink); background: rgba(255,255,255,.06); }
+
+  /* ============ Навигация-аккордеон ============ */
+  .sidebar-nav { display: flex; flex-direction: column; gap: 4px; }
+  .nav-group {
+    border-radius: 20px;
+    transition: background .2s;
+  }
+  .nav-group.is-open { background: rgba(255,255,255,.035); }
+  .nav-head {
+    width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 14px;
+    background: transparent; border: 0;
+    color: var(--color-ink); font: inherit; font-size: 13px; font-weight: 500;
+    cursor: pointer; text-align: left;
+    border-radius: 20px;
+    transition: background .15s;
+  }
+  .nav-head:hover { background: rgba(255,255,255,.05); }
+  .nav-head .chev {
+    color: var(--color-muted); font-size: 10px;
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    display: inline-block;
+  }
+  .nav-group.is-open .nav-head .chev { transform: rotate(180deg); }
+  .nav-body {
+    max-height: 0; overflow: hidden;
+    padding: 0 10px;
+    transition: max-height .38s cubic-bezier(.4,0,.2,1), padding .3s ease;
+  }
+  .nav-group.is-open .nav-body { max-height: 1600px; padding: 6px 10px 14px; }
+  .nav-hint { font-size: 11px; color: var(--color-muted); line-height: 1.5; margin: 0 0 8px; padding: 0 4px; }
+  .nav-link {
+    display: block;
+    font-family: ui-monospace, monospace; font-size: 11px;
+    color: var(--color-muted); text-decoration: none;
+    padding: 6px 8px; border-radius: 8px;
+    transition: background .15s, color .15s;
+  }
+  .nav-link:hover { color: var(--color-ink); background: rgba(255,255,255,.05); }
+
+  .save-preset-btn {
+    width: 100%; padding: 9px 12px;
+    background: var(--color-ink); color: var(--color-ground);
+    border: 1px solid var(--color-ink);
+    border-radius: 14px; font: inherit; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: opacity .15s, transform .15s;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    margin-bottom: 10px;
+  }
+  .save-preset-btn:hover { opacity: .9; }
+  .save-preset-btn:active { transform: scale(.98); }
+
+  .sidebar-section-title {
+    font-family: ui-monospace, monospace; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--color-muted); padding: 6px 6px 6px;
+  }
+  .preset-list { display: flex; flex-direction: column; gap: 4px; }
+  .preset-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 8px 6px 6px;
+    border-radius: 14px; cursor: pointer;
+    transition: background .15s; position: relative;
+  }
+  .preset-item:hover { background: rgba(255,255,255,.04); }
+  .preset-item.is-active { background: rgba(255,255,255,.07); }
+  .preset-item.is-active::before {
+    content: ""; position: absolute; left: 0; top: 50%;
+    width: 2px; height: 60%; transform: translateY(-50%);
+    background: var(--color-ink); border-radius: 2px;
+  }
+  .preset-tile {
+    width: 36px; height: 36px; border-radius: 12px;
+    flex-shrink: 0; position: relative; overflow: hidden;
+    display: grid; place-items: center;
+    border: 1px solid var(--color-line);
+  }
+  .preset-tile svg { width: 100%; height: 100%; display: block; }
+  .preset-tile svg .mo-root, .preset-tile svg .mo-breathe, .preset-tile svg .mo-bob,
+  .preset-tile svg .mo-eyes, .preset-tile svg .mo-eye, .preset-tile svg .mo-eye > * { animation: none !important; }
+  .preset-meta { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .preset-name { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .preset-sub {
+    font-size: 10px; font-family: ui-monospace, monospace;
+    color: var(--color-muted);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .preset-actions { display: flex; gap: 0; opacity: 0; transition: opacity .15s; flex-shrink: 0; }
+  .preset-item:hover .preset-actions, .preset-item.is-active .preset-actions { opacity: 1; }
+  .preset-action {
+    width: 22px; height: 22px;
+    border: 0; background: transparent; color: var(--color-muted);
+    cursor: pointer; border-radius: 6px; font-size: 11px;
+    display: grid; place-items: center;
+    transition: background .15s, color .15s; padding: 0;
+  }
+  .preset-action:hover { background: rgba(255,255,255,.1); color: var(--color-ink); }
+  .preset-action.danger:hover { background: rgba(239,68,68,.15); color: #f87171; }
+  .sidebar-empty { font-size: 11px; color: var(--color-muted); padding: 12px 6px; text-align: center; }
+
+  /* ============ Вкладки контента ============ */
+  .tab-pane { display: none; }
+  .tab-pane.is-active { display: block; animation: paneIn .28s ease both; }
+  @keyframes paneIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ Регистрация (Telegram) ============ */
+  .reg-overlay {
+    position: fixed; inset: 0; z-index: 2000;
+    background: var(--color-ground);
+    display: grid; place-items: center; padding: 24px;
+    overflow: auto;
+  }
+  .reg-overlay[hidden] { display: none; }
+  .reg-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(34,158,217,0.10), transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04), transparent 45%);
+    pointer-events: none;
+  }
+  .reg-card {
+    position: relative;
+    width: 100%; max-width: 440px;
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 22px;
+    padding: 36px 32px 28px;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,.6);
+    text-align: center;
+  }
+  .reg-brand { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-bottom: 22px; }
+  .reg-avatar {
+    width: 84px; height: 84px; line-height: 0;
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid var(--color-line);
+    background: var(--color-ground);
+    padding: 4px;
+  }
+  .reg-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 16px; display: block; }
+  .reg-brand-text h1 { font-size: 24px; margin: 0 0 6px; letter-spacing: -0.025em; }
+  .reg-brand-text p { margin: 0; font-size: 12px; color: var(--color-muted); font-family: ui-monospace, monospace; }
+
+  .reg-info {
+    font-size: 13px; color: var(--color-muted); line-height: 1.6;
+    margin: 0 0 24px; max-width: 40ch; margin-left: auto; margin-right: auto;
+  }
+  .reg-info strong { color: var(--color-ink); font-weight: 500; }
+
+  .tg-btn-wrap {
+    display: flex; justify-content: center; margin: 0 auto 8px;
+    min-height: 52px; align-items: center; flex-direction: column; gap: 10px;
+  }
+  .tg-btn-wrap iframe { border-radius: 10px !important; }
+
+  .tg-auth-button {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 12px 22px; min-height: 46px;
+    background: linear-gradient(135deg, #229ED9 0%, #1d8dc0 100%);
+    color: #ffffff; border: 0; border-radius: 10px;
+    font: inherit; font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: transform .15s, box-shadow .15s, opacity .15s;
+    box-shadow: 0 10px 24px -8px rgba(34,158,217,.55);
+  }
+  .tg-auth-button:hover { transform: translateY(-1px); box-shadow: 0 14px 28px -8px rgba(34,158,217,.65); }
+  .tg-auth-button:active { transform: translateY(0); }
+  .tg-auth-button svg { width: 18px; height: 18px; }
+
+  .reg-divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 18px 0 14px;
+    color: var(--color-muted); font-size: 11px;
+    font-family: ui-monospace, monospace;
+  }
+  .reg-divider::before, .reg-divider::after {
+    content: ""; flex: 1; height: 1px; background: var(--color-line);
+  }
+
+  .reg-skip {
+    background: transparent; border: 0; color: var(--color-muted);
+    font: inherit; font-size: 12px; text-decoration: underline;
+    text-underline-offset: 3px; cursor: pointer; padding: 6px;
+  }
+  .reg-skip:hover { color: var(--color-ink); }
+
+  .reg-note { font-size: 11px; color: var(--color-muted); text-align: center; margin-top: 16px; line-height: 1.5; }
+
+  /* ============ Тема ============ */
+  .theme-studio {
     background: var(--color-raised);
     border: 1px solid var(--color-line);
     border-radius: 20px;
     padding: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) { .theme-studio { grid-template-columns: 1fr; } }
+  .theme-block h3 {
+    font-size: 11px; font-weight: 400; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--color-muted); margin: 0 0 10px;
+  }
+  .theme-presets { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
+  .theme-swatch {
+    border: 1px solid var(--color-line); background: transparent;
+    padding: 8px; border-radius: 12px; cursor: pointer;
+    display: flex; flex-direction: column; gap: 6px;
+    transition: border-color .15s, transform .15s;
+  }
+  .theme-swatch:hover { transform: translateY(-2px); border-color: #3a3a42; }
+  .theme-swatch[aria-pressed="true"] { border-color: var(--color-ink); }
+  .theme-preview {
+    height: 42px; border-radius: 8px; position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,.08);
+  }
+  .theme-preview .tp-bar { position: absolute; left: 6px; right: 6px; bottom: 6px; height: 4px; border-radius: 2px; }
+  .theme-preview .tp-dot { position: absolute; left: 6px; top: 6px; width: 8px; height: 8px; border-radius: 50%; }
+  .theme-swatch .label {
+    font-family: ui-monospace, monospace; font-size: 10px;
+    color: var(--color-muted); text-align: center; text-transform: lowercase;
+  }
+  .theme-swatch[aria-pressed="true"] .label { color: var(--color-ink); }
+
+  .theme-pickers { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+  .theme-picker { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--color-muted); }
+  .theme-picker input[type=color] {
+    -webkit-appearance: none; appearance: none;
+    width: 34px; height: 28px; padding: 0; cursor: pointer;
+    border: 1px solid var(--color-line); border-radius: 8px;
+    background: transparent; overflow: hidden;
+  }
+  .theme-picker input[type=color]::-webkit-color-swatch-wrapper { padding: 2px; }
+  .theme-picker input[type=color]::-webkit-color-swatch { border: 0; border-radius: 6px; }
+  .theme-picker input[type=color]::-moz-color-swatch { border: 0; border-radius: 6px; }
+  .theme-picker span { font-family: ui-monospace, monospace; font-size: 10px; }
+
+  .gradient-swatches { display: flex; flex-wrap: wrap; gap: 8px; }
+  .gradient-swatch {
+    width: 48px; height: 36px; border-radius: 10px;
+    border: 1px solid var(--color-line); cursor: pointer;
+    padding: 0; transition: transform .15s, border-color .15s;
+  }
+  .gradient-swatch:hover { transform: scale(1.05); }
+  .gradient-swatch[aria-pressed="true"] { border-color: var(--color-ink); box-shadow: 0 0 0 1px var(--color-ink); }
+
+  /* ============ Редактор ============ */
+  .editor {
+    display: grid;
+    grid-template-columns: var(--c1, 340px) 6px minmax(0, 1fr);
+    gap: 0;
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 20px;
+    padding: 24px;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .editor > .editor-preview,
+  .editor > .editor-controls { min-width: 0; }
+  .editor > .editor-preview { margin-right: 12px; }
+  .editor > .editor-controls { margin-left: 12px; }
+  .editor-resizer {
+    background: transparent; cursor: col-resize;
+    position: relative; transition: background .15s; border-radius: 3px;
+  }
+  .editor-resizer::before {
+    content: ""; position: absolute; top: 20%; bottom: 20%; left: 50%;
+    width: 2px; transform: translateX(-50%);
+    background: var(--color-line); border-radius: 2px;
+    transition: background .15s, width .15s;
+  }
+  .editor-resizer:hover::before, .editor-resizer.is-dragging::before {
+    background: var(--color-ink); width: 3px;
   }
   @media (max-width: 1280px) {
-    .editor { grid-template-columns: minmax(280px, 340px) 1fr; }
-    .editor .code-wrap { grid-column: 1 / -1; }
-  }
-  @media (max-width: 820px) {
-    .editor { grid-template-columns: 1fr; }
-    .editor .code-wrap { grid-column: auto; }
+    .editor { grid-template-columns: 1fr; gap: 24px; }
+    .editor > .editor-preview, .editor > .editor-controls { margin: 0; }
+    .editor-resizer { display: none; }
   }
   .editor-preview {
     display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
     gap: 16px;
-    background:
-      radial-gradient(circle at 50% 45%, rgba(255,255,255,0.04), transparent 65%),
-      var(--color-ground);
+    background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.04), transparent 65%), var(--color-ground);
     border: 1px solid var(--color-line);
-    border-radius: 16px;
-    padding: 24px 16px;
+    border-radius: 16px; padding: 24px 16px; min-width: 0;
   }
-  .editor-blob { width: min(260px, 60vw); height: min(260px, 60vw); display: block; }
+  .editor-blob { width: min(240px, 100%); aspect-ratio: 1/1; display: block; }
   .seed-input {
     width: 100%; max-width: 220px;
     padding: 8px 12px;
     background: var(--color-raised);
     border: 1px solid var(--color-line);
     border-radius: 8px;
-    color: var(--color-ink);
-    font: inherit; font-size: 14px;
+    color: var(--color-ink); font: inherit; font-size: 14px;
     text-align: center; outline: none;
     transition: border-color .15s;
   }
   .seed-input:focus { border-color: var(--color-ink); }
-
-  .editor-controls { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .editor-controls { display: flex; flex-direction: column; gap: 20px; min-width: 0; overflow: hidden; }
   .control-group h3 {
-    font-size: 11px; font-weight: 400;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--color-muted); margin: 0 0 8px;
+    font-size: 11px; font-weight: 400; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--color-muted); margin: 0 0 8px;
   }
-
   .hue-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .hue-swatch {
-    width: 30px; height: 30px; border-radius: 9999px;
+    width: 28px; height: 28px; border-radius: 9999px;
     border: 2px solid transparent; padding: 0; cursor: pointer;
     transition: transform .15s, border-color .15s;
     background: transparent; position: relative;
@@ -247,11 +564,10 @@
     border: 1px solid var(--color-line); background: none;
     font-family: ui-monospace, monospace; font-size: 10px;
     color: var(--color-muted); padding: 0 10px; width: auto;
-    border-radius: 9999px; height: 30px;
+    border-radius: 9999px; height: 28px;
   }
   .hue-swatch.auto::before { display: none; }
   .hue-swatch.auto[aria-pressed="true"] { background: var(--color-ink); color: var(--color-ground); border-color: var(--color-ink); }
-
   .color-picker-wrap { display: inline-flex; align-items: center; gap: 8px; }
   .color-picker {
     -webkit-appearance: none; appearance: none;
@@ -265,7 +581,6 @@
   .color-picker::-webkit-color-swatch { border: 0; border-radius: 6px; }
   .color-picker::-moz-color-swatch { border: 0; border-radius: 6px; }
   .color-picker-value { font-family: ui-monospace, monospace; font-size: 11px; color: var(--color-muted); min-width: 72px; }
-
   .shape-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
   .shape-btn {
     display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -278,7 +593,6 @@
   .shape-btn svg { width: 36px; height: 36px; display: block; }
   .shape-btn .label { font-family: ui-monospace, monospace; font-size: 9px; color: var(--color-muted); text-transform: lowercase; transition: color .15s; }
   .shape-btn[aria-pressed="true"] .label, .shape-btn:hover .label { color: var(--color-ink); }
-
   .tone-row { display: flex; flex-wrap: wrap; gap: 6px; }
   .tone {
     border: 1px solid var(--color-line); background: transparent;
@@ -288,7 +602,6 @@
   }
   .tone:hover { color: var(--color-ink); border-color: #3a3a42; }
   .tone[aria-pressed="true"] { background: var(--color-ink); color: var(--color-ground); border-color: var(--color-ink); }
-
   .slider-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
   @media (max-width: 520px) { .slider-grid { grid-template-columns: 1fr; } }
   .slider .slider-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; margin-bottom: 4px; }
@@ -298,68 +611,15 @@
   .slider input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--color-ink); border: 2px solid var(--color-ground); cursor: pointer; }
   .slider input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--color-ink); border: 2px solid var(--color-ground); cursor: pointer; }
 
-  /* ============ Состояния ============ */
-  .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
-  .state-card {
+  /* ============ Код (под редактором) ============ */
+  .code-wrap {
+    position: relative; display: flex; flex-direction: column; min-width: 0;
     background: var(--color-raised);
     border: 1px solid var(--color-line);
-    border-radius: 14px;
-    padding: 22px 12px 14px;
-    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    border-radius: 20px;
+    padding: 18px;
   }
-  .state-card .avatar { position: relative; display: inline-block; width: 88px; height: 88px; line-height: 0; }
-  .state-card .blob { width: 100%; height: 100%; display: block; }
-  .state-card .label { color: var(--color-muted); font-size: 11px; line-height: 1.3; text-align: center; }
-
-  .status {
-    position: absolute; top: 0; right: 0; width: 26%; height: 26%;
-    border-radius: 9999px; box-shadow: 0 0 0 2px var(--color-raised);
-  }
-  .status.online  { background: #10b981; }
-  .status.away    { background: #f59e0b; }
-  .status.offline { background: #52525b; }
-
-  .unread {
-    position: absolute; right: -4px; bottom: -4px;
-    min-width: 22px; height: 22px; padding: 0 6px;
-    display: grid; place-items: center; border-radius: 9999px;
-    background: var(--color-ink); color: var(--color-ground);
-    font-family: ui-monospace, monospace;
-    font-size: 10px; line-height: 1; font-weight: 500;
-    box-shadow: 0 0 0 2px var(--color-raised);
-  }
-  .typing-dots { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); display: flex; gap: 3px; }
-  .typing-dot {
-    display: block; width: 5px; height: 5px;
-    border-radius: 9999px; background: var(--color-muted);
-    opacity: .35; animation: typing 1.2s ease-in-out infinite;
-  }
-  .typing-dot:nth-child(2) { animation-delay: .15s; }
-  .typing-dot:nth-child(3) { animation-delay: .3s; }
-  @keyframes typing { 0%, 60%, to { opacity: .3; } 30% { opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) { .typing-dot { animation: none; opacity: .6; } }
-
-  /* ============ Выражения ============ */
-  .expressions-panel { background: var(--color-raised); border: 1px solid var(--color-line); border-radius: 16px; padding: 16px; }
-  .expressions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 4px; }
-  .expr-btn {
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    padding: 10px 0 8px; border: 0; background: transparent; color: inherit; font: inherit;
-    border-radius: 12px; cursor: pointer; transition: background .15s;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .expr-btn:hover { background: rgba(255,255,255,0.05); }
-  .expr-btn[aria-pressed="true"] { background: rgba(255,255,255,0.08); }
-  .expr-btn svg { width: 48px; height: 48px; display: block; }
-  .expr-btn .label {
-    font-family: ui-monospace, monospace; font-size: 0.65rem; line-height: 1;
-    text-transform: lowercase; color: var(--color-muted); transition: color .15s;
-  }
-  .expr-btn[aria-pressed="true"] .label, .expr-btn:hover .label { color: var(--color-ink); }
-
-  /* ============ Код ============ */
-  .code-wrap { position: relative; margin-top: 0; display: flex; flex-direction: column; min-width: 0; }
-  .code-wrap .code-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .code-wrap .code-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
   .code-tabs { display: inline-flex; gap: 1px; border: 1px solid var(--color-line); border-radius: 9999px; padding: 1px; }
   .code-tab {
     border: 0; background: transparent; color: var(--color-muted);
@@ -370,15 +630,17 @@
   .code-tab[aria-pressed="true"] { background: var(--color-ink); color: var(--color-ground); }
   .code-wrap pre {
     margin: 0; padding: 14px; background: var(--color-ground);
-    border: 1px solid var(--color-line); border-radius: 10px; overflow: auto;
-    flex: 1; min-height: 300px; max-height: 640px;
+    border: 1px solid var(--color-line); border-radius: 10px;
+    overflow: auto;
+    min-height: 220px; max-height: 520px;
+    max-width: 100%;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 12px; line-height: 1.6; color: #c8c8cd; white-space: pre;
+    font-size: 12px; line-height: 1.6; color: var(--color-ink); white-space: pre;
   }
   .code-wrap pre::-webkit-scrollbar { width: 8px; height: 8px; }
   .code-wrap pre::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 4px; }
   .copy-btn {
-    position: absolute; top: 34px; right: 8px;
+    position: absolute; top: 22px; right: 26px;
     border: 1px solid var(--color-line); background: rgba(20,20,22,0.9);
     color: var(--color-muted); font: inherit; font-size: 11px;
     padding: 4px 9px; border-radius: 7px; cursor: pointer;
@@ -387,6 +649,76 @@
   }
   .copy-btn:hover { color: var(--color-ink); border-color: #3a3a42; }
   .copy-btn.is-copied { color: #6ee7b7; border-color: #1f4436; }
+
+  /* ============ PNG ============ */
+  .png-panel {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) minmax(260px, 1.1fr);
+    gap: 24px;
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 20px;
+    padding: 24px;
+    align-items: stretch;
+  }
+  @media (max-width: 760px) { .png-panel { grid-template-columns: 1fr; } }
+  .png-preview {
+    display: grid; place-items: center;
+    padding: 24px;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04), transparent 60%), var(--color-ground);
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    min-height: 280px;
+    position: relative; overflow: hidden;
+  }
+  .png-preview .checker {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+    opacity: .5; pointer-events: none;
+  }
+  .png-preview .png-stage { position: relative; display: grid; place-items: center; width: min(240px, 60%); aspect-ratio: 1 / 1; }
+  .png-preview .png-stage svg { width: 100%; height: 100%; display: block; }
+  .png-preview .png-stage svg .mo-root, .png-preview .png-stage svg .mo-breathe,
+  .png-preview .png-stage svg .mo-bob, .png-preview .png-stage svg .mo-eyes,
+  .png-preview .png-stage svg .mo-eye, .png-preview .png-stage svg .mo-eye > * { animation: none !important; }
+  .png-controls { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .png-meta { font-size: 12px; color: var(--color-muted); line-height: 1.6; margin: 0; }
+  .png-size-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .png-size-btn {
+    border: 1px solid var(--color-line); background: transparent;
+    color: var(--color-muted); border-radius: 9999px;
+    padding: 5px 12px; font: inherit; font-family: ui-monospace, monospace;
+    font-size: 11px; cursor: pointer; transition: all .15s;
+  }
+  .png-size-btn:hover { color: var(--color-ink); border-color: #3a3a42; }
+  .png-size-btn[aria-pressed="true"] { background: var(--color-ink); color: var(--color-ground); border-color: var(--color-ink); }
+  .png-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+  .btn-primary {
+    flex: 1; min-width: 140px;
+    padding: 11px 16px; border-radius: 10px;
+    background: var(--color-ink); color: var(--color-ground);
+    border: 1px solid var(--color-ink);
+    font: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: opacity .15s, transform .15s;
+  }
+  .btn-primary:hover { opacity: .9; }
+  .btn-primary:active { transform: scale(.98); }
+  .btn-secondary {
+    padding: 11px 16px; border-radius: 10px;
+    background: transparent; color: var(--color-ink);
+    border: 1px solid var(--color-line);
+    font: inherit; font-size: 13px; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    transition: border-color .15s, background .15s;
+  }
+  .btn-secondary:hover { border-color: #3a3a42; background: rgba(255,255,255,.03); }
 
   /* ============ Компоненты ============ */
   .components-layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 32px; }
@@ -401,51 +733,35 @@
     transition: background .15s, color .15s; white-space: nowrap;
   }
   .components-nav a:hover { color: var(--color-ink); background: rgba(255,255,255,.04); }
-
   .components-content { display: flex; flex-direction: column; gap: 40px; min-width: 0; }
-  .component-card { display: flex; flex-direction: column; gap: 8px; scroll-margin-top: 24px; }
+  .component-card { display: flex; flex-direction: column; gap: 8px; scroll-margin-top: 24px; min-width: 0; }
   .component-card > p { color: var(--color-muted); font-size: 13px; line-height: 1.6; margin: 0 0 8px; max-width: 70ch; }
   .component-preview {
     border: 1px solid var(--color-line);
-    border-radius: 16px;
-    padding: 32px 24px;
+    border-radius: 16px; padding: 32px 24px;
     background: var(--color-ground);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     overflow-x: auto;
+    min-width: 0;
   }
-
-  /* Присутствие */
-  .presence-row { display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; }
+  .presence-row { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
   .presence-item { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-  .presence-item .avatar-wrap { position: relative; width: 60px; height: 60px; line-height: 0; }
+  .presence-item .avatar-wrap {
+    position: relative; width: 60px; height: 60px; line-height: 0;
+    border-radius: 14px; padding: 4px; margin: -4px; cursor: pointer;
+    transition: background .15s, box-shadow .15s;
+  }
+  .presence-item .avatar-wrap:hover { background: rgba(255,255,255,.04); }
+  .presence-item.is-selected .avatar-wrap { background: rgba(255,255,255,.06); box-shadow: 0 0 0 1px var(--color-line); }
   .presence-item .avatar-wrap svg { width: 100%; height: 100%; display: block; }
   .presence-item .status { box-shadow: 0 0 0 2px var(--color-ground); }
-  .presence-item .label { color: var(--color-muted); font-size: 11px; text-align: center; max-width: 88px; line-height: 1.3; }
-
-  /* Список агентов */
-  .agent-sidebar {
-    background: var(--color-raised);
-    border: 1px solid var(--color-line);
-    border-radius: 12px;
-    padding: 8px;
-    width: 100%;
-    max-width: 340px;
-  }
-  .agent-sidebar .sb-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 10px 12px;
-    font-size: 11px; color: var(--color-muted); text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
+  .presence-item .label { color: var(--color-muted); font-size: 11px; text-align: center; max-width: 100px; line-height: 1.3; }
+  .presence-item.is-selected .label { color: var(--color-ink); }
+  .agent-sidebar { background: var(--color-raised); border: 1px solid var(--color-line); border-radius: 12px; padding: 8px; width: 100%; max-width: 340px; }
+  .agent-sidebar .sb-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px 12px; font-size: 11px; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.06em; }
   .agent-sidebar .sb-head .count { font-family: ui-monospace, monospace; letter-spacing: 0; }
   .agent-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
-  .agent-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 8px 10px; border-radius: 8px;
-    transition: background .15s; cursor: pointer;
-  }
+  .agent-item { display: flex; align-items: center; gap: 12px; padding: 8px 10px; border-radius: 8px; transition: background .15s; cursor: pointer; }
   .agent-item:hover { background: rgba(255,255,255,.04); }
   .agent-item.is-active { background: rgba(255,255,255,.06); }
   .agent-item .avatar-wrap { width: 36px; height: 36px; position: relative; line-height: 0; flex-shrink: 0; }
@@ -455,21 +771,9 @@
   .agent-meta .name { font-size: 13px; }
   .agent-meta .sub { font-size: 11px; color: var(--color-muted); }
   .agent-time { font-family: ui-monospace, monospace; font-size: 11px; color: var(--color-muted); }
-
-  /* Таблица пользователей */
-  .user-table-wrap {
-    background: var(--color-raised);
-    border: 1px solid var(--color-line);
-    border-radius: 12px;
-    width: 100%;
-    overflow-x: auto;
-  }
+  .user-table-wrap { background: var(--color-raised); border: 1px solid var(--color-line); border-radius: 12px; width: 100%; overflow-x: auto; }
   .user-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 13px; }
-  .user-table th {
-    text-align: left; font-weight: 500; color: var(--color-muted);
-    padding: 12px 16px; border-bottom: 1px solid var(--color-line);
-    font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;
-  }
+  .user-table th { text-align: left; font-weight: 500; color: var(--color-muted); padding: 12px 16px; border-bottom: 1px solid var(--color-line); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
   .user-table th.right { text-align: right; }
   .user-table td { padding: 14px 16px; border-bottom: 1px solid var(--color-line); vertical-align: middle; }
   .user-table tr:last-child td { border-bottom: 0; }
@@ -480,76 +784,28 @@
   .user-cell .user-name { font-size: 13px; }
   .user-cell .user-email { font-size: 11px; color: var(--color-muted); }
   .user-table .muted { color: var(--color-muted); }
-  .chip {
-    display: inline-flex; padding: 2px 8px; border-radius: 9999px;
-    border: 1px solid var(--color-line); color: var(--color-muted);
-    font-size: 11px;
-  }
+  .chip { display: inline-flex; padding: 2px 8px; border-radius: 9999px; border: 1px solid var(--color-line); color: var(--color-muted); font-size: 11px; }
   .user-time { font-family: ui-monospace, monospace; font-size: 11px; color: var(--color-muted); text-align: right; }
-
-  /* Поле пароля */
   .password-demo { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; max-width: 380px; }
   .password-blob { width: 140px; height: 140px; line-height: 0; }
   .password-blob svg { width: 100%; height: 100%; display: block; }
   .password-field { width: 100%; display: flex; flex-direction: column; gap: 8px; }
   .password-field > label { font-size: 13px; font-weight: 500; }
   .password-input-wrap { position: relative; width: 100%; }
-  .password-input {
-    width: 100%; height: 52px;
-    padding: 0 84px 0 16px;
-    background: transparent;
-    border: 1px solid var(--color-line);
-    border-radius: 8px;
-    color: var(--color-ink);
-    font: inherit; font-size: 18px; letter-spacing: 0.3em;
-    outline: none;
-    transition: border-color .15s;
-  }
+  .password-input { width: 100%; height: 52px; padding: 0 84px 0 16px; background: transparent; border: 1px solid var(--color-line); border-radius: 8px; color: var(--color-ink); font: inherit; font-size: 18px; letter-spacing: 0.3em; outline: none; transition: border-color .15s; }
   .password-input:focus { border-color: var(--color-ink); }
   .password-input::placeholder { letter-spacing: 0; color: var(--color-muted); font-size: 14px; }
-  .password-show {
-    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-    background: none; border: 0; color: var(--color-muted);
-    font: inherit; font-size: 12px; text-decoration: underline;
-    text-underline-offset: 3px; cursor: pointer;
-    transition: color .15s;
-  }
+  .password-show { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: 0; color: var(--color-muted); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; transition: color .15s; }
   .password-show:hover { color: var(--color-ink); }
   .password-hint { color: var(--color-muted); font-size: 11px; }
-
-  /* Групповой чат */
-  .chat {
-    background: var(--color-raised);
-    border: 1px solid var(--color-line);
-    border-radius: 12px;
-    width: 100%; max-width: 620px;
-    display: flex; flex-direction: column; overflow: hidden;
-  }
-  .chat-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 18px;
-    border-bottom: 1px solid var(--color-line);
-    font-family: ui-monospace, monospace; font-size: 13px;
-  }
+  .chat { background: var(--color-raised); border: 1px solid var(--color-line); border-radius: 12px; width: 100%; max-width: 620px; display: flex; flex-direction: column; overflow: hidden; }
+  .chat-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; border-bottom: 1px solid var(--color-line); font-family: ui-monospace, monospace; font-size: 13px; }
   .chat-header .prefix { color: var(--color-muted); }
   .chat-members { display: flex; align-items: center; }
-  .chat-members .mini {
-    width: 26px; height: 26px; line-height: 0; border-radius: 50%;
-    border: 2px solid var(--color-raised);
-    margin-left: -8px;
-    overflow: hidden;
-  }
+  .chat-members .mini { width: 26px; height: 26px; line-height: 0; border-radius: 50%; border: 2px solid var(--color-raised); margin-left: -8px; overflow: hidden; }
   .chat-members .mini:first-child { margin-left: 0; }
   .chat-members .mini svg { width: 100%; height: 100%; display: block; }
-  .chat-members .more {
-    width: 26px; height: 26px; border-radius: 50%;
-    display: grid; place-items: center;
-    background: rgba(255,255,255,.06);
-    color: var(--color-muted);
-    font-family: ui-monospace, monospace; font-size: 10px;
-    border: 2px solid var(--color-raised);
-    margin-left: -8px;
-  }
+  .chat-members .more { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.06); color: var(--color-muted); font-family: ui-monospace, monospace; font-size: 10px; border: 2px solid var(--color-raised); margin-left: -8px; }
   .chat-messages { display: flex; flex-direction: column; gap: 20px; padding: 20px 18px; }
   .chat-msg { display: flex; gap: 12px; }
   .chat-msg .avatar-wrap { width: 40px; height: 40px; line-height: 0; flex-shrink: 0; }
@@ -563,207 +819,535 @@
   .chat-typing .avatar-wrap { width: 40px; height: 40px; line-height: 0; opacity: .5; }
   .chat-typing .avatar-wrap svg { width: 100%; height: 100%; display: block; }
   .chat-typing .text { color: var(--color-muted); font-size: 12px; }
+
+  /* ============ Состояния / выражения ============ */
+  .states-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .state-card { background: var(--color-raised); border: 1px solid var(--color-line); border-radius: 14px; padding: 22px 12px 14px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .state-card .avatar { position: relative; display: inline-block; width: 88px; height: 88px; line-height: 0; }
+  .state-card .blob { width: 100%; height: 100%; display: block; }
+  .state-card .label { color: var(--color-muted); font-size: 11px; line-height: 1.3; text-align: center; }
+  .status { position: absolute; top: 0; right: 0; width: 26%; height: 26%; border-radius: 9999px; box-shadow: 0 0 0 2px var(--color-raised); }
+  .status.online  { background: #10b981; }
+  .status.away    { background: #f59e0b; }
+  .status.offline { background: #52525b; }
+  .unread { position: absolute; right: -4px; bottom: -4px; min-width: 22px; height: 22px; padding: 0 6px; display: grid; place-items: center; border-radius: 9999px; background: var(--color-ink); color: var(--color-ground); font-family: ui-monospace, monospace; font-size: 10px; line-height: 1; font-weight: 500; box-shadow: 0 0 0 2px var(--color-raised); }
+  .typing-dots { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); display: flex; gap: 3px; }
+  .typing-dot { display: block; width: 5px; height: 5px; border-radius: 9999px; background: var(--color-muted); opacity: .35; animation: typing 1.2s ease-in-out infinite; }
+  .typing-dot:nth-child(2) { animation-delay: .15s; }
+  .typing-dot:nth-child(3) { animation-delay: .3s; }
+  @keyframes typing { 0%, 60%, to { opacity: .3; } 30% { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .typing-dot { animation: none; opacity: .6; } }
+  .expressions-panel { background: var(--color-raised); border: 1px solid var(--color-line); border-radius: 16px; padding: 16px; }
+  .expressions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 4px; }
+  .expr-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 0 8px; border: 0; background: transparent; color: inherit; font: inherit; border-radius: 12px; cursor: pointer; transition: background .15s; -webkit-tap-highlight-color: transparent; }
+  .expr-btn:hover { background: rgba(255,255,255,0.05); }
+  .expr-btn[aria-pressed="true"] { background: rgba(255,255,255,0.08); }
+  .expr-btn svg { width: 48px; height: 48px; display: block; }
+  .expr-btn .label { font-family: ui-monospace, monospace; font-size: 0.65rem; line-height: 1; text-transform: lowercase; color: var(--color-muted); transition: color .15s; }
+  .expr-btn[aria-pressed="true"] .label, .expr-btn:hover .label { color: var(--color-ink); }
+
+  /* ============ Команда ============ */
+  .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .team-card {
+    position: relative;
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 18px;
+    padding: 22px;
+    display: flex; flex-direction: column; gap: 14px;
+    overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+  .team-card:hover { border-color: #3a3a42; transform: translateY(-2px); }
+  .team-card::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 100% 0%, var(--tc-glow, rgba(255,255,255,.05)), transparent 55%);
+    pointer-events: none;
+  }
+  .team-head { display: flex; align-items: center; gap: 14px; }
+  .team-avatar { width: 56px; height: 56px; line-height: 0; flex-shrink: 0; }
+  .team-avatar svg { width: 100%; height: 100%; display: block; }
+  .team-info { min-width: 0; }
+  .team-name { font-size: 15px; font-weight: 500; letter-spacing: -0.01em; margin: 0 0 2px; }
+  .team-role { font-family: ui-monospace, monospace; font-size: 11px; color: var(--color-muted); }
+  .team-bio { font-size: 12px; color: var(--color-muted); line-height: 1.55; margin: 0; }
+  .team-links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .team-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 9999px;
+    border: 1px solid var(--color-line); background: transparent;
+    color: var(--color-ink); font: inherit; font-size: 11px;
+    text-decoration: none; cursor: pointer;
+    transition: background .15s, border-color .15s;
+  }
+  .team-link:hover { background: rgba(255,255,255,.05); border-color: #3a3a42; }
+  .team-link.tg {
+    background: linear-gradient(135deg, #229ED9 0%, #1d8dc0 100%);
+    color: #fff; border-color: transparent;
+  }
+  .team-link.tg:hover { background: linear-gradient(135deg, #2aa9e0 0%, #1f97cc 100%); }
+  .tg-hero {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #229ED9 0%, #0d6e9c 60%, #083a52 100%);
+    border: 1px solid #1e8cc2;
+    border-radius: 18px;
+    padding: 26px;
+    color: #fff;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (max-width: 640px) { .tg-hero { grid-template-columns: 1fr; text-align: center; justify-items: center; } }
+  .tg-hero::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 90% 10%, rgba(255,255,255,.18), transparent 45%);
+    pointer-events: none;
+  }
+  .tg-hero-avatar { width: 72px; height: 72px; line-height: 0; position: relative; z-index: 1; }
+  .tg-hero-avatar svg { width: 100%; height: 100%; display: block; }
+  .tg-hero-info { position: relative; z-index: 1; }
+  .tg-hero-info .tg-label {
+    font-family: ui-monospace, monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    opacity: .85; margin: 0 0 6px;
+  }
+  .tg-hero-info h3 { font-size: 22px; margin: 0 0 6px; letter-spacing: -0.02em; color: #fff; }
+  .tg-hero-info p { font-size: 13px; margin: 0; opacity: .9; line-height: 1.5; max-width: 60ch; }
+  .tg-hero-cta {
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: 12px;
+    background: #fff; color: #0d6e9c;
+    font: inherit; font-size: 13px; font-weight: 600;
+    text-decoration: none; cursor: pointer;
+    transition: transform .15s, box-shadow .15s;
+    box-shadow: 0 8px 24px -6px rgba(0,0,0,.4);
+  }
+  .tg-hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px -6px rgba(0,0,0,.5); }
+  .tg-hero-cta svg { width: 16px; height: 16px; }
+
+  /* ============ Telegram discussion ============ */
+  .discussion-panel {
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 20px;
+    padding: 18px;
+    min-height: 220px;
+    overflow: hidden;
+  }
+  .discussion-panel #discussion-slot { min-height: 180px; }
+  .discussion-panel .tgme_widget_message_wrap,
+  .discussion-panel iframe { border-radius: 12px !important; }
+  .discussion-fallback { color: var(--color-muted); font-size: 12px; font-family: ui-monospace, monospace; padding: 12px; }
+
+  .component-code-slot { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .component-code-toggle {
+    align-self: flex-start;
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--color-line); background: transparent;
+    color: var(--color-muted);
+    font: inherit; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px; padding: 4px 11px; border-radius: 9999px;
+    cursor: pointer; transition: color .15s, border-color .15s, background .15s;
+  }
+  .component-code-toggle:hover { color: var(--color-ink); border-color: #3a3a42; }
+  .component-code-toggle[aria-expanded="true"] { background: var(--color-ink); color: var(--color-ground); border-color: var(--color-ink); }
+  .component-code { border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-ground); overflow: hidden; min-width: 0; }
+  .component-code[hidden] { display: none; }
+  .component-code-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; border-bottom: 1px solid var(--color-line); background: rgba(255,255,255,0.02); flex-wrap: wrap; }
+  .component-code pre {
+    margin: 0; padding: 14px; max-height: 420px; overflow: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px; line-height: 1.6; color: var(--color-ink); white-space: pre;
+    max-width: 100%;
+  }
+  .component-code pre::-webkit-scrollbar { width: 8px; height: 8px; }
+  .component-code pre::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 4px; }
+  .copy-btn-inline { border: 1px solid var(--color-line); background: transparent; color: var(--color-muted); font: inherit; font-size: 11px; padding: 4px 9px; border-radius: 7px; cursor: pointer; transition: color .15s, border-color .15s; }
+  .copy-btn-inline:hover { color: var(--color-ink); border-color: #3a3a42; }
+  .copy-btn-inline.is-copied { color: #6ee7b7; border-color: #1f4436; }
 </style>
 </head>
 <body>
 
-<main>
-  <h1>Редактор Broot</h1>
-  <p class="lead">
-    Меняйте цвет (системная палитра + пресеты тона), форму, выражение, тело и глаза —
-    все панели и компоненты ниже мгновенно обновляются. Кнопка «Копировать» отдаёт JSX
-    или готовый standalone HTML-файл.
-  </p>
-
-  <!-- ============ РЕДАКТОР ============ -->
-  <section id="editor-section">
-    <header>
-      <h2>Редактор</h2>
-      <span class="pill">живой</span>
-    </header>
-    <div class="editor">
-
-      <div class="editor-preview">
-        <div id="editor-blob-slot"></div>
-        <input id="seed-input" class="seed-input" type="text" value="halo" spellcheck="false" autocomplete="off" aria-label="Имя Broot">
+<!-- ============ РЕГИСТРАЦИЯ (Telegram only) ============ -->
+<div class="reg-overlay" id="reg-overlay" role="dialog" aria-modal="true" aria-labelledby="reg-title">
+  <div class="reg-bg"></div>
+  <div class="reg-card">
+    <div class="reg-brand">
+      <div class="reg-avatar">
+        <img src="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png" alt="Broot">
       </div>
-
-      <div class="editor-controls">
-        <div class="control-group">
-          <h3>цвет</h3>
-          <div class="color-picker-wrap" style="margin-bottom:12px">
-            <input id="color-picker" class="color-picker" type="color" value="#ffffff" aria-label="Выбрать цвет">
-            <span id="color-picker-value" class="color-picker-value">#ffffff</span>
-          </div>
-          <div class="tone-row" id="tone-row">
-            <button type="button" class="tone" data-tone="white" aria-pressed="true">белый</button>
-            <button type="button" class="tone" data-tone="pastel">пастель</button>
-            <button type="button" class="tone" data-tone="pale">бледный</button>
-            <button type="button" class="tone" data-tone="mid">средний</button>
-            <button type="button" class="tone" data-tone="deep">глубокий</button>
-            <button type="button" class="tone" data-tone="bright">яркий</button>
-            <button type="button" class="tone" data-tone="ink">чернила</button>
-          </div>
-          <div style="margin-top:12px"><div class="hue-row" id="hue-row"></div></div>
-          <div class="slider-grid" style="margin-top:14px">
-            <div class="slider" data-key="lightness">
-              <div class="slider-head"><span class="k">светлота</span><span class="v">100%</span></div>
-              <input type="range" min="0" max="100" value="100">
-            </div>
-            <div class="slider" data-key="saturation">
-              <div class="slider-head"><span class="k">насыщенность</span><span class="v">0%</span></div>
-              <input type="range" min="0" max="100" value="0">
-            </div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <h3>форма</h3>
-          <div class="shape-grid" id="shape-grid"></div>
-        </div>
-
-        <div class="control-group">
-          <h3>тело</h3>
-          <div class="slider-grid">
-            <div class="slider" data-key="bodySize">
-              <div class="slider-head"><span class="k">размер</span><span class="v">100%</span></div>
-              <input type="range" min="60" max="140" value="100">
-            </div>
-            <div class="slider" data-key="bodyProportion">
-              <div class="slider-head"><span class="k">пропорция</span><span class="v">100%</span></div>
-              <input type="range" min="70" max="130" value="100">
-            </div>
-            <div class="slider" data-key="bodyTilt">
-              <div class="slider-head"><span class="k">наклон</span><span class="v">0°</span></div>
-              <input type="range" min="-30" max="30" value="0">
-            </div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <h3>глаза</h3>
-          <div class="slider-grid">
-            <div class="slider" data-key="eyeSize">
-              <div class="slider-head"><span class="k">размер</span><span class="v">100%</span></div>
-              <input type="range" min="60" max="140" value="100">
-            </div>
-            <div class="slider" data-key="eyeSeparation">
-              <div class="slider-head"><span class="k">расстояние</span><span class="v">0</span></div>
-              <input type="range" min="-6" max="6" step="0.5" value="0">
-            </div>
-            <div class="slider" data-key="eyeLean">
-              <div class="slider-head"><span class="k">наклон</span><span class="v">0°</span></div>
-              <input type="range" min="-15" max="15" step="0.5" value="0">
-            </div>
-            <div class="slider" data-key="gazeX">
-              <div class="slider-head"><span class="k">взгляд X</span><span class="v">0</span></div>
-              <input type="range" min="-4" max="4" step="0.1" value="0">
-            </div>
-            <div class="slider" data-key="gazeY">
-              <div class="slider-head"><span class="k">взгляд Y</span><span class="v">0</span></div>
-              <input type="range" min="-4" max="4" step="0.1" value="0">
-            </div>
-          </div>
-        </div>
-
-        <div class="control-group">
-          <h3>выражение</h3>
-          <div class="shape-grid" id="expr-grid"></div>
-        </div>
-      </div>
-
-      <div class="code-wrap">
-        <div class="code-head">
-          <div class="code-tabs" role="group" aria-label="Формат вывода">
-            <button type="button" class="code-tab" data-mode="jsx" aria-pressed="true">jsx</button>
-            <button type="button" class="code-tab" data-mode="html" aria-pressed="false">html</button>
-          </div>
-        </div>
-        <button type="button" class="copy-btn" data-copy="#code-output">Копировать</button>
-        <pre><code id="code-output"></code></pre>
+      <div class="reg-brand-text">
+        <h1 id="reg-title">Broot</h1>
+        <p>// живой редактор аватаров</p>
       </div>
     </div>
-  </section>
 
-  <!-- ============ КОМПОНЕНТЫ ============ -->
-  <section id="components-section">
-    <header>
-      <h2>Компоненты</h2>
-      <span class="pill">5 компонентов — отражают текущую настройку</span>
-    </header>
-    <div class="components-layout">
-      <nav class="components-nav" aria-label="Компоненты">
-        <a href="#presence-avatar">Аватар присутствия</a>
-        <a href="#agent-list">Список агентов</a>
-        <a href="#user-table">Таблица пользователей</a>
-        <a href="#password-field">Поле пароля</a>
-        <a href="#group-chat">Групповой чат</a>
-      </nav>
-      <div class="components-content">
+    <p class="reg-info">
+      Войдите через <strong>Telegram</strong>, чтобы сохранить свой Broot-профиль.
+      Или продолжите как гость — все данные останутся в браузере.
+    </p>
 
-        <article id="presence-avatar" class="component-card">
-          <h3>Аватар присутствия</h3>
-          <p>Одно лицо плюс статус и количество непрочитанных. Все состояния дышат и моргают, у «размышления» снизу три пульсирующие точки.</p>
-          <div class="component-preview">
-            <div class="presence-row" id="presence-row"></div>
-          </div>
-        </article>
+    <!-- Telegram Login -->
+    <div class="tg-btn-wrap" id="tg-btn-wrap">
+      <script async src="https://oauth.telegram.org/js/telegram-login.js?6"
+        data-client-id="8842784777"
+        data-onauth="console.log(data)"
+        data-request-access="write"></script>
+      <button class="tg-auth-button">Sign In with Telegram</button>
+    </div>
 
-        <article id="agent-list" class="component-card">
-          <h3>Список агентов</h3>
-          <p>Список агентов в сайдбаре. Нет загруженных аватарок и нет ручного дизайна — имя и есть аватар.</p>
-          <div class="component-preview">
-            <div class="agent-sidebar" id="agent-list-slot"></div>
-          </div>
-        </article>
+    <div class="reg-divider">или</div>
 
-        <article id="user-table" class="component-card">
-          <h3>Таблица пользователей</h3>
-          <p>Таблица людей — стена похожих строк. Лицо в строке — единственная колонка, которая отличается от всех и делает строку находимой.</p>
-          <div class="component-preview">
-            <div class="user-table-wrap" id="user-table-slot"></div>
-          </div>
-        </article>
+    <button type="button" class="reg-skip" id="reg-skip">Продолжить как гость</button>
 
-        <article id="password-field" class="component-card">
-          <h3>Поле пароля</h3>
-          <p>Инпут, который намеренно перестаёт подсказывать. Пока ввод скрыт — Broot смотрит на каретку; как только открываете пароль — отворачивается.</p>
-          <div class="component-preview">
-            <div class="password-demo" id="password-demo-slot"></div>
-          </div>
-        </article>
+    <p class="reg-note">
+      Данные хранятся только в вашем браузере (localStorage).<br>
+      Мы не отправляем ничего на сервер.
+    </p>
+  </div>
+</div>
 
-        <article id="group-chat" class="component-card">
-          <h3>Групповой чат</h3>
-          <p>В чате имена проскакивают мимо глаз. Что реально несёт «кто что сказал» — левая колонка. Обычно там серый кружок с буквой.</p>
-          <div class="component-preview">
-            <div id="group-chat-slot"></div>
-          </div>
-        </article>
+<div class="app-shell" id="app-shell">
+  <aside class="sidebar" aria-label="Навигация Broot">
+    <div class="sidebar-brand">
+      <h2>Broot</h2>
+      <span class="count" id="preset-count">0</span>
+    </div>
+
+    <div class="sidebar-user" id="sidebar-user" hidden>
+      <div class="u-avatar" id="sidebar-user-avatar"></div>
+      <div class="u-meta">
+        <span class="u-name" id="sidebar-user-name">—</span>
+        <span class="u-sub" id="sidebar-user-sub">—</span>
       </div>
+      <button type="button" class="u-out" id="sidebar-user-out" title="Выйти" aria-label="Выйти">⎋</button>
     </div>
-  </section>
 
-  <!-- ============ СОСТОЯНИЯ ============ -->
-  <section id="states-section">
-    <header>
-      <h2>Состояния</h2>
-      <span class="pill">5 состояний — отражают текущую настройку</span>
-    </header>
-    <div class="states-grid" id="states-grid"></div>
-  </section>
+    <nav class="sidebar-nav" id="sidebar-nav" aria-label="Разделы">
+      <div class="nav-group is-open" data-tab="editor">
+        <button type="button" class="nav-head" aria-expanded="true">
+          <span>Редактор</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="nav-body">
+          <button type="button" class="save-preset-btn" id="save-preset-btn">
+            <span>＋</span> Save preset
+          </button>
+          <div class="sidebar-section-title">Сохранённые broot'ы</div>
+          <div class="preset-list" id="preset-list" role="list"></div>
+        </div>
+      </div>
 
-  <!-- ============ ВЫРАЖЕНИЯ ============ -->
-  <section id="expressions-section">
-    <header>
-      <h2>Все выражения</h2>
-      <span class="pill">14 выражений — отражают текущую настройку</span>
-    </header>
-    <div class="expressions-panel">
-      <div class="expressions-grid" id="expressions-grid" role="group" aria-label="Все выражения"></div>
+      <div class="nav-group" data-tab="theme">
+        <button type="button" class="nav-head" aria-expanded="false">
+          <span>Студия темы</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="nav-body">
+          <p class="nav-hint">Палитры, цвета и градиенты интерфейса.</p>
+        </div>
+      </div>
+
+      <div class="nav-group" data-tab="team">
+        <button type="button" class="nav-head" aria-expanded="false">
+          <span>Команда и контакты</span><span class="chev" aria-hidden="true">▾</span>
+        </button>
+        <div class="nav-body">
+          <p class="nav-hint">Разработка, поддержка и Telegram-обсуждение.</p>
+          <a class="nav-link" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">@verifure</a>
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- ================= TAB: EDITOR ================= -->
+    <div class="tab-pane is-active" data-pane="editor">
+      <h1>Редактор Broot</h1>
+      <p class="lead">
+        Меняйте цвет, форму, выражение, тело и глаза. Слева — сохранённые пресеты.
+        Ниже — код, PNG-экспорт, компоненты, состояния и все выражения.
+        Панели редактора можно тянуть за края.
+      </p>
+
+      <section id="editor-section">
+        <header>
+          <h2>Редактор</h2>
+          <span class="pill">тяните за край, чтобы менять ширину</span>
+        </header>
+        <div class="editor" id="editor">
+          <div class="editor-preview">
+            <div id="editor-blob-slot"></div>
+            <input id="seed-input" class="seed-input" type="text" value="halo" spellcheck="false" autocomplete="off" aria-label="Имя Broot">
+          </div>
+
+          <div class="editor-resizer" data-resizer="1" role="separator" aria-orientation="vertical" aria-label="Изменить ширину превью"></div>
+
+          <div class="editor-controls">
+            <div class="control-group">
+              <h3>цвет</h3>
+              <div class="color-picker-wrap" style="margin-bottom:12px">
+                <input id="color-picker" class="color-picker" type="color" value="#ffffff" aria-label="Выбрать цвет">
+                <span id="color-picker-value" class="color-picker-value">#ffffff</span>
+              </div>
+              <div class="tone-row" id="tone-row">
+                <button type="button" class="tone" data-tone="white" aria-pressed="true">белый</button>
+                <button type="button" class="tone" data-tone="pastel">пастель</button>
+                <button type="button" class="tone" data-tone="pale">бледный</button>
+                <button type="button" class="tone" data-tone="mid">средний</button>
+                <button type="button" class="tone" data-tone="deep">глубокий</button>
+                <button type="button" class="tone" data-tone="bright">яркий</button>
+                <button type="button" class="tone" data-tone="ink">чернила</button>
+              </div>
+              <div style="margin-top:12px"><div class="hue-row" id="hue-row"></div></div>
+              <div class="slider-grid" style="margin-top:14px">
+                <div class="slider" data-key="lightness">
+                  <div class="slider-head"><span class="k">светлота</span><span class="v">100%</span></div>
+                  <input type="range" min="0" max="100" value="100">
+                </div>
+                <div class="slider" data-key="saturation">
+                  <div class="slider-head"><span class="k">насыщенность</span><span class="v">0%</span></div>
+                  <input type="range" min="0" max="100" value="0">
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <h3>форма</h3>
+              <div class="shape-grid" id="shape-grid"></div>
+            </div>
+
+            <div class="control-group">
+              <h3>тело</h3>
+              <div class="slider-grid">
+                <div class="slider" data-key="bodySize">
+                  <div class="slider-head"><span class="k">размер</span><span class="v">100%</span></div>
+                  <input type="range" min="60" max="140" value="100">
+                </div>
+                <div class="slider" data-key="bodyProportion">
+                  <div class="slider-head"><span class="k">пропорция</span><span class="v">100%</span></div>
+                  <input type="range" min="70" max="130" value="100">
+                </div>
+                <div class="slider" data-key="bodyTilt">
+                  <div class="slider-head"><span class="k">наклон</span><span class="v">0°</span></div>
+                  <input type="range" min="-30" max="30" value="0">
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <h3>глаза</h3>
+              <div class="slider-grid">
+                <div class="slider" data-key="eyeSize">
+                  <div class="slider-head"><span class="k">размер</span><span class="v">100%</span></div>
+                  <input type="range" min="60" max="140" value="100">
+                </div>
+                <div class="slider" data-key="eyeSeparation">
+                  <div class="slider-head"><span class="k">расстояние</span><span class="v">0</span></div>
+                  <input type="range" min="-6" max="6" step="0.5" value="0">
+                </div>
+                <div class="slider" data-key="eyeLean">
+                  <div class="slider-head"><span class="k">наклон</span><span class="v">0°</span></div>
+                  <input type="range" min="-15" max="15" step="0.5" value="0">
+                </div>
+                <div class="slider" data-key="gazeX">
+                  <div class="slider-head"><span class="k">взгляд X</span><span class="v">0</span></div>
+                  <input type="range" min="-4" max="4" step="0.1" value="0">
+                </div>
+                <div class="slider" data-key="gazeY">
+                  <div class="slider-head"><span class="k">взгляд Y</span><span class="v">0</span></div>
+                  <input type="range" min="-4" max="4" step="0.1" value="0">
+                </div>
+              </div>
+            </div>
+
+            <div class="control-group">
+              <h3>выражение</h3>
+              <div class="shape-grid" id="expr-grid"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Код (между редактором и PNG) ============ -->
+      <section id="code-section">
+        <header>
+          <h2>Код</h2>
+          <span class="pill">jsx / html</span>
+        </header>
+        <div class="code-wrap">
+          <div class="code-head">
+            <div class="code-tabs" role="group" aria-label="Формат вывода">
+              <button type="button" class="code-tab" data-mode="jsx" aria-pressed="true">jsx</button>
+              <button type="button" class="code-tab" data-mode="html" aria-pressed="false">html</button>
+            </div>
+          </div>
+          <button type="button" class="copy-btn" data-copy="#code-output">Копировать</button>
+          <pre><code id="code-output"></code></pre>
+        </div>
+      </section>
+
+      <section id="png-section">
+        <header>
+          <h2>PNG-экспорт</h2>
+          <span class="pill">скачать аватар</span>
+        </header>
+        <div class="png-panel">
+          <div class="png-preview">
+            <div class="checker"></div>
+            <div class="png-stage" id="png-stage"></div>
+          </div>
+          <div class="png-controls">
+            <div>
+              <h3>Создать аватар</h3>
+              <p class="png-meta">Прозрачный фон. Размер выбирается ниже — от 128 до 1024 px. Имя файла берётся из имени Broot.</p>
+            </div>
+            <div>
+              <div class="control-group">
+                <h3>размер, px</h3>
+                <div class="png-size-row" id="png-size-row" role="group" aria-label="Размер PNG">
+                  <button type="button" class="png-size-btn" data-size="128" aria-pressed="false">128</button>
+                  <button type="button" class="png-size-btn" data-size="256" aria-pressed="false">256</button>
+                  <button type="button" class="png-size-btn" data-size="512" aria-pressed="true">512</button>
+                  <button type="button" class="png-size-btn" data-size="1024" aria-pressed="false">1024</button>
+                </div>
+              </div>
+            </div>
+            <div class="png-actions">
+              <button type="button" class="btn-primary" id="png-download-btn">Скачать PNG</button>
+              <button type="button" class="btn-secondary" id="png-copy-btn">Копировать data URL</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="components-section">
+        <header>
+          <h2>Компоненты</h2>
+          <span class="pill">5 компонентов — отражают текущую настройку</span>
+        </header>
+        <div class="components-layout">
+          <nav class="components-nav" aria-label="Компоненты">
+            <a href="#presence-avatar">Аватар присутствия</a>
+            <a href="#agent-list">Список агентов</a>
+            <a href="#user-table">Таблица пользователей</a>
+            <a href="#password-field">Поле пароля</a>
+            <a href="#group-chat">Групповой чат</a>
+          </nav>
+          <div class="components-content">
+            <article id="presence-avatar" class="component-card">
+              <h3>Аватар присутствия</h3>
+              <p>Кликните по аватару — его выражение применится к редактору. Активный обведён фоном.</p>
+              <div class="component-preview"><div class="presence-row" id="presence-row"></div></div>
+              <div class="component-code-slot" data-comp="presence"></div>
+            </article>
+            <article id="agent-list" class="component-card">
+              <h3>Список агентов</h3>
+              <p>Список агентов в сайдбаре. Нет загруженных аватарок и нет ручного дизайна — имя и есть аватар.</p>
+              <div class="component-preview"><div class="agent-sidebar" id="agent-list-slot"></div></div>
+              <div class="component-code-slot" data-comp="agents"></div>
+            </article>
+            <article id="user-table" class="component-card">
+              <h3>Таблица пользователей</h3>
+              <p>Лицо в строке — единственная колонка, которая отличается от всех и делает строку находимой.</p>
+              <div class="component-preview"><div class="user-table-wrap" id="user-table-slot"></div></div>
+              <div class="component-code-slot" data-comp="users"></div>
+            </article>
+            <article id="password-field" class="component-card">
+              <h3>Поле пароля</h3>
+              <p>Пока ввод скрыт — Broot смотрит на каретку; как только открываете пароль — отворачивается.</p>
+              <div class="component-preview"><div class="password-demo" id="password-demo-slot"></div></div>
+              <div class="component-code-slot" data-comp="password"></div>
+            </article>
+            <article id="group-chat" class="component-card">
+              <h3>Групповой чат</h3>
+              <p>В чате имена проскакивают мимо глаз. Что реально несёт «кто что сказал» — левая колонка.</p>
+              <div class="component-preview"><div id="group-chat-slot"></div></div>
+              <div class="component-code-slot" data-comp="chat"></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="states-section">
+        <header>
+          <h2>Состояния</h2>
+          <span class="pill">5 состояний — отражают текущую настройку</span>
+        </header>
+        <div class="states-grid" id="states-grid"></div>
+      </section>
+
+      <section id="expressions-section">
+        <header>
+          <h2>Все выражения</h2>
+          <span class="pill">14 выражений — отражают текущую настройку</span>
+        </header>
+        <div class="expressions-panel">
+          <div class="expressions-grid" id="expressions-grid" role="group" aria-label="Все выражения"></div>
+        </div>
+      </section>
     </div>
-  </section>
-</main>
+
+    <!-- ================= TAB: THEME ================= -->
+    <div class="tab-pane" data-pane="theme">
+      <h1>Студия темы</h1>
+      <p class="lead">
+        Выберите палитру или задайте цвета вручную.
+        Изменения применяются мгновенно ко всему интерфейсу.
+      </p>
+
+      <section id="theme-section">
+        <header>
+          <h2>Тема интерфейса</h2>
+          <span class="pill">палитры + градиенты</span>
+        </header>
+        <div class="theme-studio">
+          <div class="theme-block">
+            <h3>палитры</h3>
+            <div class="theme-presets" id="theme-presets"></div>
+          </div>
+          <div class="theme-block">
+            <h3>цвета</h3>
+            <div class="theme-pickers" id="theme-pickers"></div>
+            <h3 style="margin-top:16px">фон</h3>
+            <div class="gradient-swatches" id="gradient-swatches"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ================= TAB: TEAM ================= -->
+    <div class="tab-pane" data-pane="team">
+      <h1>Команда и контакты</h1>
+      <p class="lead">
+        Разработка, поддержка и живое обсуждение в Telegram.
+      </p>
+
+      <section id="team-section">
+        <header>
+          <h2>Команда</h2>
+          <span class="pill">разработка · поддержка · telegram</span>
+        </header>
+        <div class="team-grid" id="team-grid"></div>
+      </section>
+
+      <section id="discussion-section">
+        <header>
+          <h2>Обсуждение</h2>
+          <span class="pill">telegram comments · brootAI/66</span>
+        </header>
+        <div class="discussion-panel">
+          <div id="discussion-slot">
+            <div class="discussion-fallback">// комментарии загружаются…</div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
 
 <script>
 /* =========================================================
@@ -788,7 +1372,6 @@ const SHAPES = [
     body:'<circle cx="27.41" cy="55.97" r="5.98"/><circle cx="31.33" cy="35.51" r="5.98"/><circle cx="49.77" cy="25.82" r="5.98"/><circle cx="68.85" cy="34.19" r="5.98"/><circle cx="74.2" cy="54.33" r="5.98"/><circle cx="61.79" cy="71.06" r="5.98"/><circle cx="40.97" cy="71.8" r="5.98"/><path d="M73.75 49.81C73.75 66.12 66.31 73.85 50.62 73.85C34.92 73.85 27.49 66.12 27.49 49.81C27.49 33.5 34.92 25.78 50.62 25.78C66.31 25.78 73.75 33.5 73.75 49.81Z"/>' },
 ];
 
-/* Выражения: g — групповой transform, e — пути глаз, label — русская подпись */
 const EXPRESSIONS = {
   idle:       { label:'покой',         g:'',                 e:["M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z","M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"] },
   happy:      { label:'радость',       g:'translate(0 -2.2)', e:["M44.75 46.31C45.04 48.38 44.8 48.51 39.43 49.27C34.06 50.02 33.8 49.96 33.5 47.89C33.21 45.82 33.45 45.69 38.82 44.93C44.19 44.18 44.45 44.24 44.75 46.31Z","M66.79 45.21C67.2 48.08 66.93 48.26 60.86 49.11C54.79 49.97 54.49 49.87 54.08 47C53.68 44.13 53.94 43.96 60.02 43.1C66.09 42.25 66.39 42.34 66.79 45.21Z"] },
@@ -827,6 +1410,202 @@ const STATES = [
   { key:'offline',  expr:'idle',     status:'offline', label:'не в сети, 128 непрочитанных', unread:'99+' },
 ];
 
+const PRESENCE_ITEMS = [
+  { id:'online',   label:'в сети',                    dot:'online',  unread:null,   typing:false, thinking:false, expr:'idle' },
+  { id:'online3',  label:'в сети, 3 непрочитанных',   dot:'online',  unread:'3',    typing:false, thinking:false, expr:'idle' },
+  { id:'thinking', label:'размышляет',                dot:null,      unread:null,   typing:true,  thinking:true,  expr:'thinking' },
+  { id:'away',     label:'отошёл',                    dot:'away',    unread:null,   typing:false, thinking:false, expr:'sleepy' },
+  { id:'offline',  label:'не в сети, 128 непрочитанных', dot:'offline', unread:'99+', typing:false, thinking:false, expr:'idle' },
+];
+
+const THEMES = {
+  'github-dark': { label:'стандарт',   ground:'#0a0a0b', raised:'#131315', ink:'#fafaf8', muted:'#8a8a93', line:'#232327' },
+  'github-light':{ label:'светлая',    ground:'#ffffff', raised:'#f6f8fa', ink:'#1f2328', muted:'#656d76', line:'#d0d7de' },
+  'midnight':    { label:'midnight',   ground:'#060913', raised:'#0f1420', ink:'#e6ecff', muted:'#7c88a8', line:'#1c2438' },
+  'nord':        { label:'nord',       ground:'#2e3440', raised:'#3b4252', ink:'#eceff4', muted:'#8a94a8', line:'#434c5e' },
+  'dracula':     { label:'dracula',    ground:'#191a21', raised:'#282a36', ink:'#f8f8f2', muted:'#9aa0b3', line:'#3a3d4d' },
+  'solarized':   { label:'solarized',  ground:'#002b36', raised:'#073642', ink:'#eee8d5', muted:'#93a1a1', line:'#0f4c5c' },
+  'amber':       { label:'amber',      ground:'#1a1206', raised:'#241a0a', ink:'#ffe9b8', muted:'#b39366', line:'#3a2a12' },
+  'forest':      { label:'forest',     ground:'#0a1410', raised:'#0f1e17', ink:'#d7f0e2', muted:'#7ba392', line:'#1c3428' },
+  'rose':        { label:'rose',       ground:'#190f14', raised:'#231318', ink:'#ffe4ec', muted:'#b98a99', line:'#3a1e28' },
+  'paper':       { label:'paper',      ground:'#f4efe6', raised:'#fbf7ee', ink:'#2a2520', muted:'#7a736a', line:'#ded6c8' },
+};
+const GRADIENTS = {
+  none:     { label:'сплошной',   value:null },
+  radial:   { label:'радиал',     value:'radial-gradient(circle at 50% 30%, rgba(255,255,255,.07), transparent 60%)' },
+  corner:   { label:'угол',       value:'radial-gradient(circle at 100% 0%, rgba(255,255,255,.10), transparent 55%)' },
+  linear:   { label:'линия',      value:'linear-gradient(135deg, rgba(255,255,255,.06), transparent 45%)' },
+  conic:    { label:'конический', value:'conic-gradient(from 220deg at 50% 50%, rgba(255,255,255,.05), transparent 60%)' },
+  duo:      { label:'двойной',    value:'radial-gradient(circle at 15% 20%, rgba(255,255,255,.07), transparent 40%), radial-gradient(circle at 85% 80%, rgba(255,255,255,.05), transparent 45%)' },
+};
+
+/* =========================================================
+   HTML-ЭКСПОРТ
+   ========================================================= */
+const CSS_BASE = `:root{--color-ground:#0a0a0b;--color-raised:#131315;--color-ink:#fafaf8;--color-muted:#8a8a93;--color-line:#232327;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--color-ground);color:var(--color-ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}`;
+const CSS_ENGINE = `@property --mo-amp{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-esx{syntax:"<number>";inherits:true;initial-value:1}
+@property --mo-esy{syntax:"<number>";inherits:true;initial-value:1}
+@property --mo-tilt{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-edy{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-edx{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-esx2{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-esy2{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-tilt2{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-edy2{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-lock{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-shake{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-rock{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-rockp{syntax:"<number>";inherits:true;initial-value:1}
+@property --mo-bdy{syntax:"<number>";inherits:true;initial-value:0}
+@property --mo-track-hold{syntax:"<number>";inherits:true;initial-value:0}
+.mo-root,.mo-breathe,.mo-bob{transform-box:view-box;transform-origin:center}
+.mo-root{--mo-amp:0;transition-property:--mo-amp,transform;animation:mo-shake calc(.112s*var(--mo-rate,1))linear infinite}
+.mo-body{fill:var(--mo-head)}.mo-eyes{fill:var(--mo-eye)}
+@keyframes mo-shake{0%,to{translate:calc(.62px*var(--mo-shake))calc(-.34px*var(--mo-shake))}25%{translate:calc(-.7px*var(--mo-shake))calc(.22px*var(--mo-shake))}50%{translate:calc(.38px*var(--mo-shake))calc(.66px*var(--mo-shake))}75%{translate:calc(-.44px*var(--mo-shake))calc(-.6px*var(--mo-shake))}}
+.mo-root.mo-expr{--mo-morph:calc(.3s*var(--mo-rate,1))}
+.mo-root.mo-always{--mo-amp:1}
+.mo-breathe{animation:mo-breathe calc(2.8s*var(--mo-rate,1)) calc(var(--mo-phase,0s)*var(--mo-rate,1)) infinite alternate ease-in-out}
+@keyframes mo-breathe{to{transform:scaleX(calc(1 + .022*var(--mo-amp)))scaleY(calc(1 - .018*var(--mo-amp)))}}
+.mo-bob{translate:0 calc(var(--mo-bdy)*1px);animation:mo-bob calc(3.4s*var(--mo-rate,1)) calc(var(--mo-bob-phase,0s)*var(--mo-rate,1)) infinite alternate ease-in-out}
+@keyframes mo-bob{0%{transform:translateY(0)}to{transform:translateY(calc(-1.1px*var(--mo-amp)))}}
+.mo-eye{transform-box:view-box;--mo-sel:calc((var(--mo-wrap,1) + 1)/2);--mo-x:calc(var(--mo-esx) + var(--mo-esx2)*var(--mo-sel));--mo-y:calc(var(--mo-esy) + var(--mo-esy2)*var(--mo-sel));--mo-t:calc(var(--mo-tilt) + var(--mo-tilt2)*var(--mo-sel));--mo-ph:calc(var(--mo-sel)*(1 - var(--mo-rock)) + var(--mo-rock)*((1 + var(--mo-wrap,1)*var(--mo-rockp))/2));translate:calc(var(--mo-edx)*var(--mo-wrap,1)*1px)calc((var(--mo-edy) + var(--mo-edy2)*var(--mo-ph))*1px);rotate:calc((var(--mo-t)*var(--mo-wrap,1) - var(--mo-lean,0)*var(--mo-lock))*1deg);transform:rotate(calc(var(--mo-lean,0)*1deg))scaleX(var(--mo-x))scaleY(var(--mo-y))rotate(calc(var(--mo-lean,0)*-1deg));animation-name:mo-rock;animation-duration:calc(.9s*var(--mo-rate,1));animation-iteration-count:infinite;animation-timing-function:ease-in-out}
+@container style(--mo-rock:0){.mo-eye{animation-name:none}}
+@keyframes mo-rock{0%,to{--mo-rockp:1}50%{--mo-rockp:-1}}
+.mo-eye>*{transform-box:fill-box;transform-origin:center;animation-name:mo-blink,mo-wrap;animation-duration:calc(var(--mo-blink,4.8s)*var(--mo-rate,1)),calc(var(--mo-saccade,5.6s)*var(--mo-rate,1));animation-delay:calc(var(--mo-blink-phase,0s)*var(--mo-rate,1)),calc(var(--mo-saccade-phase,0s)*var(--mo-rate,1));animation-iteration-count:infinite;animation-timing-function:linear}
+@keyframes mo-blink{0%,97.2%{transform:rotate(calc(var(--mo-lean,0)*1deg))scaleY(1)rotate(calc(var(--mo-lean,0)*-1deg));animation-timing-function:ease-in}98.6%{transform:rotate(calc(var(--mo-lean,0)*1deg))scaleY(calc(1 - .92*var(--mo-amp)))rotate(calc(var(--mo-lean,0)*-1deg));animation-timing-function:ease-out}to{transform:rotate(calc(var(--mo-lean,0)*1deg))scaleY(1)rotate(calc(var(--mo-lean,0)*-1deg))}}
+.mo-eyes{animation:mo-saccade calc(var(--mo-saccade,5.6s)*var(--mo-rate,1)) calc(var(--mo-saccade-phase,0s)*var(--mo-rate,1)) infinite linear}
+@keyframes mo-saccade{0%,15%{translate:0}16.5%,31%{translate:calc(-.8px*var(--mo-look-x,1.4)*var(--mo-amp))calc(-.9px*var(--mo-look-y,1.1)*var(--mo-amp))}32.5%,47%{translate:calc(1px*var(--mo-look-x,1.4)*var(--mo-amp))calc(.1px*var(--mo-look-y,1.1)*var(--mo-amp))}48.5%,63%{translate:calc(-.15px*var(--mo-look-x,1.4)*var(--mo-amp))calc(.85px*var(--mo-look-y,1.1)*var(--mo-amp))}64.5%,79%{translate:calc(.75px*var(--mo-look-x,1.4)*var(--mo-amp))calc(-.8px*var(--mo-look-y,1.1)*var(--mo-amp))}80.5%,98.5%{translate:calc(-1px*var(--mo-look-x,1.4)*var(--mo-amp))calc(-.15px*var(--mo-look-y,1.1)*var(--mo-amp))}to{translate:0}}
+@keyframes mo-wrap{0%,15%{scale:1;rotate:none}16.5%,31%{scale:calc(1 - .0176*var(--mo-look-mx,1.4)*var(--mo-amp) + .008*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .027*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(.648deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}32.5%,47%{scale:calc(1 - .022*var(--mo-look-mx,1.4)*var(--mo-amp) - .01*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .003*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(.09deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}48.5%,63%{scale:calc(1 - .0033*var(--mo-look-mx,1.4)*var(--mo-amp) + .0015*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .0255*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(-.115deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}64.5%,79%{scale:calc(1 - .0165*var(--mo-look-mx,1.4)*var(--mo-amp) - .0075*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .024*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(-.54deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}80.5%,98.5%{scale:calc(1 - .022*var(--mo-look-mx,1.4)*var(--mo-amp) + .01*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .0045*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(.135deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}to{scale:1;rotate:none}}
+@media (prefers-reduced-motion:reduce){.mo-root,.mo-breathe,.mo-bob,.mo-eyes,.mo-eye,.mo-eye>*{animation:none;transition:none}}
+.mo-root .mo-eye{--mo-gz-dx:calc(var(--mo-gz-dx1,0) + (var(--mo-gz-dx2,0) - var(--mo-gz-dx1,0))*var(--mo-sel));--mo-gz-dy:calc(var(--mo-gz-dy1,0) + (var(--mo-gz-dy2,0) - var(--mo-gz-dy1,0))*var(--mo-sel));--mo-gz-sx:calc(var(--mo-gz-sx1,1) + (var(--mo-gz-sx2,1) - var(--mo-gz-sx1,1))*var(--mo-sel));--mo-gz-sy:calc(var(--mo-gz-sy1,1) + (var(--mo-gz-sy2,1) - var(--mo-gz-sy1,1))*var(--mo-sel));--mo-gz-t:calc(var(--mo-gz-t1,0) + (var(--mo-gz-t2,0) - var(--mo-gz-t1,0))*var(--mo-sel));translate:calc((var(--mo-edx)*var(--mo-wrap,1) + var(--mo-gz-dx))*1px)calc((var(--mo-edy) + var(--mo-edy2)*var(--mo-ph) + var(--mo-gz-dy))*1px);rotate:calc((var(--mo-t)*var(--mo-wrap,1) - var(--mo-lean,0)*var(--mo-lock) + var(--mo-gz-t))*1deg);transform:rotate(calc(var(--mo-lean,0)*1deg))scaleX(calc(var(--mo-x)*var(--mo-gz-sx)))scaleY(calc(var(--mo-y)*var(--mo-gz-sy)))rotate(calc(var(--mo-lean,0)*-1deg))}
+svg:has(>.mo-root){--mo-look-seed-x:var(--mo-look-x,1.4);--mo-look-seed-y:var(--mo-look-y,1.1);--mo-look-seed-mx:var(--mo-look-mx,1.4);--mo-look-seed-my:var(--mo-look-my,1.1)}
+.mo-root{--mo-look-x:calc(var(--mo-look-seed-x,1.4)*(1 - var(--mo-track-hold)));--mo-look-y:calc(var(--mo-look-seed-y,1.1)*(1 - var(--mo-track-hold)));--mo-look-mx:calc(var(--mo-look-seed-mx,1.4)*(1 - var(--mo-track-hold)));--mo-look-my:calc(var(--mo-look-seed-my,1.1)*(1 - var(--mo-track-hold)))}`;
+
+const CSS_STATUS = `.status{position:absolute;top:0;right:0;width:26%;height:26%;border-radius:9999px;box-shadow:0 0 0 2px var(--color-raised)}
+.status.online{background:#10b981}.status.away{background:#f59e0b}.status.offline{background:#52525b}`;
+const CSS_UNREAD = `.unread{position:absolute;right:-4px;bottom:-4px;min-width:22px;height:22px;padding:0 6px;display:grid;place-items:center;border-radius:9999px;background:var(--color-ink);color:var(--color-ground);font-family:ui-monospace,monospace;font-size:10px;line-height:1;font-weight:500;box-shadow:0 0 0 2px var(--color-raised)}`;
+const CSS_TYPING = `.typing-dots{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);display:flex;gap:3px}
+.typing-dot{display:block;width:5px;height:5px;border-radius:9999px;background:var(--color-muted);opacity:.35;animation:typing 1.2s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.15s}.typing-dot:nth-child(3){animation-delay:.3s}
+@keyframes typing{0%,60%,to{opacity:.3}30%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.typing-dot{animation:none;opacity:.6}}`;
+const CSS_PRESENCE = `.presence-row{display:flex;flex-wrap:wrap;gap:32px;justify-content:center}
+.presence-item{display:flex;flex-direction:column;align-items:center;gap:12px}
+.presence-item .avatar-wrap{position:relative;width:60px;height:60px;line-height:0}
+.presence-item .avatar-wrap svg{width:100%;height:100%;display:block}
+.presence-item .status{box-shadow:0 0 0 2px var(--color-ground)}
+.presence-item .label{color:var(--color-muted);font-size:11px;text-align:center;max-width:88px;line-height:1.3}`;
+const CSS_AGENTS = `.agent-sidebar{background:var(--color-raised);border:1px solid var(--color-line);border-radius:12px;padding:8px;width:100%;max-width:340px}
+.agent-sidebar .sb-head{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 12px;font-size:11px;color:var(--color-muted);text-transform:uppercase;letter-spacing:.06em}
+.agent-sidebar .sb-head .count{font-family:ui-monospace,monospace;letter-spacing:0}
+.agent-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px}
+.agent-item{display:flex;align-items:center;gap:12px;padding:8px 10px;border-radius:8px;transition:background .15s;cursor:pointer}
+.agent-item:hover{background:rgba(255,255,255,.04)}
+.agent-item.is-active{background:rgba(255,255,255,.06)}
+.agent-item .avatar-wrap{width:36px;height:36px;position:relative;line-height:0;flex-shrink:0}
+.agent-item .avatar-wrap svg{width:100%;height:100%;display:block}
+.agent-item .avatar-wrap .status{box-shadow:0 0 0 2px var(--color-raised)}
+.agent-meta{flex:1;min-width:0;display:flex;flex-direction:column}
+.agent-meta .name{font-size:13px}
+.agent-meta .sub{font-size:11px;color:var(--color-muted)}
+.agent-time{font-family:ui-monospace,monospace;font-size:11px;color:var(--color-muted)}`;
+const CSS_USERS = `.user-table-wrap{background:var(--color-raised);border:1px solid var(--color-line);border-radius:12px;width:100%;overflow-x:auto}
+.user-table{width:100%;min-width:560px;border-collapse:collapse;font-size:13px}
+.user-table th{text-align:left;font-weight:500;color:var(--color-muted);padding:12px 16px;border-bottom:1px solid var(--color-line);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.user-table th.right{text-align:right}
+.user-table td{padding:14px 16px;border-bottom:1px solid var(--color-line);vertical-align:middle}
+.user-table tr:last-child td{border-bottom:0}
+.user-cell{display:flex;align-items:center;gap:12px}
+.user-cell .avatar-wrap{width:32px;height:32px;line-height:0;flex-shrink:0}
+.user-cell .avatar-wrap svg{width:100%;height:100%;display:block}
+.user-cell .user-meta{min-width:0}
+.user-cell .user-name{font-size:13px}
+.user-cell .user-email{font-size:11px;color:var(--color-muted)}
+.user-table .muted{color:var(--color-muted)}
+.chip{display:inline-flex;padding:2px 8px;border-radius:9999px;border:1px solid var(--color-line);color:var(--color-muted);font-size:11px}
+.user-time{font-family:ui-monospace,monospace;font-size:11px;color:var(--color-muted);text-align:right}`;
+const CSS_PASSWORD = `.password-demo{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%;max-width:380px}
+.password-blob{width:140px;height:140px;line-height:0}
+.password-blob svg{width:100%;height:100%;display:block}
+.password-field{width:100%;display:flex;flex-direction:column;gap:8px}
+.password-field>label{font-size:13px;font-weight:500}
+.password-input-wrap{position:relative;width:100%}
+.password-input{width:100%;height:52px;padding:0 84px 0 16px;background:transparent;border:1px solid var(--color-line);border-radius:8px;color:var(--color-ink);font:inherit;font-size:18px;letter-spacing:.3em;outline:none;transition:border-color .15s}
+.password-input:focus{border-color:var(--color-ink)}
+.password-input::placeholder{letter-spacing:0;color:var(--color-muted);font-size:14px}
+.password-show{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:0;color:var(--color-muted);font:inherit;font-size:12px;text-decoration:underline;text-underline-offset:3px;cursor:pointer;transition:color .15s}
+.password-show:hover{color:var(--color-ink)}
+.password-hint{color:var(--color-muted);font-size:11px}`;
+const CSS_CHAT = `.chat{background:var(--color-raised);border:1px solid var(--color-line);border-radius:12px;width:100%;max-width:620px;display:flex;flex-direction:column;overflow:hidden}
+.chat-header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--color-line);font-family:ui-monospace,monospace;font-size:13px}
+.chat-header .prefix{color:var(--color-muted)}
+.chat-members{display:flex;align-items:center}
+.chat-members .mini{width:26px;height:26px;line-height:0;border-radius:50%;border:2px solid var(--color-raised);margin-left:-8px;overflow:hidden}
+.chat-members .mini:first-child{margin-left:0}
+.chat-members .mini svg{width:100%;height:100%;display:block}
+.chat-members .more{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.06);color:var(--color-muted);font-family:ui-monospace,monospace;font-size:10px;border:2px solid var(--color-raised);margin-left:-8px}
+.chat-messages{display:flex;flex-direction:column;gap:20px;padding:20px 18px}
+.chat-msg{display:flex;gap:12px}
+.chat-msg .avatar-wrap{width:40px;height:40px;line-height:0;flex-shrink:0}
+.chat-msg .avatar-wrap svg{width:100%;height:100%;display:block}
+.chat-msg .msg-body{min-width:0;flex:1}
+.chat-msg .msg-head{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+.chat-msg .msg-author{font-size:13px;font-weight:500}
+.chat-msg .msg-time{font-family:ui-monospace,monospace;font-size:11px;color:var(--color-muted)}
+.chat-msg .msg-text{font-size:13px;color:var(--color-muted);line-height:1.55}
+.chat-typing{display:flex;align-items:center;gap:10px}
+.chat-typing .avatar-wrap{width:40px;height:40px;line-height:0;opacity:.5}
+.chat-typing .avatar-wrap svg{width:100%;height:100%;display:block}
+.chat-typing .text{color:var(--color-muted);font-size:12px}`;
+
+const TRACKING_SCRIPT = `document.querySelectorAll('svg').forEach(function(svg){
+  var root=svg.querySelector('.mo-root');var eyes=svg.querySelector('.mo-eyes');if(!root||!eyes)return;
+  root.style.setProperty('--mo-track-hold',0);
+  window.addEventListener('pointermove',function(e){
+    var r=svg.getBoundingClientRect();
+    var inside=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;
+    if(!inside){root.style.setProperty('--mo-track-hold',0);return;}
+    root.style.setProperty('--mo-track-hold',1);
+    var nx=((e.clientX-r.left)/r.width)*2-1;var ny=((e.clientY-r.top)/r.height)*2-1;
+    eyes.style.setProperty('--mo-gz-dx1',(nx*4).toFixed(3));
+    eyes.style.setProperty('--mo-gz-dy1',(ny*3).toFixed(3));
+    eyes.style.setProperty('--mo-gz-dx2',(nx*3).toFixed(3));
+    eyes.style.setProperty('--mo-gz-dy2',(ny*2.5).toFixed(3));
+  });
+  window.addEventListener('blur',function(){root.style.setProperty('--mo-track-hold',0);});
+});`;
+const PASSWORD_SCRIPT = `(function(){
+  var input=document.getElementById('broot-password');
+  var btn=document.getElementById('password-show-btn');
+  if(!input||!btn)return;
+  btn.addEventListener('click',function(){
+    var show=input.type==='password';
+    input.type=show?'text':'password';
+    btn.textContent=show?'Скрыть':'Показать';
+    btn.setAttribute('aria-pressed',String(show));
+  });
+})();`;
+
+const COMPONENT_META = {
+  presence: { title:'Аватар присутствия',    css: CSS_STATUS + '\n' + CSS_UNREAD + '\n' + CSS_TYPING + '\n' + CSS_PRESENCE },
+  agents:   { title:'Список агентов',        css: CSS_STATUS + '\n' + CSS_AGENTS },
+  users:    { title:'Таблица пользователей', css: CSS_USERS },
+  password: { title:'Поле пароля',           css: CSS_PASSWORD, script: PASSWORD_SCRIPT },
+  chat:     { title:'Групповой чат',         css: CSS_CHAT },
+};
+const COMPONENT_WRAP = {
+  presence: m => `<div class="presence-row">\n${m}\n</div>`,
+  agents:   m => `<div class="agent-sidebar">\n${m}\n</div>`,
+  users:    m => `<div class="user-table-wrap">\n${m}\n</div>`,
+  password: m => `<div class="password-demo">\n${m}\n</div>`,
+};
+const COMPONENT_MARKUP = {};
+const codePanels = {};
+Object.keys(COMPONENT_META).forEach(k => { codePanels[k] = { open: false, mode: 'html' }; });
+
 /* =========================================================
    СОСТОЯНИЕ
    ========================================================= */
@@ -840,6 +1619,40 @@ const state = {
   eyeSize: 100, eyeSeparation: 0, eyeLean: 0,
   gazeX: 0, gazeY: 0,
 };
+
+let presets = [];
+let activePresetId = null;
+let presetSeq = 1;
+
+function stateSnapshot(s) { return JSON.parse(JSON.stringify(s)); }
+function makePreset(name, overrides = {}) {
+  const base = {
+    name: name || 'broot',
+    hue: 190, autoHue: false,
+    shape: 'auto', expression: 'idle',
+    tone: 'white', lightness: 100, saturation: 0,
+    customHex: null,
+    bodySize: 100, bodyProportion: 100, bodyTilt: 0,
+    eyeSize: 100, eyeSeparation: 0, eyeLean: 0,
+    gazeX: 0, gazeY: 0,
+  };
+  return Object.assign(base, overrides);
+}
+function seedPresets() {
+  const initial = [
+    { name:'Default',  st:{ tone:'white',  lightness:100, saturation:0,   hue:190, autoHue:false, shape:'auto',    expression:'idle' } },
+    { name:'Friendly', st:{ tone:'custom', lightness:56,  saturation:65,  hue:40,  autoHue:false, shape:'organic', expression:'happy',  bodySize:104, eyeSize:108 } },
+    { name:'Focused',  st:{ tone:'custom', lightness:38,  saturation:60,  hue:225, autoHue:false, shape:'boxy',    expression:'smug',   eyeSize:92,  eyeSeparation:0.5 } },
+    { name:'Sleepy',   st:{ tone:'custom', lightness:62,  saturation:40,  hue:275, autoHue:false, shape:'cloud',   expression:'sleepy', bodySize:108, bodyProportion:112 } },
+    { name:'Alert',    st:{ tone:'custom', lightness:60,  saturation:80,  hue:12,  autoHue:false, shape:'nub',     expression:'surprised', eyeSize:118, eyeSeparation:1 } },
+  ];
+  initial.forEach(p => {
+    const id = 'p' + (presetSeq++);
+    presets.push({ id, name: p.name, state: makePreset(p.name, p.st) });
+  });
+  activePresetId = presets[0].id;
+}
+function findPreset(id) { return presets.find(p => p.id === id); }
 
 /* =========================================================
    Утилиты цвета
@@ -878,17 +1691,19 @@ function autoHueFromName(name) {
   for (let i = 0; i < name.length; i++) h = ((h << 5) - h + name.charCodeAt(i)) | 0;
   return Math.abs(h) % 360;
 }
-function currentHex() {
-  if (state.customHex) return state.customHex;
-  const h = state.autoHue ? autoHueFromName(state.name) : state.hue;
-  return hslToHex(h, state.saturation, state.lightness);
+function computeHexFor(s) {
+  if (s.customHex) return s.customHex;
+  const h = s.autoHue ? autoHueFromName(s.name) : s.hue;
+  return hslToHex(h, s.saturation, s.lightness);
 }
+function currentHex() { return computeHexFor(state); }
 function headColor() { return currentHex(); }
+function headColorFor(s) { return computeHexFor(s); }
 function eyeColor() { return '#051215'; }
-
 function escapeXml(s) {
   return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 }
+function escapeHtml(s) { return escapeXml(s); }
 
 /* =========================================================
    Кэш фаз
@@ -913,19 +1728,19 @@ function getPhases(key) {
 }
 
 /* =========================================================
-   buildSvg — единый источник каждого аватара
+   buildSvg
    ========================================================= */
-function buildSvg(opts = {}) {
-  const shapeId      = opts.shapeId      ?? state.shape;
-  const expressionId = opts.expressionId ?? state.expression;
-  const head         = opts.head         ?? headColor();
+function buildSvg(opts = {}, s = state) {
+  const shapeId      = opts.shapeId      ?? s.shape;
+  const expressionId = opts.expressionId ?? s.expression;
+  const head         = opts.head         ?? headColorFor(s);
   const eye          = opts.eye          ?? eyeColor();
   const phasesKey    = opts.phasesKey    ?? 'default';
   const className    = opts.className    ?? 'blob';
   const thinking     = opts.thinking     ?? false;
   const useTransforms = opts.useTransforms ?? true;
 
-  const shape = SHAPES.find(s => s.id === shapeId) || SHAPES[0];
+  const shape = SHAPES.find(x => x.id === shapeId) || SHAPES[0];
   const expr  = EXPRESSIONS[expressionId] || EXPRESSIONS.idle;
   const ph    = getPhases(phasesKey);
 
@@ -937,18 +1752,16 @@ function buildSvg(opts = {}) {
       '--mo-lock:1','--mo-rock:0.8','--mo-bdy:-0.4'
     );
   }
-
   const eyeGroups = expr.e.map((d, i) => {
     const wrap = i === 0 ? -1 : 1;
     const ox = i === 0 ? '40.62px 48.6px' : '58.94px 47.61px';
-    const baseLean = i === 0 ? state.eyeLean : -state.eyeLean;
+    const baseLean = i === 0 ? s.eyeLean : -s.eyeLean;
     const inner = `<g class="mo-eye" style="--mo-wrap:${wrap};--mo-lean:${baseLean};transform-origin:${ox}"><path d="${d}"/></g>`;
     if (!useTransforms) return inner;
-
-    const sep  = state.eyeSeparation;
-    const gx   = state.gazeX;
-    const gy   = state.gazeY;
-    const sc   = state.eyeSize / 100;
+    const sep  = s.eyeSeparation;
+    const gx   = s.gazeX;
+    const gy   = s.gazeY;
+    const sc   = s.eyeSize / 100;
     const offset = i === 0 ? (-sep + gx) : (sep + gx);
     const ox2 = i === 0 ? '40.62' : '58.94';
     const oy2 = i === 0 ? '48.6'  : '47.61';
@@ -958,12 +1771,11 @@ function buildSvg(opts = {}) {
 
   let bodyTransform = '';
   if (useTransforms) {
-    const bs = state.bodySize / 100;
-    const px = state.bodyProportion / 100;
+    const bs = s.bodySize / 100;
+    const px = s.bodyProportion / 100;
     const py = 1 / px;
-    bodyTransform = `translate(50 50) scale(${(bs * px).toFixed(4)} ${(bs * py).toFixed(4)}) rotate(${state.bodyTilt}) translate(-50 -50)`;
+    bodyTransform = `translate(50 50) scale(${(bs * px).toFixed(4)} ${(bs * py).toFixed(4)}) rotate(${s.bodyTilt}) translate(-50 -50)`;
   }
-
   const bodyWrapped = bodyTransform
     ? `<g transform="${bodyTransform}"><g class="mo-body">${shape.body}</g><g class="mo-eyes">${eyeGroups}</g></g>`
     : `<g class="mo-body">${shape.body}</g><g class="mo-eyes">${eyeGroups}</g>`;
@@ -979,20 +1791,47 @@ function buildSvg(opts = {}) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="${className}"
     style="${svgStyle}" aria-hidden="true">
     <g class="mo-root mo-always${thinking ? ' mo-expr' : ''}" style="${rootVars.join(';')}">
-      <g class="mo-breathe">
-        <g class="mo-bob">
-          <g transform="${expr.g}">
-            ${bodyWrapped}
-          </g>
-        </g>
-      </g>
+      <g class="mo-breathe"><g class="mo-bob"><g transform="${expr.g}">
+        ${bodyWrapped}
+      </g></g></g>
     </g>
   </svg>`;
 }
 
-/* =========================================================
-   JSX-вывод
-   ========================================================= */
+function buildExportSvg(size = 512, s = state) {
+  const shape = SHAPES.find(x => x.id === s.shape) || SHAPES[0];
+  const expr  = EXPRESSIONS[s.expression] || EXPRESSIONS.idle;
+  const head  = headColorFor(s);
+  const eye   = eyeColor();
+  const thinking = s.expression === 'thinking';
+  let eyesHtml = '';
+  expr.e.forEach((d, i) => {
+    const ox = i === 0 ? 40.62 : 58.94;
+    const oy = i === 0 ? 48.6 : 47.61;
+    let scaleX = s.eyeSize / 100;
+    let scaleY = s.eyeSize / 100;
+    let offsetX = (i === 0 ? -s.eyeSeparation : s.eyeSeparation) + s.gazeX;
+    let offsetY = s.gazeY;
+    if (thinking) {
+      if (i === 0) { scaleX *= 1.15; scaleY *= 0.62; offsetX += 0.4; offsetY += 4.2; }
+      else         { scaleX *= 1.02; scaleY *= 1.06; offsetY += -4.2; }
+    }
+    const t = `translate(${offsetX.toFixed(3)} ${offsetY.toFixed(3)}) translate(${ox} ${oy}) scale(${scaleX.toFixed(4)} ${scaleY.toFixed(4)}) translate(${-ox} ${-oy})`;
+    eyesHtml += `<g transform="${t}"><path d="${d}"/></g>`;
+  });
+  const bs = s.bodySize / 100;
+  const px = s.bodyProportion / 100;
+  const py = 1 / px;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="${size}" height="${size}">
+  <g transform="${expr.g}">
+    <g transform="translate(50 50) scale(${(bs * px).toFixed(4)} ${(bs * py).toFixed(4)}) rotate(${s.bodyTilt}) translate(-50 -50)">
+      <g fill="${head}">${shape.body}</g>
+      <g fill="${eye}">${eyesHtml}</g>
+    </g>
+  </g>
+</svg>`;
+}
+
 function buildJsx() {
   const hex = currentHex();
   const h = state.autoHue ? autoHueFromName(state.name) : state.hue;
@@ -1011,13 +1850,9 @@ function buildJsx() {
   return lines.join('\n');
 }
 
-/* =========================================================
-   Standalone HTML
-   ========================================================= */
 function buildStandaloneHtml() {
   const svg = buildSvg({ phasesKey: 'export', className: 'hero-broot', thinking: state.expression === 'thinking' });
   const svgOut = svg.replace('<svg ', '<svg width="96" height="96" ');
-
   return `<!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -1026,47 +1861,9 @@ function buildStandaloneHtml() {
 <meta name="color-scheme" content="dark">
 <title>Broot — ${escapeXml(state.name)}</title>
 <style>
-:root{--color-ground:#0a0a0b;--color-raised:#131315;--color-ink:#fafaf8;--color-muted:#8a8a93;--color-line:#232327;color-scheme:dark}
-html,body{margin:0;padding:0;width:100%;background:var(--color-ground);color:var(--color-ink);font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;text-align:center}
-body{display:flex;align-items:center;justify-content:center;flex-direction:column}
-@property --mo-amp{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-esx{syntax:"<number>";inherits:true;initial-value:1}
-@property --mo-esy{syntax:"<number>";inherits:true;initial-value:1}
-@property --mo-tilt{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-edy{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-edx{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-esx2{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-esy2{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-tilt2{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-edy2{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-lock{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-shake{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-rock{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-rockp{syntax:"<number>";inherits:true;initial-value:1}
-@property --mo-bdy{syntax:"<number>";inherits:true;initial-value:0}
-@property --mo-track-hold{syntax:"<number>";inherits:true;initial-value:0}
-.mo-root,.mo-breathe,.mo-bob{transform-box:view-box;transform-origin:center}
-.mo-root{--mo-amp:0;transition-property:--mo-amp,transform;animation:mo-shake calc(.112s*var(--mo-rate,1))linear infinite}
-.mo-body{fill:var(--mo-head)}.mo-eyes{fill:var(--mo-eye)}
-@keyframes mo-shake{0%,to{translate:calc(.62px*var(--mo-shake))calc(-.34px*var(--mo-shake))}25%{translate:calc(-.7px*var(--mo-shake))calc(.22px*var(--mo-shake))}50%{translate:calc(.38px*var(--mo-shake))calc(.66px*var(--mo-shake))}75%{translate:calc(-.44px*var(--mo-shake))calc(-.6px*var(--mo-shake))}}
-.mo-root.mo-expr{--mo-morph:calc(.3s*var(--mo-rate,1))}
-.mo-root.mo-always{--mo-amp:1}
-.mo-breathe{animation:mo-breathe calc(2.8s*var(--mo-rate,1)) calc(var(--mo-phase,0s)*var(--mo-rate,1)) infinite alternate ease-in-out}
-@keyframes mo-breathe{to{transform:scaleX(calc(1 + .022*var(--mo-amp)))scaleY(calc(1 - .018*var(--mo-amp)))}}
-.mo-bob{translate:0 calc(var(--mo-bdy)*1px);animation:mo-bob calc(3.4s*var(--mo-rate,1)) calc(var(--mo-bob-phase,0s)*var(--mo-rate,1)) infinite alternate ease-in-out}
-@keyframes mo-bob{0%{transform:translateY(0)}to{transform:translateY(calc(-1.1px*var(--mo-amp)))}}
-.mo-eye{transform-box:view-box;--mo-sel:calc((var(--mo-wrap,1) + 1)/2);--mo-x:calc(var(--mo-esx) + var(--mo-esx2)*var(--mo-sel));--mo-y:calc(var(--mo-esy) + var(--mo-esy2)*var(--mo-sel));--mo-t:calc(var(--mo-tilt) + var(--mo-tilt2)*var(--mo-sel));--mo-ph:calc(var(--mo-sel)*(1 - var(--mo-rock)) + var(--mo-rock)*((1 + var(--mo-wrap,1)*var(--mo-rockp))/2));translate:calc(var(--mo-edx)*var(--mo-wrap,1)*1px)calc((var(--mo-edy) + var(--mo-edy2)*var(--mo-ph))*1px);rotate:calc((var(--mo-t)*var(--mo-wrap,1) - var(--mo-lean,0)*var(--mo-lock))*1deg);transform:rotate(calc(var(--mo-lean,0)*1deg))scaleX(var(--mo-x))scaleY(var(--mo-y))rotate(calc(var(--mo-lean,0)*-1deg));animation-name:mo-rock;animation-duration:calc(.9s*var(--mo-rate,1));animation-iteration-count:infinite;animation-timing-function:ease-in-out}
-@container style(--mo-rock:0){.mo-eye{animation-name:none}}
-@keyframes mo-rock{0%,to{--mo-rockp:1}50%{--mo-rockp:-1}}
-.mo-eye>*{transform-box:fill-box;transform-origin:center;animation-name:mo-blink,mo-wrap;animation-duration:calc(var(--mo-blink,4.8s)*var(--mo-rate,1)),calc(var(--mo-saccade,5.6s)*var(--mo-rate,1));animation-delay:calc(var(--mo-blink-phase,0s)*var(--mo-rate,1)),calc(var(--mo-saccade-phase,0s)*var(--mo-rate,1));animation-iteration-count:infinite;animation-timing-function:linear}
-@keyframes mo-blink{0%,97.2%{transform:rotate(calc(var(--mo-lean,0)*1deg))scaleY(1)rotate(calc(var(--mo-lean,0)*-1deg));animation-timing-function:ease-in}98.6%{transform:rotate(calc(var(--mo-lean,0)*1deg))scaleY(calc(1 - .92*var(--mo-amp)))rotate(calc(var(--mo-lean,0)*-1deg));animation-timing-function:ease-out}to{transform:rotate(calc(var(--mo-lean,0)*1deg))scaleY(1)rotate(calc(var(--mo-lean,0)*-1deg))}}
-.mo-eyes{animation:mo-saccade calc(var(--mo-saccade,5.6s)*var(--mo-rate,1)) calc(var(--mo-saccade-phase,0s)*var(--mo-rate,1)) infinite linear}
-@keyframes mo-saccade{0%,15%{translate:0}16.5%,31%{translate:calc(-.8px*var(--mo-look-x,1.4)*var(--mo-amp))calc(-.9px*var(--mo-look-y,1.1)*var(--mo-amp))}32.5%,47%{translate:calc(1px*var(--mo-look-x,1.4)*var(--mo-amp))calc(.1px*var(--mo-look-y,1.1)*var(--mo-amp))}48.5%,63%{translate:calc(-.15px*var(--mo-look-x,1.4)*var(--mo-amp))calc(.85px*var(--mo-look-y,1.1)*var(--mo-amp))}64.5%,79%{translate:calc(.75px*var(--mo-look-x,1.4)*var(--mo-amp))calc(-.8px*var(--mo-look-y,1.1)*var(--mo-amp))}80.5%,98.5%{translate:calc(-1px*var(--mo-look-x,1.4)*var(--mo-amp))calc(-.15px*var(--mo-look-y,1.1)*var(--mo-amp))}to{translate:0}}
-@keyframes mo-wrap{0%,15%{scale:1;rotate:none}16.5%,31%{scale:calc(1 - .0176*var(--mo-look-mx,1.4)*var(--mo-amp) + .008*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .027*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(.648deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}32.5%,47%{scale:calc(1 - .022*var(--mo-look-mx,1.4)*var(--mo-amp) - .01*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .003*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(.09deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}48.5%,63%{scale:calc(1 - .0033*var(--mo-look-mx,1.4)*var(--mo-amp) + .0015*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .0255*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(-.115deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}64.5%,79%{scale:calc(1 - .0165*var(--mo-look-mx,1.4)*var(--mo-amp) - .0075*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .024*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(-.54deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}80.5%,98.5%{scale:calc(1 - .022*var(--mo-look-mx,1.4)*var(--mo-amp) + .01*var(--mo-look-x,1.4)*var(--mo-wrap,1)*var(--mo-amp))calc(1 - .0045*var(--mo-look-my,1.1)*var(--mo-amp));rotate:calc(.135deg*var(--mo-look-x,1.4)*var(--mo-look-y,1.1)*var(--mo-wrap,1)*var(--mo-amp))}to{scale:1;rotate:none}}
-@media (prefers-reduced-motion:reduce){.mo-root,.mo-breathe,.mo-bob,.mo-eyes,.mo-eye,.mo-eye>*{animation:none;transition:none}}
-.mo-root .mo-eye{--mo-gz-dx:calc(var(--mo-gz-dx1,0) + (var(--mo-gz-dx2,0) - var(--mo-gz-dx1,0))*var(--mo-sel));--mo-gz-dy:calc(var(--mo-gz-dy1,0) + (var(--mo-gz-dy2,0) - var(--mo-gz-dy1,0))*var(--mo-sel));--mo-gz-sx:calc(var(--mo-gz-sx1,1) + (var(--mo-gz-sx2,1) - var(--mo-gz-sx1,1))*var(--mo-sel));--mo-gz-sy:calc(var(--mo-gz-sy1,1) + (var(--mo-gz-sy2,1) - var(--mo-gz-sy1,1))*var(--mo-sel));--mo-gz-t:calc(var(--mo-gz-t1,0) + (var(--mo-gz-t2,0) - var(--mo-gz-t1,0))*var(--mo-sel));translate:calc((var(--mo-edx)*var(--mo-wrap,1) + var(--mo-gz-dx))*1px)calc((var(--mo-edy) + var(--mo-edy2)*var(--mo-ph) + var(--mo-gz-dy))*1px);rotate:calc((var(--mo-t)*var(--mo-wrap,1) - var(--mo-lean,0)*var(--mo-lock) + var(--mo-gz-t))*1deg);transform:rotate(calc(var(--mo-lean,0)*1deg))scaleX(calc(var(--mo-x)*var(--mo-gz-sx)))scaleY(calc(var(--mo-y)*var(--mo-gz-sy)))rotate(calc(var(--mo-lean,0)*-1deg))}
-svg:has(>.mo-root){--mo-look-seed-x:var(--mo-look-x,1.4);--mo-look-seed-y:var(--mo-look-y,1.1);--mo-look-seed-mx:var(--mo-look-mx,1.4);--mo-look-seed-my:var(--mo-look-my,1.1)}
-.mo-root{--mo-look-x:calc(var(--mo-look-seed-x,1.4)*(1 - var(--mo-track-hold)));--mo-look-y:calc(var(--mo-look-seed-y,1.1)*(1 - var(--mo-track-hold)));--mo-look-mx:calc(var(--mo-look-seed-mx,1.4)*(1 - var(--mo-track-hold)));--mo-look-my:calc(var(--mo-look-seed-my,1.1)*(1 - var(--mo-track-hold)))}
+${CSS_BASE}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 24px;text-align:center}
+${CSS_ENGINE}
 .broot-btn{border:0;padding:0;margin:0 auto;background:none;box-shadow:none;outline:none;cursor:pointer;line-height:0;display:inline-flex;align-items:center;justify-content:center}
 .broot-btn .hero-broot{display:block;margin:0 auto;width:96px;height:96px}
 </style>
@@ -1076,104 +1873,387 @@ svg:has(>.mo-root){--mo-look-seed-x:var(--mo-look-x,1.4);--mo-look-seed-y:var(--
   ${svgOut}
 </button>
 <script>
-document.querySelectorAll('.hero-broot').forEach(function(svg){
-  var root=svg.querySelector('.mo-root');var eyes=svg.querySelector('.mo-eyes');if(!root||!eyes)return;
-  root.style.setProperty('--mo-track-hold',0);
-  window.addEventListener('pointermove',function(e){
-    var r=svg.getBoundingClientRect();
-    var inside=e.clientX>=r.left&&e.clientX<=r.right&&e.clientY>=r.top&&e.clientY<=r.bottom;
-    if(!inside){root.style.setProperty('--mo-track-hold',0);return;}
-    root.style.setProperty('--mo-track-hold',1);
-    var nx=((e.clientX-r.left)/r.width)*2-1;var ny=((e.clientY-r.top)/r.height)*2-1;
-    eyes.style.setProperty('--mo-gz-dx1',(nx*4).toFixed(3));
-    eyes.style.setProperty('--mo-gz-dy1',(ny*3).toFixed(3));
-    eyes.style.setProperty('--mo-gz-dx2',(nx*3).toFixed(3));
-    eyes.style.setProperty('--mo-gz-dy2',(ny*2.5).toFixed(3));
-  });
-  window.addEventListener('blur',function(){root.style.setProperty('--mo-track-hold',0);});
-});
+${TRACKING_SCRIPT}
 <\/script>
 </body>
 </html>`;
 }
 
-/* =========================================================
-   Режим кода
-   ========================================================= */
-let codeMode = 'jsx';
+function componentFragment(key) {
+  const markup = COMPONENT_MARKUP[key] || '';
+  const wrap = COMPONENT_WRAP[key];
+  return wrap ? wrap(markup) : markup;
+}
+function buildComponentStandalone(key) {
+  const meta = COMPONENT_META[key];
+  const markup = componentFragment(key);
+  const script = TRACKING_SCRIPT + (meta.script ? '\n' + meta.script : '');
+  return `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<title>Broot — ${escapeXml(meta.title)}</title>
+<style>
+${CSS_BASE}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 24px}
+${CSS_ENGINE}
+${meta.css}
+</style>
+</head>
+<body>
+${markup}
+<script>
+${script}
+<\/script>
+</body>
+</html>`;
+}
+function componentCode(key) {
+  return codePanels[key].mode === 'standalone' ? buildComponentStandalone(key) : componentFragment(key);
+}
+function ensureComponentCodeSlots() {
+  Object.keys(COMPONENT_META).forEach(key => {
+    const slot = document.querySelector(`.component-code-slot[data-comp="${key}"]`);
+    if (!slot || slot.dataset.ready === '1') return;
+    slot.dataset.ready = '1';
+    slot.innerHTML = `
+      <button type="button" class="component-code-toggle" data-toggle="${key}" aria-expanded="false">код html</button>
+      <div class="component-code" data-panel="${key}" hidden>
+        <div class="component-code-head">
+          <div class="code-tabs" role="group" aria-label="Формат вывода">
+            <button type="button" class="code-tab" data-cmode="html" aria-pressed="true">фрагмент</button>
+            <button type="button" class="code-tab" data-cmode="standalone" aria-pressed="false">страница</button>
+          </div>
+          <button type="button" class="copy-btn-inline" data-ccopy="${key}">Копировать</button>
+        </div>
+        <pre><code></code></pre>
+      </div>`;
+  });
+}
+function updateComponentCodeSlots() {
+  Object.keys(COMPONENT_META).forEach(key => {
+    const st = codePanels[key];
+    const slot = document.querySelector(`.component-code-slot[data-comp="${key}"]`);
+    if (!slot) return;
+    const toggle = slot.querySelector('.component-code-toggle');
+    const panel  = slot.querySelector('.component-code');
+    const code   = slot.querySelector('code');
+    if (!toggle || !panel || !code) return;
+    toggle.setAttribute('aria-expanded', String(st.open));
+    toggle.textContent = st.open ? 'скрыть код' : 'код html';
+    panel.hidden = !st.open;
+    slot.querySelectorAll('.code-tab').forEach(t => t.setAttribute('aria-pressed', String(t.dataset.cmode === st.mode)));
+    if (st.open) code.textContent = componentCode(key);
+  });
+}
 
 /* =========================================================
-   Рендер — редактор
+   ТЕМА
    ========================================================= */
+const themeState = {
+  preset: 'github-dark',
+  gradient: 'none',
+  colors: { ground:'#0a0a0b', raised:'#131315', ink:'#fafaf8', muted:'#8a8a93', line:'#232327' },
+};
+function applyTheme() {
+  const r = document.documentElement;
+  r.style.setProperty('--color-ground', themeState.colors.ground);
+  r.style.setProperty('--color-raised', themeState.colors.raised);
+  r.style.setProperty('--color-ink', themeState.colors.ink);
+  r.style.setProperty('--color-muted', themeState.colors.muted);
+  r.style.setProperty('--color-line', themeState.colors.line);
+  const g = GRADIENTS[themeState.gradient];
+  if (g && g.value) {
+    document.body.classList.add('has-gradient');
+    document.body.style.setProperty('--app-gradient', g.value);
+  } else {
+    document.body.classList.remove('has-gradient');
+    document.body.style.removeProperty('--app-gradient');
+  }
+  try { localStorage.setItem('broot_theme', JSON.stringify(themeState)); } catch(e) {}
+}
+function setThemePreset(id) {
+  const t = THEMES[id];
+  if (!t) return;
+  themeState.preset = id;
+  themeState.colors = { ground:t.ground, raised:t.raised, ink:t.ink, muted:t.muted, line:t.line };
+  applyTheme();
+  renderThemeStudio();
+}
+function renderThemeStudio() {
+  const presetGrid = document.getElementById('theme-presets');
+  presetGrid.innerHTML = Object.keys(THEMES).map(id => {
+    const t = THEMES[id];
+    const pressed = themeState.preset === id;
+    return `
+      <button type="button" class="theme-swatch" data-theme="${id}" aria-pressed="${pressed}">
+        <div class="theme-preview" style="background:${t.ground};border-color:${t.line};">
+          <span class="tp-dot" style="background:${t.ink}"></span>
+          <span class="tp-bar" style="background:${t.raised};border:1px solid ${t.line};"></span>
+        </div>
+        <span class="label">${escapeHtml(t.label)}</span>
+      </button>`;
+  }).join('');
+  presetGrid.querySelectorAll('.theme-swatch').forEach(btn => {
+    btn.addEventListener('click', () => setThemePreset(btn.dataset.theme));
+  });
+
+  const pickers = document.getElementById('theme-pickers');
+  const defs = [['ground', 'фон'], ['raised', 'панель'], ['ink', 'текст'], ['muted', 'приглушённый'], ['line', 'линия']];
+  pickers.innerHTML = defs.map(([k, label]) => `
+    <label class="theme-picker">
+      <input type="color" data-tcolor="${k}" value="${themeState.colors[k]}">
+      <span>${label}</span>
+    </label>`).join('');
+  pickers.querySelectorAll('input[type=color]').forEach(inp => {
+    inp.addEventListener('input', () => {
+      themeState.colors[inp.dataset.tcolor] = inp.value;
+      applyTheme();
+    });
+  });
+
+  const gWrap = document.getElementById('gradient-swatches');
+  gWrap.innerHTML = Object.keys(GRADIENTS).map(id => {
+    const g = GRADIENTS[id];
+    const bg = g.value || themeState.colors.ground;
+    return `<button type="button" class="gradient-swatch" data-grad="${id}" aria-pressed="${themeState.gradient === id}" style="background: ${bg};" title="${g.label}" aria-label="${g.label}"></button>`;
+  }).join('');
+  gWrap.querySelectorAll('.gradient-swatch').forEach(btn => {
+    btn.addEventListener('click', () => {
+      themeState.gradient = btn.dataset.grad;
+      applyTheme();
+      renderThemeStudio();
+    });
+  });
+}
+
+/* =========================================================
+   ВКЛАДКИ
+   ========================================================= */
+function selectTab(name) {
+  document.querySelectorAll('.nav-group').forEach(g => {
+    const open = g.dataset.tab === name;
+    g.classList.toggle('is-open', open);
+    const head = g.querySelector('.nav-head');
+    if (head) head.setAttribute('aria-expanded', String(open));
+  });
+  document.querySelectorAll('.tab-pane').forEach(p => {
+    p.classList.toggle('is-active', p.dataset.pane === name);
+  });
+  if (name === 'team') loadDiscussion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function wireTabs() {
+  document.querySelectorAll('.nav-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const group = head.closest('.nav-group');
+      selectTab(group.dataset.tab);
+    });
+  });
+}
+let discussionLoaded = false;
+function loadDiscussion() {
+  if (discussionLoaded) return;
+  discussionLoaded = true;
+  const slot = document.getElementById('discussion-slot');
+  if (!slot) return;
+  slot.innerHTML = '';
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://telegram.org/js/telegram-widget.js?24';
+  script.setAttribute('data-telegram-discussion', 'brootAI/66');
+  script.setAttribute('data-comments-limit', '50');
+  script.setAttribute('data-colorful', '1');
+  script.setAttribute('data-color', 'F646A4');
+  slot.appendChild(script);
+}
+
+/* =========================================================
+   САЙДБАР
+   ========================================================= */
+function presetPreviewSvg(preset) {
+  return buildSvg({
+    phasesKey: 'preset-' + preset.id,
+    className: 'preset-svg',
+    thinking: preset.state.expression === 'thinking',
+  }, preset.state);
+}
+function renderSidebar() {
+  const list = document.getElementById('preset-list');
+  const count = document.getElementById('preset-count');
+  count.textContent = String(presets.length);
+  if (!presets.length) {
+    list.innerHTML = `<div class="sidebar-empty">Пока пусто.<br>Нажмите «Save preset».</div>`;
+    return;
+  }
+  list.innerHTML = presets.map(p => {
+    const hex = headColorFor(p.state);
+    const isActive = p.id === activePresetId;
+    return `
+      <div class="preset-item${isActive ? ' is-active' : ''}" data-id="${p.id}" role="listitem" tabindex="0" aria-label="Пресет ${escapeHtml(p.name)}">
+        <div class="preset-tile" style="background: linear-gradient(135deg, ${hex}44 0%, ${hex}18 50%, transparent 100%);">
+          ${presetPreviewSvg(p)}
+        </div>
+        <div class="preset-meta">
+          <span class="preset-name">${escapeHtml(p.name)}</span>
+          <span class="preset-sub">${escapeHtml(p.state.shape)} · ${escapeHtml(EXPRESSIONS[p.state.expression] ? EXPRESSIONS[p.state.expression].label : p.state.expression)}</span>
+        </div>
+        <div class="preset-actions">
+          <button type="button" class="preset-action" data-act="duplicate" data-id="${p.id}" title="Дублировать" aria-label="Дублировать">⧉</button>
+          <button type="button" class="preset-action" data-act="rename"    data-id="${p.id}" title="Переименовать" aria-label="Переименовать">✎</button>
+          <button type="button" class="preset-action danger" data-act="delete" data-id="${p.id}" title="Удалить" aria-label="Удалить">✕</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+function loadPreset(preset) {
+  Object.assign(state, stateSnapshot(preset.state));
+  activePresetId = preset.id;
+  renderAll();
+  renderSidebar();
+}
+function handleSidebarClick(e) {
+  const actionBtn = e.target.closest('.preset-action');
+  if (actionBtn) {
+    e.stopPropagation();
+    const id = actionBtn.dataset.id;
+    const act = actionBtn.dataset.act;
+    const preset = findPreset(id);
+    if (!preset) return;
+    if (act === 'duplicate') {
+      presets.push({ id: 'p' + (presetSeq++), name: preset.name + ' copy', state: stateSnapshot(preset.state) });
+      renderSidebar();
+    } else if (act === 'rename') {
+      const next = prompt('Новое имя пресета:', preset.name);
+      if (next && next.trim()) {
+        preset.name = next.trim();
+        preset.state.name = preset.name;
+        if (preset.id === activePresetId) state.name = preset.name;
+        renderSidebar();
+        if (preset.id === activePresetId) { renderEditor(); renderPngPanel(); }
+      }
+    } else if (act === 'delete') {
+      if (!confirm(`Удалить пресет «${preset.name}»?`)) return;
+      presets = presets.filter(p => p.id !== id);
+      if (activePresetId === id) activePresetId = presets[0] ? presets[0].id : null;
+      renderSidebar();
+    }
+    return;
+  }
+  const item = e.target.closest('.preset-item');
+  if (item) {
+    const preset = findPreset(item.dataset.id);
+    if (preset) loadPreset(preset);
+  }
+}
+function handleSidebarKey(e) {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const item = e.target.closest('.preset-item');
+  if (!item) return;
+  e.preventDefault();
+  const preset = findPreset(item.dataset.id);
+  if (preset) loadPreset(preset);
+}
+function savePreset() {
+  const suggested = (state.name && state.name.trim()) || 'broot';
+  const name = prompt('Имя нового пресета:', suggested);
+  if (name === null) return;
+  const trimmed = name.trim() || suggested;
+  const newPreset = {
+    id: 'p' + (presetSeq++),
+    name: trimmed,
+    state: Object.assign(stateSnapshot(state), { name: trimmed }),
+  };
+  presets.push(newPreset);
+  activePresetId = newPreset.id;
+  renderSidebar();
+}
+
+/* =========================================================
+   PNG
+   ========================================================= */
+let pngSize = 512;
+let pngDataUrl = '';
+function renderPngPanel() {
+  document.getElementById('png-stage').innerHTML = buildExportSvg(512, state);
+  refreshPngDataUrl();
+}
+function refreshPngDataUrl() {
+  const svgStr = buildExportSvg(pngSize, state);
+  const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(svgBlob);
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = pngSize; canvas.height = pngSize;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, pngSize, pngSize);
+    ctx.drawImage(img, 0, 0, pngSize, pngSize);
+    URL.revokeObjectURL(url);
+    pngDataUrl = canvas.toDataURL('image/png');
+  };
+  img.onerror = () => { URL.revokeObjectURL(url); };
+  img.src = url;
+}
+function downloadPng() {
+  if (!pngDataUrl) { refreshPngDataUrl(); setTimeout(downloadPng, 120); return; }
+  const a = document.createElement('a');
+  a.href = pngDataUrl;
+  a.download = `broot-${(state.name || 'avatar').replace(/\s+/g, '-').toLowerCase()}-${pngSize}.png`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+function wirePngPanel() {
+  document.querySelectorAll('.png-size-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      pngSize = parseInt(btn.dataset.size, 10);
+      document.querySelectorAll('.png-size-btn').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      refreshPngDataUrl();
+    });
+  });
+  document.getElementById('png-download-btn').addEventListener('click', downloadPng);
+  document.getElementById('png-copy-btn').addEventListener('click', (e) => {
+    if (!pngDataUrl) { refreshPngDataUrl(); setTimeout(() => copyText(pngDataUrl, e.target), 120); return; }
+    copyText(pngDataUrl, e.target);
+  });
+}
+
+let codeMode = 'jsx';
 function renderEditor() {
-  const slot = document.getElementById('editor-blob-slot');
-  slot.innerHTML = buildSvg({ phasesKey: 'editor', className: 'editor-blob', thinking: state.expression === 'thinking' });
-  renderCode();
-  syncColorPicker();
+  document.getElementById('editor-blob-slot').innerHTML = buildSvg({ phasesKey: 'editor', className: 'editor-blob', thinking: state.expression === 'thinking' });
+  renderCode(); syncColorPicker();
 }
 function renderCode() {
-  const out = document.getElementById('code-output');
-  out.textContent = codeMode === 'jsx' ? buildJsx() : buildStandaloneHtml();
+  document.getElementById('code-output').textContent = codeMode === 'jsx' ? buildJsx() : buildStandaloneHtml();
 }
 function syncColorPicker() {
   const picker = document.getElementById('color-picker');
   const label  = document.getElementById('color-picker-value');
   const hex = currentHex();
-  picker.value = hex;
-  label.textContent = hex;
+  picker.value = hex; label.textContent = hex;
 }
-
-/* =========================================================
-   Рендер — состояния
-   ========================================================= */
 function renderStates() {
   const grid = document.getElementById('states-grid');
   grid.innerHTML = '';
   STATES.forEach(s => {
-    const card = document.createElement('div');
-    card.className = 'state-card';
-
-    const avatar = document.createElement('div');
-    avatar.className = 'avatar';
-    avatar.setAttribute('role', 'img');
-    avatar.setAttribute('aria-label', s.label);
+    const card = document.createElement('div'); card.className = 'state-card';
+    const avatar = document.createElement('div'); avatar.className = 'avatar';
+    avatar.setAttribute('role', 'img'); avatar.setAttribute('aria-label', s.label);
     avatar.innerHTML = buildSvg({ expressionId: s.expr, phasesKey: 'state-' + s.key, thinking: !!s.thinking });
-
-    if (s.status) {
-      const dot = document.createElement('span');
-      dot.className = 'status ' + s.status;
-      dot.setAttribute('aria-hidden', 'true');
-      avatar.appendChild(dot);
-    }
-    if (s.unread) {
-      const b = document.createElement('span');
-      b.className = 'unread'; b.setAttribute('aria-hidden', 'true'); b.textContent = s.unread;
-      avatar.appendChild(b);
-    }
-    if (s.typing) {
-      const d = document.createElement('span');
-      d.className = 'typing-dots'; d.setAttribute('aria-hidden', 'true');
-      d.innerHTML = '<i class="typing-dot"></i><i class="typing-dot"></i><i class="typing-dot"></i>';
-      avatar.appendChild(d);
-    }
-
-    const label = document.createElement('span');
-    label.className = 'label'; label.textContent = s.label;
-    card.appendChild(avatar); card.appendChild(label);
-    grid.appendChild(card);
+    if (s.status) { const d = document.createElement('span'); d.className = 'status ' + s.status; d.setAttribute('aria-hidden','true'); avatar.appendChild(d); }
+    if (s.unread) { const b = document.createElement('span'); b.className = 'unread'; b.setAttribute('aria-hidden','true'); b.textContent = s.unread; avatar.appendChild(b); }
+    if (s.typing) { const d = document.createElement('span'); d.className = 'typing-dots'; d.setAttribute('aria-hidden','true'); d.innerHTML = '<i class="typing-dot"></i><i class="typing-dot"></i><i class="typing-dot"></i>'; avatar.appendChild(d); }
+    const label = document.createElement('span'); label.className = 'label'; label.textContent = s.label;
+    card.appendChild(avatar); card.appendChild(label); grid.appendChild(card);
   });
 }
-
-/* =========================================================
-   Рендер — выражения
-   ========================================================= */
 function renderExpressions() {
   const grid = document.getElementById('expressions-grid');
   grid.innerHTML = '';
   Object.keys(EXPRESSIONS).forEach(name => {
     const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'expr-btn';
+    btn.type = 'button'; btn.className = 'expr-btn';
     btn.setAttribute('aria-pressed', name === state.expression ? 'true' : 'false');
     btn.setAttribute('aria-label', EXPRESSIONS[name].label);
     btn.dataset.expr = name;
@@ -1184,15 +2264,11 @@ function renderExpressions() {
       renderEditor(); renderStates();
       grid.querySelectorAll('.expr-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.expr === name ? 'true' : 'false'));
       document.querySelectorAll('#expr-grid .shape-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.expr === name ? 'true' : 'false'));
-      renderComponents();
+      renderComponents(); updateComponentCodeSlots(); renderPngPanel();
     });
     grid.appendChild(btn);
   });
 }
-
-/* =========================================================
-   Рендер — палитра оттенков
-   ========================================================= */
 function renderHuePicker() {
   const row = document.getElementById('hue-row');
   row.innerHTML = '';
@@ -1209,8 +2285,7 @@ function renderHuePicker() {
       state.customHex = null;
       if (h.hue === null) state.autoHue = true;
       else {
-        state.autoHue = false;
-        state.hue = h.hue;
+        state.autoHue = false; state.hue = h.hue;
         if (state.saturation === 0) { state.saturation = TONES.mid.s; state.lightness = TONES.mid.l; state.tone = 'mid'; }
       }
       renderAll();
@@ -1218,18 +2293,12 @@ function renderHuePicker() {
     row.appendChild(btn);
   });
 }
-
-/* =========================================================
-   Рендер — выбор формы
-   ========================================================= */
 function renderShapePicker() {
   const grid = document.getElementById('shape-grid');
   grid.innerHTML = '';
   SHAPES.forEach(s => {
     const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'shape-btn';
-    btn.dataset.shape = s.id;
+    btn.type = 'button'; btn.className = 'shape-btn'; btn.dataset.shape = s.id;
     btn.setAttribute('aria-pressed', s.id === state.shape ? 'true' : 'false');
     btn.setAttribute('aria-label', 'форма ' + s.label);
     btn.innerHTML = `<svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:${headColor()}">${s.body}</g></svg><span class="label">${s.label}</span>`;
@@ -1241,18 +2310,12 @@ function renderShapePicker() {
     grid.appendChild(btn);
   });
 }
-
-/* =========================================================
-   Рендер — выбор выражения (редактор)
-   ========================================================= */
 function renderExprPicker() {
   const grid = document.getElementById('expr-grid');
   grid.innerHTML = '';
   Object.keys(EXPRESSIONS).forEach(name => {
     const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'shape-btn';
-    btn.dataset.expr = name;
+    btn.type = 'button'; btn.className = 'shape-btn'; btn.dataset.expr = name;
     btn.setAttribute('aria-pressed', name === state.expression ? 'true' : 'false');
     btn.setAttribute('aria-label', 'выражение ' + EXPRESSIONS[name].label);
     const mini = buildSvg({ expressionId: name, phasesKey: 'picker-' + name, thinking: name === 'thinking', useTransforms: false });
@@ -1262,49 +2325,41 @@ function renderExprPicker() {
       grid.querySelectorAll('.shape-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.expr === name ? 'true' : 'false'));
       renderEditor();
       document.querySelectorAll('#expressions-grid .expr-btn').forEach(b => b.setAttribute('aria-pressed', b.dataset.expr === name ? 'true' : 'false'));
-      renderComponents();
+      renderComponents(); updateComponentCodeSlots(); renderPngPanel();
     });
     grid.appendChild(btn);
   });
 }
 
-/* =========================================================
-   КОМПОНЕНТЫ
-   ========================================================= */
-
-/* --- Аватар присутствия --- */
+let selectedPresenceId = null;
 function renderPresence() {
   const slot = document.getElementById('presence-row');
-  const items = [
-    { id:'online',   label:'в сети',                    dot:'online',  unread:null,   typing:false, thinking:false },
-    { id:'online3',  label:'в сети, 3 непрочитанных',   dot:'online',  unread:'3',    typing:false, thinking:false },
-    { id:'thinking', label:'размышляет',                dot:null,      unread:null,   typing:true,  thinking:true  },
-    { id:'away',     label:'отошёл',                    dot:'away',    unread:null,   typing:false, thinking:false },
-    { id:'offline',  label:'не в сети, 128 непрочитанных', dot:'offline', unread:'99+', typing:false, thinking:false },
-  ];
-
-  slot.innerHTML = items.map(it => {
-    const svg = buildSvg({
-      phasesKey: 'presence-' + it.id,
-      thinking: it.thinking,
-      expressionId: it.thinking ? 'thinking' : state.expression,
-    });
+  const html = PRESENCE_ITEMS.map(it => {
+    const svg = buildSvg({ phasesKey: 'presence-' + it.id, thinking: it.thinking, expressionId: it.thinking ? 'thinking' : it.expr });
     const badge = it.dot ? `<span class="status ${it.dot}"></span>` : '';
     const unread = it.unread ? `<span class="unread">${it.unread}</span>` : '';
-    const dots = it.typing
-      ? `<span class="typing-dots"><i class="typing-dot"></i><i class="typing-dot"></i><i class="typing-dot"></i></span>`
-      : '';
+    const dots = it.typing ? `<span class="typing-dots"><i class="typing-dot"></i><i class="typing-dot"></i><i class="typing-dot"></i></span>` : '';
+    const selected = selectedPresenceId === it.id ? ' is-selected' : '';
     return `
-      <div class="presence-item">
-        <div class="avatar-wrap" role="img" aria-label="${it.label}">
-          ${svg}${badge}${unread}${dots}
-        </div>
+      <div class="presence-item${selected}" data-presence="${it.id}" role="button" tabindex="0" aria-pressed="${selected ? 'true' : 'false'}" aria-label="Выбрать: ${it.label}">
+        <div class="avatar-wrap" role="img" aria-label="${it.label}">${svg}${badge}${unread}${dots}</div>
         <span class="label">${it.label}</span>
       </div>`;
   }).join('');
+  COMPONENT_MARKUP.presence = html.replace(/ is-selected/g, '').replace(/ aria-pressed="[^"]*"/g, '').replace(/ role="button" tabindex="0"/g, '');
+  slot.innerHTML = html;
+  slot.querySelectorAll('.presence-item').forEach(item => {
+    item.addEventListener('click', () => selectPresence(item.dataset.presence));
+    item.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectPresence(item.dataset.presence); } });
+  });
 }
-
-/* --- Список агентов --- */
+function selectPresence(id) {
+  const item = PRESENCE_ITEMS.find(p => p.id === id);
+  if (!item) return;
+  selectedPresenceId = (selectedPresenceId === id) ? null : id;
+  if (selectedPresenceId) state.expression = item.thinking ? 'thinking' : item.expr;
+  renderPresence(); renderEditor(); renderExpressions(); renderExprPicker(); renderPngPanel();
+}
 function renderAgentList() {
   const slot = document.getElementById('agent-list-slot');
   const agents = [
@@ -1314,34 +2369,15 @@ function renderAgentList() {
     { id:'packager',  name:'packager',  sub:'запуск 6м назад',   time:'',    dot:'away',    thinking:false },
     { id:'publisher', name:'publisher', sub:'не запущен',        time:'',    dot:'offline', thinking:false },
   ];
-
   const items = agents.map((a, i) => {
-    const svg = buildSvg({
-      phasesKey: 'agent-' + a.id,
-      thinking: a.thinking,
-      expressionId: a.thinking ? 'thinking' : state.expression,
-    });
+    const svg = buildSvg({ phasesKey: 'agent-' + a.id, thinking: a.thinking, expressionId: a.thinking ? 'thinking' : state.expression });
     const dot = a.dot ? `<span class="status ${a.dot}"></span>` : '';
     const active = i === 1 ? ' is-active' : '';
-    return `
-      <li><div class="agent-item${active}">
-        <div class="avatar-wrap" role="img" aria-label="${a.name}">
-          ${svg}${dot}
-        </div>
-        <div class="agent-meta">
-          <span class="name">${a.name}</span>
-          <span class="sub">${a.sub}</span>
-        </div>
-        ${a.time ? `<span class="agent-time">${a.time}</span>` : ''}
-      </div></li>`;
+    return `<li><div class="agent-item${active}"><div class="avatar-wrap" role="img" aria-label="${a.name}">${svg}${dot}</div><div class="agent-meta"><span class="name">${a.name}</span><span class="sub">${a.sub}</span></div>${a.time ? `<span class="agent-time">${a.time}</span>` : ''}</div></li>`;
   }).join('');
-
-  slot.innerHTML = `
-    <div class="sb-head"><span>Агенты</span><span class="count">2/5</span></div>
-    <ul class="agent-list">${items}</ul>`;
+  const html = `<div class="sb-head"><span>Агенты</span><span class="count">2/5</span></div><ul class="agent-list">${items}</ul>`;
+  COMPONENT_MARKUP.agents = html; slot.innerHTML = html;
 }
-
-/* --- Таблица пользователей --- */
 function renderUserTable() {
   const slot = document.getElementById('user-table-slot');
   const users = [
@@ -1351,40 +2387,17 @@ function renderUserTable() {
     { id:'sora',    name:'Сора Накагава',   email:'s.nakagawa@example.com', role:'Разработчик',   status:'приглашён',     time:'никогда' },
     { id:'ivan',    name:'Иван Петров',     email:'i.petrov@example.com',   role:'Биллинг',       status:'приостановлен', time:'3 недели назад' },
   ];
-
   const rows = users.map(u => {
     const svg = buildSvg({ phasesKey: 'user-' + u.id });
-    return `
-      <tr>
-        <td>
-          <div class="user-cell">
-            <div class="avatar-wrap">${svg}</div>
-            <div class="user-meta">
-              <div class="user-name">${u.name}</div>
-              <div class="user-email">${u.email}</div>
-            </div>
-          </div>
-        </td>
-        <td class="muted">${u.role}</td>
-        <td><span class="chip">${u.status}</span></td>
-        <td class="user-time">${u.time}</td>
-      </tr>`;
+    return `<tr><td><div class="user-cell"><div class="avatar-wrap">${svg}</div><div class="user-meta"><div class="user-name">${u.name}</div><div class="user-email">${u.email}</div></div></div></td><td class="muted">${u.role}</td><td><span class="chip">${u.status}</span></td><td class="user-time">${u.time}</td></tr>`;
   }).join('');
-
-  slot.innerHTML = `
-    <table class="user-table">
-      <thead><tr>
-        <th>Пользователь</th><th>Роль</th><th>Статус</th><th class="right">Был(а)</th>
-      </tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+  const html = `<table class="user-table"><thead><tr><th>Пользователь</th><th>Роль</th><th>Статус</th><th class="right">Был(а)</th></tr></thead><tbody>${rows}</tbody></table>`;
+  COMPONENT_MARKUP.users = html; slot.innerHTML = html;
 }
-
-/* --- Поле пароля --- */
 function renderPassword() {
   const slot = document.getElementById('password-demo-slot');
   const svg = buildSvg({ phasesKey: 'password', className: 'password-blob-inner' });
-  slot.innerHTML = `
+  const html = `
     <div class="password-blob">${svg}</div>
     <div class="password-field">
       <label for="broot-password">Пароль</label>
@@ -1394,6 +2407,7 @@ function renderPassword() {
       </div>
       <p class="password-hint">Слежу за вводом.</p>
     </div>`;
+  COMPONENT_MARKUP.password = html; slot.innerHTML = html;
   const input = slot.querySelector('#broot-password');
   const btn   = slot.querySelector('#password-show-btn');
   btn.addEventListener('click', () => {
@@ -1403,8 +2417,6 @@ function renderPassword() {
     btn.setAttribute('aria-pressed', String(show));
   });
 }
-
-/* --- Групповой чат --- */
 function renderGroupChat() {
   const slot = document.getElementById('group-chat-slot');
   const messages = [
@@ -1414,55 +2426,72 @@ function renderGroupChat() {
     { id:'ivan',   name:'ivan',   time:'9:43', text:'то есть staging-я и prod-я — разные люди 😅' },
     { id:'svea2',  name:'svea',   time:'9:44', text:'другая строка — другой человек. вот и весь фокус' },
   ];
-
   const messagesHtml = messages.map(m => {
     const svg = buildSvg({ phasesKey: 'chat-' + m.id });
-    return `
-      <div class="chat-msg">
-        <div class="avatar-wrap">${svg}</div>
-        <div class="msg-body">
-          <div class="msg-head">
-            <span class="msg-author">${m.name}</span>
-            <span class="msg-time">${m.time}</span>
-          </div>
-          <div class="msg-text">${m.text}</div>
-        </div>
-      </div>`;
+    return `<div class="chat-msg"><div class="avatar-wrap">${svg}</div><div class="msg-body"><div class="msg-head"><span class="msg-author">${m.name}</span><span class="msg-time">${m.time}</span></div><div class="msg-text">${m.text}</div></div></div>`;
   }).join('');
-
   const members = ['laura','tobias','svea','ivan'].map(id => {
     const svg = buildSvg({ phasesKey: 'chat-mem-' + id });
     return `<span class="mini">${svg}</span>`;
   }).join('');
   const typingSvg = buildSvg({ phasesKey: 'chat-typing', expressionId: 'idle' });
-
-  slot.innerHTML = `
+  const html = `
     <div class="chat">
-      <div class="chat-header">
-        <span><span class="prefix">#</span> релиз</span>
-        <div class="chat-members">${members}<span class="more">+12</span></div>
-      </div>
+      <div class="chat-header"><span><span class="prefix">#</span> релиз</span><div class="chat-members">${members}<span class="more">+12</span></div></div>
       <div class="chat-messages">
         ${messagesHtml}
-        <div class="chat-typing">
-          <div class="avatar-wrap">${typingSvg}</div>
-          <span class="text">tobias печатает</span>
-        </div>
+        <div class="chat-typing"><div class="avatar-wrap">${typingSvg}</div><span class="text">tobias печатает</span></div>
       </div>
     </div>`;
+  COMPONENT_MARKUP.chat = html; slot.innerHTML = html;
 }
-
 function renderComponents() {
-  renderPresence();
-  renderAgentList();
-  renderUserTable();
-  renderPassword();
-  renderGroupChat();
+  renderPresence(); renderAgentList(); renderUserTable(); renderPassword(); renderGroupChat();
 }
 
-/* =========================================================
-   Слайдеры и тона
-   ========================================================= */
+function renderTeam() {
+  const grid = document.getElementById('team-grid');
+  const devSvg = buildSvg({ phasesKey: 'team-dev', expressionId: 'smug' });
+  const supSvg = buildSvg({ phasesKey: 'team-sup', expressionId: 'happy' });
+  const tgSvg  = buildSvg({ phasesKey: 'team-tg',  expressionId: 'idle' });
+  grid.innerHTML = `
+    <div class="tg-hero">
+      <div class="tg-hero-avatar">${tgSvg}</div>
+      <div class="tg-hero-info">
+        <p class="tg-label">// telegram</p>
+        <h3>@verifure</h3>
+        <p>Написать напрямую — быстрее всего. Отвечаю в течение дня, обычно в течение часа.</p>
+      </div>
+      <a class="tg-hero-cta" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.46l-.38 5.35c.54 0 .78-.23 1.06-.51l2.55-2.44 5.28 3.87c.97.53 1.66.25 1.92-.9l3.48-16.3.01-.01c.3-1.41-.51-1.96-1.45-1.61L1.55 9.7c-1.38.53-1.36 1.3-.23 1.65l5.12 1.6 11.9-7.49c.56-.37 1.07-.17.65.2l-9.95 9.8z"/></svg>
+        Открыть Telegram
+      </a>
+    </div>
+    <div class="team-card" style="--tc-glow: rgba(34,158,217,.16)">
+      <div class="team-head">
+        <div class="team-avatar">${devSvg}</div>
+        <div class="team-info"><h3 class="team-name">Verifure</h3><p class="team-role">// developer · maintainer</p></div>
+      </div>
+      <p class="team-bio">Придумал Broot и собрал движок: от «глаза смотрят на курсор» до пресетов и студии темы. Отвечает за релизы, API и всё, что под капотом.</p>
+      <div class="team-links">
+        <a class="team-link tg" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">@verifure</a>
+        <a class="team-link" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">Написать</a>
+      </div>
+    </div>
+    <div class="team-card" style="--tc-glow: rgba(16,185,129,.14)">
+      <div class="team-head">
+        <div class="team-avatar">${supSvg}</div>
+        <div class="team-info"><h3 class="team-name">Поддержка</h3><p class="team-role">// tech support</p></div>
+      </div>
+      <p class="team-bio">Помогает с интеграцией, отвечает на вопросы по API, разбирается с нестандартными случаями. Пишите с описанием задачи и скриншотом, если возможно.</p>
+      <div class="team-links">
+        <a class="team-link tg" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">@verifure</a>
+        <a class="team-link" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">Поддержка</a>
+      </div>
+    </div>
+  `;
+}
+
 function formatSliderValue(key, v) {
   if (key === 'bodyTilt' || key === 'eyeLean') return v + '°';
   if (key === 'lightness' || key === 'saturation') return v + '%';
@@ -1474,8 +2503,7 @@ function syncSliders() {
     const input = el.querySelector('input');
     const valEl = el.querySelector('.v');
     const v = state[key];
-    input.value = v;
-    valEl.textContent = formatSliderValue(key, v);
+    input.value = v; valEl.textContent = formatSliderValue(key, v);
   });
   document.querySelectorAll('.tone').forEach(btn => {
     btn.setAttribute('aria-pressed', btn.dataset.tone === state.tone ? 'true' : 'false');
@@ -1491,8 +2519,7 @@ function wireSliders() {
       state[key] = v;
       valEl.textContent = formatSliderValue(key, v);
       if (key === 'lightness' || key === 'saturation') {
-        state.tone = 'custom';
-        state.customHex = null;
+        state.tone = 'custom'; state.customHex = null;
         document.querySelectorAll('.tone').forEach(b => b.setAttribute('aria-pressed', 'false'));
       }
       renderAll();
@@ -1503,8 +2530,7 @@ function wireTones() {
   document.querySelectorAll('.tone').forEach(btn => {
     btn.addEventListener('click', () => {
       const t = btn.dataset.tone;
-      state.tone = t;
-      state.customHex = null;
+      state.tone = t; state.customHex = null;
       const cfg = TONES[t];
       if (cfg) { state.saturation = cfg.s; state.lightness = cfg.l; }
       renderAll();
@@ -1524,60 +2550,175 @@ function wireColorPicker() {
   });
 }
 
-/* =========================================================
-   Мастер-рендер
-   ========================================================= */
 function renderAll() {
-  renderEditor();
-  renderStates();
-  renderExpressions();
-  renderShapePicker();
-  renderExprPicker();
-  renderHuePicker();
-  renderComponents();
-  syncSliders();
-  syncColorPicker();
-  refreshTrackedSvgs();
+  renderEditor(); renderStates(); renderExpressions();
+  renderShapePicker(); renderExprPicker(); renderHuePicker();
+  renderComponents(); syncSliders(); syncColorPicker();
+  refreshTrackedSvgs(); updateComponentCodeSlots(); renderPngPanel(); renderSidebar();
 }
 
 /* =========================================================
-   Обработчики ввода
+   РЕГИСТРАЦИЯ — Telegram
    ========================================================= */
-document.getElementById('seed-input').addEventListener('input', (e) => {
-  state.name = e.target.value || 'кто-то';
+const REG_KEY = 'broot_user';
+
+function getStoredUser() {
+  try { return JSON.parse(localStorage.getItem(REG_KEY) || 'null'); } catch(e) { return null; }
+}
+function setStoredUser(u) { try { localStorage.setItem(REG_KEY, JSON.stringify(u)); } catch(e) {} }
+function clearStoredUser() { try { localStorage.removeItem(REG_KEY); } catch(e) {} }
+
+function showRegistration() {
+  document.getElementById('reg-overlay').hidden = false;
+  document.getElementById('app-shell').style.visibility = 'hidden';
+}
+function hideRegistration() {
+  document.getElementById('reg-overlay').hidden = true;
+  document.getElementById('app-shell').style.visibility = 'visible';
+}
+
+function applyUser(user) {
+  const sidebarUser = document.getElementById('sidebar-user');
+  if (!user) { sidebarUser.hidden = true; return; }
+  sidebarUser.hidden = false;
+  document.getElementById('sidebar-user-name').textContent = user.name || 'гость';
+  document.getElementById('sidebar-user-sub').textContent =
+    user.telegram
+      ? (user.username ? '@' + user.username : 'Telegram')
+      : (user.email ? user.email : 'локальный профиль');
+
+  const avatarSlot = document.getElementById('sidebar-user-avatar');
+  if (user.picture) {
+    avatarSlot.innerHTML = `<img src="${escapeHtml(user.picture)}" alt="${escapeHtml(user.name || 'user')}">`;
+  } else {
+    const seed = user.name || user.username || 'guest';
+    avatarSlot.innerHTML = buildSvg({
+      phasesKey: 'user-avatar-' + seed,
+      expressionId: 'idle',
+    }, makePreset(seed, {
+      hue: autoHueFromName(seed), autoHue: false,
+      saturation: 55, lightness: 65, tone: 'custom',
+    }));
+  }
+  if (state.name === 'halo' && user.name) {
+    state.name = user.name;
+    const seedInput = document.getElementById('seed-input');
+    if (seedInput) seedInput.value = user.name;
+  }
+}
+
+/* Глобальный колбэк, вызываемый telegram-login.js */
+window.onTelegramAuth = function (data) {
+  console.log('[Telegram auth]', data);
+
+  if (data && data.error) {
+    alert('Ошибка входа через Telegram: ' + data.error);
+    return;
+  }
+
+  let u = data && data.user ? data.user : null;
+  if (!u && data && data.id_token) {
+    try {
+      const payload = JSON.parse(atob(data.id_token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+      u = {
+        id: payload.id || payload.sub,
+        name: payload.name,
+        username: payload.preferred_username,
+        picture: payload.picture,
+      };
+    } catch (e) { console.warn('id_token decode failed', e); }
+  }
+
+  if (!u) {
+    u = { name: 'Telegram user', telegram: true, raw: data };
+  }
+
+  const user = {
+    name: u.name || (u.first_name ? (u.first_name + (u.last_name ? ' ' + u.last_name : '')) : null) || u.preferred_username || 'Telegram user',
+    username: u.username || u.preferred_username || null,
+    email: u.email || null,
+    picture: u.picture || u.photo_url || null,
+    id: u.id || null,
+    telegram: true,
+  };
+
+  setStoredUser(user);
+  applyUser(user);
+  hideRegistration();
   renderAll();
-});
+};
 
-document.querySelectorAll('.code-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    codeMode = tab.dataset.mode;
-    document.querySelectorAll('.code-tab').forEach(t => t.setAttribute('aria-pressed', t === tab ? 'true' : 'false'));
-    renderCode();
+function wireRegistration() {
+  document.getElementById('reg-skip').addEventListener('click', () => {
+    clearStoredUser();
+    applyUser(null);
+    hideRegistration();
+    renderAll();
   });
-});
-
-document.querySelectorAll('.copy-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const el = document.querySelector(btn.dataset.copy);
-    if (!el) return;
-    const text = el.textContent;
-    const done = () => {
-      btn.textContent = 'Скопировано'; btn.classList.add('is-copied');
-      setTimeout(() => { btn.textContent = 'Копировать'; btn.classList.remove('is-copied'); }, 1400);
-    };
-    if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done);
-    else {
-      const ta = document.createElement('textarea');
-      ta.value = text; document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); } catch (e) {}
-      document.body.removeChild(ta); done();
-    }
+  document.getElementById('sidebar-user-out').addEventListener('click', () => {
+    clearStoredUser();
+    applyUser(null);
+    showRegistration();
   });
-});
+}
 
 /* =========================================================
-   Слежение за курсором — один глобальный обработчик
+   Resizable panels
    ========================================================= */
+function wireResizers() {
+  const editor = document.getElementById('editor');
+  const resizer = editor.querySelector('.editor-resizer[data-resizer="1"]');
+  if (!resizer) return;
+  const MIN = 240;
+  let drag = null;
+
+  resizer.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    const cs = getComputedStyle(editor);
+    const cols = cs.gridTemplateColumns.split(' ');
+    const w1 = parseFloat(cols[0]);
+    drag = { startX: e.clientX, w1 };
+    resizer.classList.add('is-dragging');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  });
+
+  window.addEventListener('mousemove', (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.startX;
+    const inner = editor.clientWidth - 48;
+    let nw1 = drag.w1 + dx;
+    nw1 = Math.max(MIN, Math.min(nw1, inner - MIN));
+    editor.style.setProperty('--c1', nw1 + 'px');
+  });
+
+  window.addEventListener('mouseup', () => {
+    if (!drag) return;
+    resizer.classList.remove('is-dragging');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    drag = null;
+  });
+}
+
+function copyText(text, btn) {
+  const done = () => {
+    const orig = btn.dataset.orig || btn.textContent;
+    btn.dataset.orig = orig;
+    btn.textContent = 'Скопировано';
+    btn.classList.add('is-copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('is-copied'); }, 1400);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, done);
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta); done();
+  }
+}
+
 let trackedSvgs = [];
 function refreshTrackedSvgs() {
   trackedSvgs = Array.from(document.querySelectorAll('svg')).filter(svg => svg.querySelector('.mo-root'));
@@ -1585,22 +2726,14 @@ function refreshTrackedSvgs() {
 function initGlobalTracking() {
   if (window.__trackingInit) return;
   window.__trackingInit = true;
-
   window.addEventListener('pointermove', e => {
     for (const svg of trackedSvgs) {
       const root = svg.querySelector('.mo-root');
       const eyes = svg.querySelector('.mo-eyes');
       if (!root || !eyes) continue;
-
       const r = svg.getBoundingClientRect();
-      const inside = e.clientX >= r.left && e.clientX <= r.right &&
-                     e.clientY >= r.top  && e.clientY <= r.bottom;
-
-      if (!inside) {
-        root.style.setProperty('--mo-track-hold', 0);
-        continue;
-      }
-
+      const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+      if (!inside) { root.style.setProperty('--mo-track-hold', 0); continue; }
       root.style.setProperty('--mo-track-hold', 1);
       const nx = ((e.clientX - r.left) / r.width)  * 2 - 1;
       const ny = ((e.clientY - r.top)  / r.height) * 2 - 1;
@@ -1610,7 +2743,6 @@ function initGlobalTracking() {
       eyes.style.setProperty('--mo-gz-dy2', (ny * 2.5).toFixed(3));
     }
   });
-
   window.addEventListener('blur', () => {
     for (const svg of trackedSvgs) {
       const root = svg.querySelector('.mo-root');
@@ -1619,14 +2751,91 @@ function initGlobalTracking() {
   });
 }
 
+function loadStoredTheme() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('broot_theme') || 'null');
+    if (saved && saved.colors) {
+      themeState.colors = saved.colors;
+      themeState.preset = saved.preset || themeState.preset;
+      themeState.gradient = saved.gradient || themeState.gradient;
+    }
+  } catch (e) {}
+}
+
 /* =========================================================
-   Инициализация
+   ИНИЦИАЛИЗАЦИЯ
    ========================================================= */
+seedPresets();
+loadStoredTheme();
+applyTheme();
+ensureComponentCodeSlots();
+renderThemeStudio();
+wireTabs();
+selectTab('editor');
+renderTeam();
 renderAll();
 initGlobalTracking();
 wireSliders();
 wireTones();
 wireColorPicker();
+wirePngPanel();
+wireResizers();
+wireRegistration();
+
+document.getElementById('seed-input').addEventListener('input', (e) => {
+  state.name = e.target.value || 'кто-то';
+  renderAll();
+});
+document.getElementById('save-preset-btn').addEventListener('click', savePreset);
+document.getElementById('preset-list').addEventListener('click', handleSidebarClick);
+document.getElementById('preset-list').addEventListener('keydown', handleSidebarKey);
+
+document.querySelectorAll('.code-tab[data-mode]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    codeMode = tab.dataset.mode;
+    document.querySelectorAll('.code-tab[data-mode]').forEach(t => t.setAttribute('aria-pressed', t === tab ? 'true' : 'false'));
+    renderCode();
+  });
+});
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const el = document.querySelector(btn.dataset.copy);
+    if (!el) return;
+    copyText(el.textContent, btn);
+  });
+});
+document.addEventListener('click', (e) => {
+  const toggle = e.target.closest('[data-toggle]');
+  if (toggle) {
+    const key = toggle.dataset.toggle;
+    codePanels[key].open = !codePanels[key].open;
+    updateComponentCodeSlots();
+    return;
+  }
+  const modeBtn = e.target.closest('[data-cmode]');
+  if (modeBtn) {
+    const key = modeBtn.closest('.component-code-slot').dataset.comp;
+    codePanels[key].mode = modeBtn.dataset.cmode;
+    updateComponentCodeSlots();
+    return;
+  }
+  const copyBtn = e.target.closest('[data-ccopy]');
+  if (copyBtn) {
+    const key = copyBtn.dataset.ccopy;
+    const code = document.querySelector(`.component-code-slot[data-comp="${key}"] code`);
+    if (code) copyText(code.textContent, copyBtn);
+  }
+});
+
+/* Стартовое состояние: если пользователь уже вошёл — пропускаем оверлей */
+const storedUser = getStoredUser();
+if (storedUser) {
+  applyUser(storedUser);
+  hideRegistration();
+} else {
+  showRegistration();
+}
+setTimeout(() => { renderAll(); }, 0);
 </script>
 
 </body>
