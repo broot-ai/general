@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
+<html lang="ru" style="--color-ground: #0a0a0b; --color-raised: #131315; --color-ink: #fafaf8; --color-muted: #8a8a93; --color-line: #232327;"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
@@ -549,6 +547,32 @@
     font-size: 11px; font-weight: 400; text-transform: uppercase;
     letter-spacing: 0.08em; color: var(--color-muted); margin: 0 0 8px;
   }
+
+  /* Раскрывающиеся control-group (форма / тело) */
+  .control-group.collapsible > .collapsible-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin: 0; cursor: pointer; user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: color .15s;
+  }
+  .control-group.collapsible > .collapsible-head:hover { color: var(--color-ink); }
+  .control-group.collapsible > .collapsible-head .chev {
+    font-size: 10px; color: var(--color-muted);
+    display: inline-block;
+    transition: transform .28s cubic-bezier(.4, 0, .2, 1);
+  }
+  .control-group.collapsible.is-open > .collapsible-head .chev { transform: rotate(180deg); }
+
+  .collapsible-body {
+    max-height: 0; opacity: 0; overflow: hidden; padding: 0;
+    transition: max-height .35s cubic-bezier(.4, 0, .2, 1),
+                opacity .25s ease,
+                padding .3s ease;
+  }
+  .control-group.collapsible.is-open > .collapsible-body {
+    max-height: 700px; opacity: 1; padding-top: 10px;
+  }
+
   .hue-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .hue-swatch {
     width: 28px; height: 28px; border-radius: 9999px;
@@ -970,11 +994,11 @@
   .copy-btn-inline:hover { color: var(--color-ink); border-color: #3a3a42; }
   .copy-btn-inline.is-copied { color: #6ee7b7; border-color: #1f4436; }
 </style>
-</head>
-<body>
+<style>.tg-auth-button{width:fit-content;height:44px;padding:0 28px;text-transform:none;background:#119AF5;border-radius:22px;cursor:pointer;font-weight:600;font-size:16px;display:flex;align-items:center;font-family:-apple-system,system-ui,Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;color:white;position:relative;overflow:hidden;user-select:none;border:none}.tg-auth-button:hover{background:#1090E5}.tg-auth-button:before{content:" ";width:22px;height:22px;margin-right:4px;display:inline-block;vertical-align:top;background:no-repeat 0 0;background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 22 22' fill='none'%3E%3Cpath d='M2.81376 10.5943C7.36914 8.61002 10.406 7.30175 11.9245 6.66971C16.265 4.86489 17.1658 4.55143 17.7542 4.54094C17.8836 4.53874 18.1716 4.57072 18.3596 4.72281C18.5158 4.85097 18.5598 5.0243 18.5818 5.14588C18.6013 5.26745 18.6282 5.54454 18.6062 5.76083C18.3719 8.23138 17.3539 14.2266 16.8363 16.9938C16.619 18.1647 16.1869 18.5572 15.7695 18.5955C14.8613 18.679 14.1728 17.996 13.294 17.42C11.9196 16.5185 11.1433 15.9575 9.80793 15.0779C8.26505 14.0613 9.26594 13.5025 10.1448 12.5895C10.3743 12.3505 14.373 8.71426 14.4487 8.38445C14.4585 8.34319 14.4683 8.18939 14.3755 8.10834C14.2852 8.02705 14.1508 8.05488 14.0532 8.07685C13.914 8.1081 11.7193 9.56015 7.4618 12.4328C6.83928 12.861 6.27536 13.0697 5.76758 13.0587C5.21097 13.0468 4.13689 12.7433 3.3386 12.484C2.3621 12.166 1.5833 11.9977 1.65166 11.4575C1.68583 11.1763 2.07406 10.8884 2.81376 10.5943Z' fill='white'/%3E%3C/svg%3E");background-size:22px;background-position:center;display:inline-block;}.tg-auth-button[data-style~="square"]{border-radius:5px}.tg-auth-button[data-style~="outlined"]{color:black;background:transparent;border:1px solid var(--border_color,rgba(0,0,0,0.06))}.tg-auth-button[data-style~="outlined"]:hover{border:1px solid rgba(0,0,0,0.08);background:rgba(116,116,128,0.06)}.tg-auth-button[data-style~="outlined"]:before{content:" ";height:22px;margin-right:8px;width:22px;display:inline-block;vertical-align:top;background-size:16px;background-position:center;background-color:#119AF5;border-radius:34px;}.tg-auth-button[data-style~="icon"]{width:44px;padding:0;justify-content:center;display:flex;font-size:0}.tg-auth-button[data-style~="icon"]::before{margin-right:0 !important}.tg-auth-button[data-style~="shine"]::after{content:" ";position:absolute;top:-2px;left:-75%;width:70px;max-width:50%;bottom:-2px;background:linear-gradient(95deg,rgba(255,255,255,.0) 0%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.0) 100%);animation:tg-shine 4s infinite;mix-blend-mode: soft-light;}.tg-auth-button[data-style~="outlined"][data-style~="shine"]::after{background:linear-gradient(95deg,rgba(255,255,255,.0) 0%,rgba(255,255,255,.6) 50%,rgba(255,255,255,.0) 100%);}@keyframes tg-shine{0%{left:-75%}100%{left:125%}}.tg-ripple-mask{position:absolute;left:0;right:0;top:0;bottom:0;transform:translateZ(0);overflow:hidden;pointer-events:none;}.tg-ripple{position:absolute;width:200%;left:50%;top:50%;margin:-100% 0 0 -100%;padding-top:200%;border-radius:50%;background-color:#ffffff1f;transition:transform .65s ease-out,opacity .65s ease-out,background-color .65s ease-out;opacity:0;}.tg-auth-button[data-style~="outlined"] .tg-ripple{background-color:#0000000f}</style></head>
+<body class="has-gradient" style="--app-gradient: radial-gradient(circle at 50% 30%, rgba(255,255,255,.07), transparent 60%);">
 
 <!-- ============ РЕГИСТРАЦИЯ (Telegram only) ============ -->
-<div class="reg-overlay" id="reg-overlay" role="dialog" aria-modal="true" aria-labelledby="reg-title">
+<div class="reg-overlay" id="reg-overlay" role="dialog" aria-modal="true" aria-labelledby="reg-title" hidden="">
   <div class="reg-bg"></div>
   <div class="reg-card">
     <div class="reg-brand">
@@ -994,11 +1018,8 @@
 
     <!-- Telegram Login -->
     <div class="tg-btn-wrap" id="tg-btn-wrap">
-      <script async src="https://oauth.telegram.org/js/telegram-login.js?6"
-        data-client-id="8842784777"
-        data-onauth="console.log(data)"
-        data-request-access="write"></script>
-      <button class="tg-auth-button">Sign In with Telegram</button>
+      <script async="" src="https://oauth.telegram.org/js/telegram-login.js?6" data-client-id="8842784777" data-onauth="console.log(data)" data-request-access="write"></script>
+      <button class="tg-auth-button" role="button" tabindex="0" aria-label="Log in with Telegram">Sign In with Telegram<span class="tg-ripple-mask"><span class="tg-ripple"></span></span></button>
     </div>
 
     <div class="reg-divider">или</div>
@@ -1012,14 +1033,14 @@
   </div>
 </div>
 
-<div class="app-shell" id="app-shell">
+<div class="app-shell" id="app-shell" style="visibility: visible;">
   <aside class="sidebar" aria-label="Навигация Broot">
     <div class="sidebar-brand">
       <h2>Broot</h2>
-      <span class="count" id="preset-count">0</span>
+      <span class="count" id="preset-count">5</span>
     </div>
 
-    <div class="sidebar-user" id="sidebar-user" hidden>
+    <div class="sidebar-user" id="sidebar-user" hidden="">
       <div class="u-avatar" id="sidebar-user-avatar"></div>
       <div class="u-meta">
         <span class="u-name" id="sidebar-user-name">—</span>
@@ -1038,7 +1059,107 @@
             <span>＋</span> Save preset
           </button>
           <div class="sidebar-section-title">Сохранённые broot'ы</div>
-          <div class="preset-list" id="preset-list" role="list"></div>
+          <div class="preset-list" id="preset-list" role="list">
+      <div class="preset-item is-active" data-id="p1" role="listitem" tabindex="0" aria-label="Пресет Default">
+        <div class="preset-tile" style="background: linear-gradient(135deg, #ffffff44 0%, #ffffff18 50%, transparent 100%);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="preset-svg" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-70ms;--mo-bob-phase:-903ms;--mo-blink:-3576ms;--mo-blink-phase:-1678ms;--mo-saccade:7335ms;--mo-saccade-phase:-494ms;--mo-look-x:1.60;--mo-look-y:-0.54;--mo-look-mx:1.85;--mo-look-my:1.46;" aria-hidden="true">
+    <g class="mo-root mo-always" style="">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg>
+        </div>
+        <div class="preset-meta">
+          <span class="preset-name">Default</span>
+          <span class="preset-sub">auto · покой</span>
+        </div>
+        <div class="preset-actions">
+          <button type="button" class="preset-action" data-act="duplicate" data-id="p1" title="Дублировать" aria-label="Дублировать">⧉</button>
+          <button type="button" class="preset-action" data-act="rename" data-id="p1" title="Переименовать" aria-label="Переименовать">✎</button>
+          <button type="button" class="preset-action danger" data-act="delete" data-id="p1" title="Удалить" aria-label="Удалить">✕</button>
+        </div>
+      </div>
+      <div class="preset-item" data-id="p2" role="listitem" tabindex="0" aria-label="Пресет Friendly">
+        <div class="preset-tile" style="background: linear-gradient(135deg, #d8a74644 0%, #d8a74618 50%, transparent 100%);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="preset-svg" style="--mo-head:#d8a746;--mo-eye:#051215;--mo-phase:-147ms;--mo-bob-phase:-258ms;--mo-blink:-4342ms;--mo-blink-phase:-1680ms;--mo-saccade:6894ms;--mo-saccade-phase:-4142ms;--mo-look-x:2.38;--mo-look-y:-0.57;--mo-look-mx:1.77;--mo-look-my:1.25;" aria-hidden="true">
+    <g class="mo-root mo-always" style="">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -2.2)">
+        <g transform="translate(50 50) scale(1.0400 1.0400) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M86.59 49.81C86.3 59.56 79.48 71.95 72.18 77.91C64.88 83.87 51.16 87.84 42.77 85.56C34.38 83.28 25.62 72.72 21.84 64.21C18.06 55.71 16.53 42.57 20.09 34.53C23.64 26.49 34.21 18.49 43.18 15.97C52.16 13.45 66.7 13.79 73.94 19.43C81.17 25.07 86.88 40.07 86.59 49.81Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0800) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.75 46.31C45.04 48.38 44.8 48.51 39.43 49.27C34.06 50.02 33.8 49.96 33.5 47.89C33.21 45.82 33.45 45.69 38.82 44.93C44.19 44.18 44.45 44.24 44.75 46.31Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0800) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M66.79 45.21C67.2 48.08 66.93 48.26 60.86 49.11C54.79 49.97 54.49 49.87 54.08 47C53.68 44.13 53.94 43.96 60.02 43.1C66.09 42.25 66.39 42.34 66.79 45.21Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg>
+        </div>
+        <div class="preset-meta">
+          <span class="preset-name">Friendly</span>
+          <span class="preset-sub">organic · радость</span>
+        </div>
+        <div class="preset-actions">
+          <button type="button" class="preset-action" data-act="duplicate" data-id="p2" title="Дублировать" aria-label="Дублировать">⧉</button>
+          <button type="button" class="preset-action" data-act="rename" data-id="p2" title="Переименовать" aria-label="Переименовать">✎</button>
+          <button type="button" class="preset-action danger" data-act="delete" data-id="p2" title="Удалить" aria-label="Удалить">✕</button>
+        </div>
+      </div>
+      <div class="preset-item" data-id="p3" role="listitem" tabindex="0" aria-label="Пресет Focused">
+        <div class="preset-tile" style="background: linear-gradient(135deg, #27449b44 0%, #27449b18 50%, transparent 100%);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="preset-svg" style="--mo-head:#27449b;--mo-eye:#051215;--mo-phase:-320ms;--mo-bob-phase:-3164ms;--mo-blink:-5593ms;--mo-blink-phase:-4093ms;--mo-saccade:5713ms;--mo-saccade-phase:-2316ms;--mo-look-x:1.30;--mo-look-y:-1.41;--mo-look-mx:1.13;--mo-look-my:1.22;" aria-hidden="true">
+    <g class="mo-root mo-always" style="">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M78.91 47.14C81.69 76.54 81.69 76.54 53.39 79.21C25.1 81.88 25.1 81.88 22.32 52.48C19.55 23.08 19.55 23.08 47.84 20.41C76.14 17.74 76.14 17.74 78.91 47.14Z"></path></g><g class="mo-eyes"><g transform="translate(-0.500 0.000) translate(40.62 48.6) scale(0.9200) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.2 46.78C45.11 49.56 44.97 49.75 41.07 51.02C37.17 52.28 36.95 52.21 36.04 49.43C35.14 46.64 35.28 46.45 39.18 45.18C43.08 43.92 43.3 43.99 44.2 46.78Z"></path></g></g><g transform="translate(0.500 0.000) translate(58.94 47.61) scale(0.9200) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.05 45.61C64.97 48.44 64.81 48.64 60.4 50.08C56 51.51 55.75 51.44 54.83 48.61C53.91 45.77 54.07 45.57 58.47 44.14C62.88 42.71 63.13 42.77 64.05 45.61Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg>
+        </div>
+        <div class="preset-meta">
+          <span class="preset-name">Focused</span>
+          <span class="preset-sub">boxy · самодовольный</span>
+        </div>
+        <div class="preset-actions">
+          <button type="button" class="preset-action" data-act="duplicate" data-id="p3" title="Дублировать" aria-label="Дублировать">⧉</button>
+          <button type="button" class="preset-action" data-act="rename" data-id="p3" title="Переименовать" aria-label="Переименовать">✎</button>
+          <button type="button" class="preset-action danger" data-act="delete" data-id="p3" title="Удалить" aria-label="Удалить">✕</button>
+        </div>
+      </div>
+      <div class="preset-item" data-id="p4" role="listitem" tabindex="0" aria-label="Пресет Sleepy">
+        <div class="preset-tile" style="background: linear-gradient(135deg, #a577c544 0%, #a577c518 50%, transparent 100%);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="preset-svg" style="--mo-head:#a577c5;--mo-eye:#051215;--mo-phase:-2365ms;--mo-bob-phase:-1598ms;--mo-blink:-3971ms;--mo-blink-phase:-4807ms;--mo-saccade:6565ms;--mo-saccade-phase:-1217ms;--mo-look-x:1.26;--mo-look-y:-1.22;--mo-look-mx:1.83;--mo-look-my:1.55;" aria-hidden="true">
+    <g class="mo-root mo-always" style="">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 1.2)">
+        <g transform="translate(50 50) scale(1.2096 0.9643) rotate(0) translate(-50 -50)"><g class="mo-body"><circle cx="31.57" cy="44.88" r="15.37"></circle><circle cx="42.73" cy="37.9" r="13.99"></circle><circle cx="58.51" cy="37.9" r="13.8"></circle><circle cx="69.67" cy="44.88" r="11.69"></circle><path d="M79.25 49.81C79.02 57.57 73.59 67.43 67.78 72.17C61.97 76.92 51.05 80.08 44.37 78.27C37.69 76.45 30.72 68.04 27.71 61.27C24.7 54.51 23.49 44.05 26.32 37.65C29.15 31.25 37.56 24.88 44.7 22.88C51.84 20.87 63.42 21.14 69.18 25.63C74.93 30.12 79.48 42.05 79.25 49.81Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.09 51C44.09 52.54 43.92 52.61 40.32 52.61C36.73 52.61 36.56 52.54 36.56 51C36.56 49.47 36.73 49.39 40.32 49.39C43.92 49.39 44.09 49.47 44.09 51Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.15 50.28C63.01 52.35 62.83 52.43 59.09 52.17C55.35 51.91 55.18 51.8 55.33 49.73C55.47 47.67 55.65 47.58 59.39 47.85C63.13 48.11 63.29 48.22 63.15 50.28Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg>
+        </div>
+        <div class="preset-meta">
+          <span class="preset-name">Sleepy</span>
+          <span class="preset-sub">cloud · сонный</span>
+        </div>
+        <div class="preset-actions">
+          <button type="button" class="preset-action" data-act="duplicate" data-id="p4" title="Дублировать" aria-label="Дублировать">⧉</button>
+          <button type="button" class="preset-action" data-act="rename" data-id="p4" title="Переименовать" aria-label="Переименовать">✎</button>
+          <button type="button" class="preset-action danger" data-act="delete" data-id="p4" title="Удалить" aria-label="Удалить">✕</button>
+        </div>
+      </div>
+      <div class="preset-item" data-id="p5" role="listitem" tabindex="0" aria-label="Пресет Alert">
+        <div class="preset-tile" style="background: linear-gradient(135deg, #eb684744 0%, #eb684718 50%, transparent 100%);">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="preset-svg" style="--mo-head:#eb6847;--mo-eye:#051215;--mo-phase:-886ms;--mo-bob-phase:-851ms;--mo-blink:-4850ms;--mo-blink-phase:-577ms;--mo-saccade:7207ms;--mo-saccade-phase:-5071ms;--mo-look-x:1.71;--mo-look-y:-0.59;--mo-look-mx:1.01;--mo-look-my:1.00;" aria-hidden="true">
+    <g class="mo-root mo-always" style="">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1.4)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><circle cx="67.63" cy="68.93" r="9.82"></circle><circle cx="74.24" cy="39.97" r="9.96"></circle><path d="M79.7 49.81C79.7 70.31 70.35 80.03 50.62 80.03C30.89 80.03 21.54 70.31 21.54 49.81C21.54 29.31 30.89 19.6 50.62 19.6C70.35 19.6 79.7 29.31 79.7 49.81Z"></path></g><g class="mo-eyes"><g transform="translate(-1.000 0.000) translate(40.62 48.6) scale(1.1800) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.52 48.01C43.65 56.34 43.41 56.7 39.21 56.26C35.01 55.82 34.85 55.41 35.73 47.09C36.6 38.76 36.84 38.4 41.04 38.84C45.24 39.28 45.4 39.69 44.52 48.01Z"></path></g></g><g transform="translate(1.000 0.000) translate(58.94 47.61) scale(1.1800) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.39 46.3C64.94 56.8 64.74 57.3 60.01 57.55C55.29 57.8 55.04 57.32 54.49 46.82C53.94 36.31 54.13 35.81 58.86 35.57C63.59 35.32 63.84 35.79 64.39 46.3Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg>
+        </div>
+        <div class="preset-meta">
+          <span class="preset-name">Alert</span>
+          <span class="preset-sub">nub · удивление</span>
+        </div>
+        <div class="preset-actions">
+          <button type="button" class="preset-action" data-act="duplicate" data-id="p5" title="Дублировать" aria-label="Дублировать">⧉</button>
+          <button type="button" class="preset-action" data-act="rename" data-id="p5" title="Переименовать" aria-label="Переименовать">✎</button>
+          <button type="button" class="preset-action danger" data-act="delete" data-id="p5" title="Удалить" aria-label="Удалить">✕</button>
+        </div>
+      </div></div>
         </div>
       </div>
 
@@ -1080,7 +1201,13 @@
         </header>
         <div class="editor" id="editor">
           <div class="editor-preview">
-            <div id="editor-blob-slot"></div>
+            <div id="editor-blob-slot"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="editor-blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-312ms;--mo-bob-phase:-2076ms;--mo-blink:-5338ms;--mo-blink-phase:-740ms;--mo-saccade:5893ms;--mo-saccade-phase:-2902ms;--mo-look-x:1.03;--mo-look-y:-1.11;--mo-look-mx:1.45;--mo-look-my:1.42;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes" style="--mo-gz-dx1: 0.767; --mo-gz-dy1: -2.779; --mo-gz-dx2: 0.575; --mo-gz-dy2: -2.316;"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div>
             <input id="seed-input" class="seed-input" type="text" value="halo" spellcheck="false" autocomplete="off" aria-label="Имя Broot">
           </div>
 
@@ -1095,14 +1222,14 @@
               </div>
               <div class="tone-row" id="tone-row">
                 <button type="button" class="tone" data-tone="white" aria-pressed="true">белый</button>
-                <button type="button" class="tone" data-tone="pastel">пастель</button>
-                <button type="button" class="tone" data-tone="pale">бледный</button>
-                <button type="button" class="tone" data-tone="mid">средний</button>
-                <button type="button" class="tone" data-tone="deep">глубокий</button>
-                <button type="button" class="tone" data-tone="bright">яркий</button>
-                <button type="button" class="tone" data-tone="ink">чернила</button>
+                <button type="button" class="tone" data-tone="pastel" aria-pressed="false">пастель</button>
+                <button type="button" class="tone" data-tone="pale" aria-pressed="false">бледный</button>
+                <button type="button" class="tone" data-tone="mid" aria-pressed="false">средний</button>
+                <button type="button" class="tone" data-tone="deep" aria-pressed="false">глубокий</button>
+                <button type="button" class="tone" data-tone="bright" aria-pressed="false">яркий</button>
+                <button type="button" class="tone" data-tone="ink" aria-pressed="false">чернила</button>
               </div>
-              <div style="margin-top:12px"><div class="hue-row" id="hue-row"></div></div>
+              <div style="margin-top:12px"><div class="hue-row" id="hue-row"><button type="button" class="hue-swatch auto" aria-label="оттенок авто" aria-pressed="false">авто</button><button type="button" class="hue-swatch" aria-label="оттенок 12" aria-pressed="false" style="--hue-color: hsl(12 40% 100%);"></button><button type="button" class="hue-swatch" aria-label="оттенок 40" aria-pressed="false" style="--hue-color: hsl(40 40% 100%);"></button><button type="button" class="hue-swatch" aria-label="оттенок 78" aria-pressed="false" style="--hue-color: hsl(78 40% 100%);"></button><button type="button" class="hue-swatch" aria-label="оттенок 140" aria-pressed="false" style="--hue-color: hsl(140 40% 100%);"></button><button type="button" class="hue-swatch" aria-label="оттенок 190" aria-pressed="true" style="--hue-color: hsl(190 40% 100%);"></button><button type="button" class="hue-swatch" aria-label="оттенок 225" aria-pressed="false" style="--hue-color: hsl(225 40% 100%);"></button><button type="button" class="hue-swatch" aria-label="оттенок 275" aria-pressed="false" style="--hue-color: hsl(275 40% 100%);"></button><button type="button" class="hue-swatch" aria-label="оттенок 320" aria-pressed="false" style="--hue-color: hsl(320 40% 100%);"></button></div></div>
               <div class="slider-grid" style="margin-top:14px">
                 <div class="slider" data-key="lightness">
                   <div class="slider-head"><span class="k">светлота</span><span class="v">100%</span></div>
@@ -1115,25 +1242,33 @@
               </div>
             </div>
 
-            <div class="control-group">
-              <h3>форма</h3>
-              <div class="shape-grid" id="shape-grid"></div>
+            <div class="control-group collapsible" data-collapsible="">
+              <h3 class="collapsible-head" role="button" tabindex="0" aria-expanded="false" aria-controls="cg-shape">
+                <span>форма</span><span class="chev" aria-hidden="true">▾</span>
+              </h3>
+              <div class="collapsible-body" id="cg-shape">
+                <div class="shape-grid" id="shape-grid"><button type="button" class="shape-btn" data-shape="auto" aria-pressed="true" aria-label="форма авто"><svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:#ffffff"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g></svg><span class="label">авто</span></button><button type="button" class="shape-btn" data-shape="round" aria-pressed="false" aria-label="форма круг"><svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:#ffffff"><path d="M83.66 49.81C83.66 73.11 73.04 84.15 50.62 84.15C28.2 84.15 17.57 73.11 17.57 49.81C17.57 26.51 28.2 15.47 50.62 15.47C73.04 15.47 83.66 26.51 83.66 49.81Z"></path></g></svg><span class="label">круг</span></button><button type="button" class="shape-btn" data-shape="organic" aria-pressed="false" aria-label="форма органика"><svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:#ffffff"><path d="M86.59 49.81C86.3 59.56 79.48 71.95 72.18 77.91C64.88 83.87 51.16 87.84 42.77 85.56C34.38 83.28 25.62 72.72 21.84 64.21C18.06 55.71 16.53 42.57 20.09 34.53C23.64 26.49 34.21 18.49 43.18 15.97C52.16 13.45 66.7 13.79 73.94 19.43C81.17 25.07 86.88 40.07 86.59 49.81Z"></path></g></svg><span class="label">органика</span></button><button type="button" class="shape-btn" data-shape="boxy" aria-pressed="false" aria-label="форма коробка"><svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:#ffffff"><path d="M78.91 47.14C81.69 76.54 81.69 76.54 53.39 79.21C25.1 81.88 25.1 81.88 22.32 52.48C19.55 23.08 19.55 23.08 47.84 20.41C76.14 17.74 76.14 17.74 78.91 47.14Z"></path></g></svg><span class="label">коробка</span></button><button type="button" class="shape-btn" data-shape="capsule" aria-pressed="false" aria-label="форма капсула"><svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:#ffffff"><circle cx="38.27" cy="49.81" r="21.35"></circle><circle cx="62.97" cy="49.81" r="21.35"></circle><path d="M38.27 28.46H62.97V71.17H38.27Z"></path></g></svg><span class="label">капсула</span></button><button type="button" class="shape-btn" data-shape="nub" aria-pressed="false" aria-label="форма нарост"><svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:#ffffff"><circle cx="67.63" cy="68.93" r="9.82"></circle><circle cx="74.24" cy="39.97" r="9.96"></circle><path d="M79.7 49.81C79.7 70.31 70.35 80.03 50.62 80.03C30.89 80.03 21.54 70.31 21.54 49.81C21.54 29.31 30.89 19.6 50.62 19.6C70.35 19.6 79.7 29.31 79.7 49.81Z"></path></g></svg><span class="label">нарост</span></button><button type="button" class="shape-btn" data-shape="cloud" aria-pressed="false" aria-label="форма облако"><svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:#ffffff"><circle cx="31.57" cy="44.88" r="15.37"></circle><circle cx="42.73" cy="37.9" r="13.99"></circle><circle cx="58.51" cy="37.9" r="13.8"></circle><circle cx="69.67" cy="44.88" r="11.69"></circle><path d="M79.25 49.81C79.02 57.57 73.59 67.43 67.78 72.17C61.97 76.92 51.05 80.08 44.37 78.27C37.69 76.45 30.72 68.04 27.71 61.27C24.7 54.51 23.49 44.05 26.32 37.65C29.15 31.25 37.56 24.88 44.7 22.88C51.84 20.87 63.42 21.14 69.18 25.63C74.93 30.12 79.48 42.05 79.25 49.81Z"></path></g></svg><span class="label">облако</span></button><button type="button" class="shape-btn" data-shape="sun" aria-pressed="false" aria-label="форма солнце"><svg viewBox="0 0 100 100" aria-hidden="true"><g style="fill:#ffffff"><circle cx="27.41" cy="55.97" r="5.98"></circle><circle cx="31.33" cy="35.51" r="5.98"></circle><circle cx="49.77" cy="25.82" r="5.98"></circle><circle cx="68.85" cy="34.19" r="5.98"></circle><circle cx="74.2" cy="54.33" r="5.98"></circle><circle cx="61.79" cy="71.06" r="5.98"></circle><circle cx="40.97" cy="71.8" r="5.98"></circle><path d="M73.75 49.81C73.75 66.12 66.31 73.85 50.62 73.85C34.92 73.85 27.49 66.12 27.49 49.81C27.49 33.5 34.92 25.78 50.62 25.78C66.31 25.78 73.75 33.5 73.75 49.81Z"></path></g></svg><span class="label">солнце</span></button></div>
+              </div>
             </div>
 
-            <div class="control-group">
-              <h3>тело</h3>
-              <div class="slider-grid">
-                <div class="slider" data-key="bodySize">
-                  <div class="slider-head"><span class="k">размер</span><span class="v">100%</span></div>
-                  <input type="range" min="60" max="140" value="100">
-                </div>
-                <div class="slider" data-key="bodyProportion">
-                  <div class="slider-head"><span class="k">пропорция</span><span class="v">100%</span></div>
-                  <input type="range" min="70" max="130" value="100">
-                </div>
-                <div class="slider" data-key="bodyTilt">
-                  <div class="slider-head"><span class="k">наклон</span><span class="v">0°</span></div>
-                  <input type="range" min="-30" max="30" value="0">
+            <div class="control-group collapsible" data-collapsible="">
+              <h3 class="collapsible-head" role="button" tabindex="0" aria-expanded="false" aria-controls="cg-body">
+                <span>тело</span><span class="chev" aria-hidden="true">▾</span>
+              </h3>
+              <div class="collapsible-body" id="cg-body">
+                <div class="slider-grid">
+                  <div class="slider" data-key="bodySize">
+                    <div class="slider-head"><span class="k">размер</span><span class="v">100</span></div>
+                    <input type="range" min="60" max="140" value="100">
+                  </div>
+                  <div class="slider" data-key="bodyProportion">
+                    <div class="slider-head"><span class="k">пропорция</span><span class="v">100</span></div>
+                    <input type="range" min="70" max="130" value="100">
+                  </div>
+                  <div class="slider" data-key="bodyTilt">
+                    <div class="slider-head"><span class="k">наклон</span><span class="v">0°</span></div>
+                    <input type="range" min="-30" max="30" value="0">
+                  </div>
                 </div>
               </div>
             </div>
@@ -1142,7 +1277,7 @@
               <h3>глаза</h3>
               <div class="slider-grid">
                 <div class="slider" data-key="eyeSize">
-                  <div class="slider-head"><span class="k">размер</span><span class="v">100%</span></div>
+                  <div class="slider-head"><span class="k">размер</span><span class="v">100</span></div>
                   <input type="range" min="60" max="140" value="100">
                 </div>
                 <div class="slider" data-key="eyeSeparation">
@@ -1166,7 +1301,91 @@
 
             <div class="control-group">
               <h3>выражение</h3>
-              <div class="shape-grid" id="expr-grid"></div>
+              <div class="shape-grid" id="expr-grid"><button type="button" class="shape-btn" data-expr="idle" aria-pressed="true" aria-label="выражение покой"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2258ms;--mo-bob-phase:-1140ms;--mo-blink:-4474ms;--mo-blink-phase:-3340ms;--mo-saccade:5180ms;--mo-saccade-phase:-4130ms;--mo-look-x:1.82;--mo-look-y:-0.80;--mo-look-mx:2.05;--mo-look-my:1.00;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">покой</span></button><button type="button" class="shape-btn" data-expr="happy" aria-pressed="false" aria-label="выражение радость"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2702ms;--mo-bob-phase:-1597ms;--mo-blink:-4350ms;--mo-blink-phase:-4380ms;--mo-saccade:4781ms;--mo-saccade-phase:-2904ms;--mo-look-x:1.67;--mo-look-y:0.24;--mo-look-mx:1.07;--mo-look-my:1.58;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -2.2)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.75 46.31C45.04 48.38 44.8 48.51 39.43 49.27C34.06 50.02 33.8 49.96 33.5 47.89C33.21 45.82 33.45 45.69 38.82 44.93C44.19 44.18 44.45 44.24 44.75 46.31Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M66.79 45.21C67.2 48.08 66.93 48.26 60.86 49.11C54.79 49.97 54.49 49.87 54.08 47C53.68 44.13 53.94 43.96 60.02 43.1C66.09 42.25 66.39 42.34 66.79 45.21Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">радость</span></button><button type="button" class="shape-btn" data-expr="sad" aria-pressed="false" aria-label="выражение грусть"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2486ms;--mo-bob-phase:-593ms;--mo-blink:-4633ms;--mo-blink-phase:-2832ms;--mo-saccade:6643ms;--mo-saccade-phase:-3311ms;--mo-look-x:1.80;--mo-look-y:-0.26;--mo-look-mx:2.25;--mo-look-my:1.55;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 2.6)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M40.5 51.33C42.22 54.84 42.22 55.05 40.52 55.87C38.82 56.7 38.66 56.58 36.94 53.07C35.23 49.56 35.23 49.36 36.93 48.53C38.63 47.7 38.79 47.82 40.5 51.33Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.69 51.85C61.37 55.68 61.23 55.83 59.46 55.22C57.68 54.61 57.66 54.41 58.98 50.57C60.31 46.73 60.45 46.58 62.22 47.19C63.99 47.8 64.01 48.01 62.69 51.85Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">грусть</span></button><button type="button" class="shape-btn" data-expr="mad" aria-pressed="false" aria-label="выражение злость"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2237ms;--mo-bob-phase:-1967ms;--mo-blink:-4965ms;--mo-blink-phase:-2864ms;--mo-saccade:4897ms;--mo-saccade-phase:-2077ms;--mo-look-x:2.32;--mo-look-y:0.23;--mo-look-mx:1.25;--mo-look-my:1.57;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 0.8)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M45.14 52.33C44.16 53.85 43.88 53.77 38.99 50.59C34.1 47.42 33.92 47.2 34.9 45.68C35.89 44.15 36.17 44.23 41.06 47.41C45.95 50.59 46.13 50.8 45.14 52.33Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M65.36 44.91C66.26 46.59 66.04 46.81 60.47 49.77C54.91 52.73 54.61 52.79 53.71 51.1C52.82 49.42 53.04 49.21 58.6 46.25C64.17 43.29 64.47 43.23 65.36 44.91Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">злость</span></button><button type="button" class="shape-btn" data-expr="surprised" aria-pressed="false" aria-label="выражение удивление"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2649ms;--mo-bob-phase:-292ms;--mo-blink:-4062ms;--mo-blink-phase:-2446ms;--mo-saccade:4742ms;--mo-saccade-phase:-2065ms;--mo-look-x:1.75;--mo-look-y:0.19;--mo-look-mx:1.84;--mo-look-my:1.24;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1.4)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.52 48.01C43.65 56.34 43.41 56.7 39.21 56.26C35.01 55.82 34.85 55.41 35.73 47.09C36.6 38.76 36.84 38.4 41.04 38.84C45.24 39.28 45.4 39.69 44.52 48.01Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.39 46.3C64.94 56.8 64.74 57.3 60.01 57.55C55.29 57.8 55.04 57.32 54.49 46.82C53.94 36.31 54.13 35.81 58.86 35.57C63.59 35.32 63.84 35.79 64.39 46.3Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">удивление</span></button><button type="button" class="shape-btn" data-expr="wink" aria-pressed="false" aria-label="выражение подмигивание"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2304ms;--mo-bob-phase:-1639ms;--mo-blink:-5608ms;--mo-blink-phase:-2392ms;--mo-saccade:4643ms;--mo-saccade-phase:-3077ms;--mo-look-x:1.58;--mo-look-y:0.32;--mo-look-mx:1.16;--mo-look-my:0.81;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1.1)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.16 47.62C44.63 52.9 44.45 53.16 40.31 53.53C36.16 53.89 35.95 53.66 35.49 48.38C35.02 43.1 35.19 42.84 39.34 42.47C43.49 42.11 43.7 42.34 44.16 47.62Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M65.34 46.42C65.51 48.07 65.27 48.17 59.92 48.73C54.57 49.29 54.31 49.24 54.14 47.6C53.96 45.95 54.2 45.85 59.56 45.28C64.91 44.72 65.17 44.77 65.34 46.42Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">подмигивание</span></button><button type="button" class="shape-btn" data-expr="sleepy" aria-pressed="false" aria-label="выражение сонный"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1774ms;--mo-bob-phase:-757ms;--mo-blink:-3778ms;--mo-blink-phase:-1470ms;--mo-saccade:5808ms;--mo-saccade-phase:-3272ms;--mo-look-x:1.43;--mo-look-y:0.14;--mo-look-mx:1.10;--mo-look-my:1.37;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 1.2)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.09 51C44.09 52.54 43.92 52.61 40.32 52.61C36.73 52.61 36.56 52.54 36.56 51C36.56 49.47 36.73 49.39 40.32 49.39C43.92 49.39 44.09 49.47 44.09 51Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.15 50.28C63.01 52.35 62.83 52.43 59.09 52.17C55.35 51.91 55.18 51.8 55.33 49.73C55.47 47.67 55.65 47.58 59.39 47.85C63.13 48.11 63.29 48.22 63.15 50.28Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">сонный</span></button><button type="button" class="shape-btn" data-expr="smug" aria-pressed="false" aria-label="выражение самодовольный"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1405ms;--mo-bob-phase:-746ms;--mo-blink:-3788ms;--mo-blink-phase:-490ms;--mo-saccade:5820ms;--mo-saccade-phase:-5015ms;--mo-look-x:1.57;--mo-look-y:-1.35;--mo-look-mx:2.29;--mo-look-my:1.34;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.2 46.78C45.11 49.56 44.97 49.75 41.07 51.02C37.17 52.28 36.95 52.21 36.04 49.43C35.14 46.64 35.28 46.45 39.18 45.18C43.08 43.92 43.3 43.99 44.2 46.78Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.05 45.61C64.97 48.44 64.81 48.64 60.4 50.08C56 51.51 55.75 51.44 54.83 48.61C53.91 45.77 54.07 45.57 58.47 44.14C62.88 42.71 63.13 42.77 64.05 45.61Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">самодовольный</span></button><button type="button" class="shape-btn" data-expr="unsure" aria-pressed="false" aria-label="выражение неуверенный"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-927ms;--mo-bob-phase:-1119ms;--mo-blink:-4977ms;--mo-blink-phase:-1906ms;--mo-saccade:6313ms;--mo-saccade-phase:-6311ms;--mo-look-x:2.28;--mo-look-y:0.39;--mo-look-mx:1.57;--mo-look-my:1.34;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.45 48.18C43.95 55.28 43.83 55.62 40.84 55.83C37.86 56.04 37.69 55.72 37.2 48.62C36.7 41.52 36.82 41.18 39.81 40.97C42.79 40.76 42.96 41.08 43.45 48.18Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.35 46.38C64.52 51.04 64.39 51.3 60.45 52.29C56.52 53.27 56.28 53.09 55.12 48.43C53.96 43.77 54.09 43.51 58.02 42.53C61.96 41.55 62.19 41.72 63.35 46.38Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">неуверенный</span></button><button type="button" class="shape-btn" data-expr="scared" aria-pressed="false" aria-label="выражение испуган"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1890ms;--mo-bob-phase:-1315ms;--mo-blink:-5250ms;--mo-blink-phase:-2361ms;--mo-saccade:5565ms;--mo-saccade-phase:-3402ms;--mo-look-x:1.41;--mo-look-y:0.31;--mo-look-mx:1.65;--mo-look-my:1.55;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -0.6)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.94 47.64C42.55 54.19 42.37 54.47 39.97 53.96C37.56 53.44 37.51 53.12 38.91 46.57C40.3 40.02 40.48 39.73 42.88 40.25C45.29 40.76 45.33 41.09 43.94 47.64Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M60.75 45.74C61.91 54.02 61.85 54.43 59.36 54.78C56.86 55.13 56.69 54.76 55.53 46.47C54.36 38.19 54.42 37.79 56.92 37.44C59.42 37.09 59.59 37.46 60.75 45.74Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">испуган</span></button><button type="button" class="shape-btn" data-expr="love" aria-pressed="false" aria-label="выражение любовь"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2288ms;--mo-bob-phase:-2544ms;--mo-blink:-3595ms;--mo-blink-phase:-3369ms;--mo-saccade:7133ms;--mo-saccade-phase:-1998ms;--mo-look-x:1.57;--mo-look-y:-1.23;--mo-look-mx:1.20;--mo-look-my:0.99;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1.6)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.73 48.79C41.57 57.45 41.35 57.82 38.71 57.17C36.08 56.51 36.06 56.08 38.22 47.41C40.38 38.75 40.6 38.38 43.23 39.03C45.87 39.69 45.89 40.12 43.73 48.79Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M61.8 46.66C63.35 57.65 63.27 58.18 60.2 58.61C57.13 59.04 56.92 58.55 55.38 47.56C53.83 36.57 53.9 36.04 56.97 35.61C60.04 35.18 60.26 35.67 61.8 46.66Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">любовь</span></button><button type="button" class="shape-btn" data-expr="shy" aria-pressed="false" aria-label="выражение стеснительный"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1297ms;--mo-bob-phase:-1274ms;--mo-blink:-3607ms;--mo-blink-phase:-2463ms;--mo-saccade:5733ms;--mo-saccade-phase:-2154ms;--mo-look-x:1.69;--mo-look-y:0.41;--mo-look-mx:2.38;--mo-look-my:1.46;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 0.9)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M42.84 49.65C43.44 53.08 43.38 53.26 41.46 53.6C39.53 53.93 39.42 53.79 38.81 50.36C38.2 46.92 38.27 46.75 40.19 46.41C42.12 46.07 42.23 46.21 42.84 49.65Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M60.77 49.08C60.64 52.89 60.54 53.06 58.6 52.99C56.66 52.92 56.57 52.74 56.71 48.94C56.84 45.13 56.94 44.96 58.88 45.02C60.82 45.09 60.9 45.27 60.77 49.08Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">стеснительный</span></button><button type="button" class="shape-btn" data-expr="sick" aria-pressed="false" aria-label="выражение больной"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-279ms;--mo-bob-phase:-1300ms;--mo-blink:-5550ms;--mo-blink-phase:-765ms;--mo-saccade:6657ms;--mo-saccade-phase:-185ms;--mo-look-x:1.36;--mo-look-y:0.09;--mo-look-mx:1.20;--mo-look-my:0.93;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 1.4)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.7 48.99C44.51 51.22 44.38 51.38 40.67 52.73C36.97 54.08 36.76 54.04 35.95 51.81C35.14 49.58 35.27 49.42 38.98 48.07C42.68 46.72 42.89 46.76 43.7 48.99Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.24 50.53C63.65 52.86 63.43 52.92 59.13 51.85C54.83 50.78 54.66 50.62 55.24 48.29C55.82 45.96 56.05 45.9 60.35 46.97C64.64 48.04 64.82 48.2 64.24 50.53Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">больной</span></button><button type="button" class="shape-btn" data-expr="thinking" aria-pressed="false" aria-label="выражение размышление"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2573ms;--mo-bob-phase:-3141ms;--mo-blink:-4646ms;--mo-blink-phase:-1381ms;--mo-saccade:7079ms;--mo-saccade-phase:-4836ms;--mo-look-x:1.20;--mo-look-y:-1.50;--mo-look-mx:1.88;--mo-look-my:1.14;" aria-hidden="true">
+    <g class="mo-root mo-always mo-expr" style="--mo-esx: 1.15; --mo-esy: 0.62; --mo-edy: 4.2; --mo-edx: 0.4; --mo-esx2: 0.02; --mo-esy2: 0.06; --mo-edy2: -8.4; --mo-lock: 1; --mo-rock: 0.8; --mo-bdy: -0.4; --mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -0.4)">
+        <g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.02 52.8C44.02 57.13 43.85 57.33 40.22 57.33C36.6 57.33 36.43 57.13 36.43 52.8C36.43 48.48 36.6 48.27 40.22 48.27C43.85 48.27 44.02 48.48 44.02 52.8Z"></path></g><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.51 43.41C63.51 49.04 63.32 49.3 59.34 49.3C55.35 49.3 55.17 49.04 55.17 43.41C55.17 37.78 55.35 37.51 59.34 37.51C63.32 37.51 63.51 37.78 63.51 43.41Z"></path></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">размышление</span></button></div>
             </div>
           </div>
         </div>
@@ -1186,7 +1405,14 @@
             </div>
           </div>
           <button type="button" class="copy-btn" data-copy="#code-output">Копировать</button>
-          <pre><code id="code-output"></code></pre>
+          <pre><code id="code-output">&lt;Broot
+  name="halo"
+  shape="auto"
+  expression="idle"
+  hue={190}
+  saturation={0}
+  lightness={100}
+/&gt;</code></pre>
         </div>
       </section>
 
@@ -1198,7 +1424,14 @@
         <div class="png-panel">
           <div class="png-preview">
             <div class="checker"></div>
-            <div class="png-stage" id="png-stage"></div>
+            <div class="png-stage" id="png-stage"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <g transform="">
+    <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)">
+      <g fill="#ffffff"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g>
+      <g fill="#051215"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000 1.0000) translate(-40.62 -48.6)"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000 1.0000) translate(-58.94 -47.61)"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g>
+    </g>
+  </g>
+</svg></div>
           </div>
           <div class="png-controls">
             <div>
@@ -1241,32 +1474,279 @@
             <article id="presence-avatar" class="component-card">
               <h3>Аватар присутствия</h3>
               <p>Кликните по аватару — его выражение применится к редактору. Активный обведён фоном.</p>
-              <div class="component-preview"><div class="presence-row" id="presence-row"></div></div>
-              <div class="component-code-slot" data-comp="presence"></div>
+              <div class="component-preview"><div class="presence-row" id="presence-row">
+      <div class="presence-item" data-presence="online" role="button" tabindex="0" aria-pressed="false" aria-label="Выбрать: в сети">
+        <div class="avatar-wrap" role="img" aria-label="в сети"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1014ms;--mo-bob-phase:-132ms;--mo-blink:-4030ms;--mo-blink-phase:-1815ms;--mo-saccade:6904ms;--mo-saccade-phase:-6548ms;--mo-look-x:1.37;--mo-look-y:-0.28;--mo-look-mx:2.04;--mo-look-my:1.07;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status online"></span></div>
+        <span class="label">в сети</span>
+      </div>
+      <div class="presence-item" data-presence="online3" role="button" tabindex="0" aria-pressed="false" aria-label="Выбрать: в сети, 3 непрочитанных">
+        <div class="avatar-wrap" role="img" aria-label="в сети, 3 непрочитанных"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-650ms;--mo-bob-phase:-1840ms;--mo-blink:-5562ms;--mo-blink-phase:-3151ms;--mo-saccade:7095ms;--mo-saccade-phase:-5559ms;--mo-look-x:2.16;--mo-look-y:-0.91;--mo-look-mx:2.00;--mo-look-my:0.83;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status online"></span><span class="unread">3</span></div>
+        <span class="label">в сети, 3 непрочитанных</span>
+      </div>
+      <div class="presence-item" data-presence="thinking" role="button" tabindex="0" aria-pressed="false" aria-label="Выбрать: размышляет">
+        <div class="avatar-wrap" role="img" aria-label="размышляет"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1730ms;--mo-bob-phase:-1483ms;--mo-blink:-5103ms;--mo-blink-phase:-1329ms;--mo-saccade:6569ms;--mo-saccade-phase:-61ms;--mo-look-x:2.22;--mo-look-y:-1.17;--mo-look-mx:2.10;--mo-look-my:0.99;" aria-hidden="true">
+    <g class="mo-root mo-always mo-expr" style="--mo-esx: 1.15; --mo-esy: 0.62; --mo-edy: 4.2; --mo-edx: 0.4; --mo-esx2: 0.02; --mo-esy2: 0.06; --mo-edy2: -8.4; --mo-lock: 1; --mo-rock: 0.8; --mo-bdy: -0.4; --mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -0.4)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.02 52.8C44.02 57.13 43.85 57.33 40.22 57.33C36.6 57.33 36.43 57.13 36.43 52.8C36.43 48.48 36.6 48.27 40.22 48.27C43.85 48.27 44.02 48.48 44.02 52.8Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.51 43.41C63.51 49.04 63.32 49.3 59.34 49.3C55.35 49.3 55.17 49.04 55.17 43.41C55.17 37.78 55.35 37.51 59.34 37.51C63.32 37.51 63.51 37.78 63.51 43.41Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="typing-dots"><i class="typing-dot"></i><i class="typing-dot"></i><i class="typing-dot"></i></span></div>
+        <span class="label">размышляет</span>
+      </div>
+      <div class="presence-item" data-presence="away" role="button" tabindex="0" aria-pressed="false" aria-label="Выбрать: отошёл">
+        <div class="avatar-wrap" role="img" aria-label="отошёл"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-631ms;--mo-bob-phase:-874ms;--mo-blink:-5216ms;--mo-blink-phase:-3880ms;--mo-saccade:4632ms;--mo-saccade-phase:-6082ms;--mo-look-x:1.20;--mo-look-y:-0.48;--mo-look-mx:1.27;--mo-look-my:1.53;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 1.2)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.09 51C44.09 52.54 43.92 52.61 40.32 52.61C36.73 52.61 36.56 52.54 36.56 51C36.56 49.47 36.73 49.39 40.32 49.39C43.92 49.39 44.09 49.47 44.09 51Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.15 50.28C63.01 52.35 62.83 52.43 59.09 52.17C55.35 51.91 55.18 51.8 55.33 49.73C55.47 47.67 55.65 47.58 59.39 47.85C63.13 48.11 63.29 48.22 63.15 50.28Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status away"></span></div>
+        <span class="label">отошёл</span>
+      </div>
+      <div class="presence-item" data-presence="offline" role="button" tabindex="0" aria-pressed="false" aria-label="Выбрать: не в сети, 128 непрочитанных">
+        <div class="avatar-wrap" role="img" aria-label="не в сети, 128 непрочитанных"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-404ms;--mo-bob-phase:-268ms;--mo-blink:-4090ms;--mo-blink-phase:-2674ms;--mo-saccade:4963ms;--mo-saccade-phase:-6090ms;--mo-look-x:2.36;--mo-look-y:0.19;--mo-look-mx:1.65;--mo-look-my:0.84;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status offline"></span><span class="unread">99+</span></div>
+        <span class="label">не в сети, 128 непрочитанных</span>
+      </div></div></div>
+              <div class="component-code-slot" data-comp="presence" data-ready="1">
+      <button type="button" class="component-code-toggle" data-toggle="presence" aria-expanded="false">код html</button>
+      <div class="component-code" data-panel="presence" hidden="">
+        <div class="component-code-head">
+          <div class="code-tabs" role="group" aria-label="Формат вывода">
+            <button type="button" class="code-tab" data-cmode="html" aria-pressed="true">фрагмент</button>
+            <button type="button" class="code-tab" data-cmode="standalone" aria-pressed="false">страница</button>
+          </div>
+          <button type="button" class="copy-btn-inline" data-ccopy="presence">Копировать</button>
+        </div>
+        <pre><code></code></pre>
+      </div></div>
             </article>
             <article id="agent-list" class="component-card">
               <h3>Список агентов</h3>
               <p>Список агентов в сайдбаре. Нет загруженных аватарок и нет ручного дизайна — имя и есть аватар.</p>
-              <div class="component-preview"><div class="agent-sidebar" id="agent-list-slot"></div></div>
-              <div class="component-code-slot" data-comp="agents"></div>
+              <div class="component-preview"><div class="agent-sidebar" id="agent-list-slot"><div class="sb-head"><span>Агенты</span><span class="count">2/5</span></div><ul class="agent-list"><li><div class="agent-item"><div class="avatar-wrap" role="img" aria-label="scout"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-537ms;--mo-bob-phase:-3237ms;--mo-blink:-3825ms;--mo-blink-phase:-1999ms;--mo-saccade:4846ms;--mo-saccade-phase:-2176ms;--mo-look-x:1.97;--mo-look-y:-1.48;--mo-look-mx:1.09;--mo-look-my:1.02;" aria-hidden="true">
+    <g class="mo-root mo-always mo-expr" style="--mo-esx: 1.15; --mo-esy: 0.62; --mo-edy: 4.2; --mo-edx: 0.4; --mo-esx2: 0.02; --mo-esy2: 0.06; --mo-edy2: -8.4; --mo-lock: 1; --mo-rock: 0.8; --mo-bdy: -0.4; --mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -0.4)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.02 52.8C44.02 57.13 43.85 57.33 40.22 57.33C36.6 57.33 36.43 57.13 36.43 52.8C36.43 48.48 36.6 48.27 40.22 48.27C43.85 48.27 44.02 48.48 44.02 52.8Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.51 43.41C63.51 49.04 63.32 49.3 59.34 49.3C55.35 49.3 55.17 49.04 55.17 43.41C55.17 37.78 55.35 37.51 59.34 37.51C63.32 37.51 63.51 37.78 63.51 43.41Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="agent-meta"><span class="name">scout</span><span class="sub">читает 41 файл</span></div><span class="agent-time">1м</span></div></li><li><div class="agent-item is-active"><div class="avatar-wrap" role="img" aria-label="planner"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-693ms;--mo-bob-phase:-2117ms;--mo-blink:-5067ms;--mo-blink-phase:-3954ms;--mo-saccade:5108ms;--mo-saccade-phase:-5925ms;--mo-look-x:2.28;--mo-look-y:-1.27;--mo-look-mx:1.69;--mo-look-my:1.05;" aria-hidden="true">
+    <g class="mo-root mo-always mo-expr" style="--mo-esx: 1.15; --mo-esy: 0.62; --mo-edy: 4.2; --mo-edx: 0.4; --mo-esx2: 0.02; --mo-esy2: 0.06; --mo-edy2: -8.4; --mo-lock: 1; --mo-rock: 0.8; --mo-bdy: -0.4; --mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -0.4)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.02 52.8C44.02 57.13 43.85 57.33 40.22 57.33C36.6 57.33 36.43 57.13 36.43 52.8C36.43 48.48 36.6 48.27 40.22 48.27C43.85 48.27 44.02 48.48 44.02 52.8Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.51 43.41C63.51 49.04 63.32 49.3 59.34 49.3C55.35 49.3 55.17 49.04 55.17 43.41C55.17 37.78 55.35 37.51 59.34 37.51C63.32 37.51 63.51 37.78 63.51 43.41Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="agent-meta"><span class="name">planner</span><span class="sub">пишет миграцию</span></div><span class="agent-time">12с</span></div></li><li><div class="agent-item"><div class="avatar-wrap" role="img" aria-label="reviewer"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-952ms;--mo-bob-phase:-1283ms;--mo-blink:-4586ms;--mo-blink-phase:-427ms;--mo-saccade:5503ms;--mo-saccade-phase:-451ms;--mo-look-x:1.64;--mo-look-y:-0.40;--mo-look-mx:2.13;--mo-look-my:1.21;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status online"></span></div><div class="agent-meta"><span class="name">reviewer</span><span class="sub">ждёт diff</span></div></div></li><li><div class="agent-item"><div class="avatar-wrap" role="img" aria-label="packager"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-443ms;--mo-bob-phase:-1633ms;--mo-blink:-5615ms;--mo-blink-phase:-3199ms;--mo-saccade:5865ms;--mo-saccade-phase:-3892ms;--mo-look-x:1.46;--mo-look-y:0.13;--mo-look-mx:2.01;--mo-look-my:0.90;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status away"></span></div><div class="agent-meta"><span class="name">packager</span><span class="sub">запуск 6м назад</span></div></div></li><li><div class="agent-item"><div class="avatar-wrap" role="img" aria-label="publisher"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1011ms;--mo-bob-phase:-1357ms;--mo-blink:-5013ms;--mo-blink-phase:-4332ms;--mo-saccade:5873ms;--mo-saccade-phase:-4957ms;--mo-look-x:1.81;--mo-look-y:0.29;--mo-look-mx:2.02;--mo-look-my:1.36;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status offline"></span></div><div class="agent-meta"><span class="name">publisher</span><span class="sub">не запущен</span></div></div></li></ul></div></div>
+              <div class="component-code-slot" data-comp="agents" data-ready="1">
+      <button type="button" class="component-code-toggle" data-toggle="agents" aria-expanded="false">код html</button>
+      <div class="component-code" data-panel="agents" hidden="">
+        <div class="component-code-head">
+          <div class="code-tabs" role="group" aria-label="Формат вывода">
+            <button type="button" class="code-tab" data-cmode="html" aria-pressed="true">фрагмент</button>
+            <button type="button" class="code-tab" data-cmode="standalone" aria-pressed="false">страница</button>
+          </div>
+          <button type="button" class="copy-btn-inline" data-ccopy="agents">Копировать</button>
+        </div>
+        <pre><code></code></pre>
+      </div></div>
             </article>
             <article id="user-table" class="component-card">
               <h3>Таблица пользователей</h3>
               <p>Лицо в строке — единственная колонка, которая отличается от всех и делает строку находимой.</p>
-              <div class="component-preview"><div class="user-table-wrap" id="user-table-slot"></div></div>
-              <div class="component-code-slot" data-comp="users"></div>
+              <div class="component-preview"><div class="user-table-wrap" id="user-table-slot"><table class="user-table"><thead><tr><th>Пользователь</th><th>Роль</th><th>Статус</th><th class="right">Был(а)</th></tr></thead><tbody><tr><td><div class="user-cell"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1397ms;--mo-bob-phase:-892ms;--mo-blink:-4051ms;--mo-blink-phase:-1886ms;--mo-saccade:6526ms;--mo-saccade-phase:-3785ms;--mo-look-x:1.54;--mo-look-y:-0.16;--mo-look-mx:1.43;--mo-look-my:0.91;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="user-meta"><div class="user-name">Лаура Брандт</div><div class="user-email">l.brandt@example.com</div></div></div></td><td class="muted">Владелец</td><td><span class="chip">активен</span></td><td class="user-time">2м назад</td></tr><tr><td><div class="user-cell"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2383ms;--mo-bob-phase:-2886ms;--mo-blink:-4409ms;--mo-blink-phase:-4068ms;--mo-saccade:5036ms;--mo-saccade-phase:-1307ms;--mo-look-x:1.68;--mo-look-y:0.04;--mo-look-mx:1.87;--mo-look-my:1.15;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="user-meta"><div class="user-name">Тобиас Оконкво</div><div class="user-email">t.okonkwo@example.com</div></div></div></td><td class="muted">Админ</td><td><span class="chip">активен</span></td><td class="user-time">1ч назад</td></tr><tr><td><div class="user-cell"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1673ms;--mo-bob-phase:-2761ms;--mo-blink:-5543ms;--mo-blink-phase:-2922ms;--mo-saccade:5925ms;--mo-saccade-phase:-2133ms;--mo-look-x:1.06;--mo-look-y:-1.35;--mo-look-mx:2.38;--mo-look-my:1.27;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="user-meta"><div class="user-name">Свея Накамура</div><div class="user-email">s.nakamura@example.com</div></div></div></td><td class="muted">Разработчик</td><td><span class="chip">активен</span></td><td class="user-time">вчера</td></tr><tr><td><div class="user-cell"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-80ms;--mo-bob-phase:-2405ms;--mo-blink:-5485ms;--mo-blink-phase:-3031ms;--mo-saccade:4847ms;--mo-saccade-phase:-5441ms;--mo-look-x:1.66;--mo-look-y:-1.20;--mo-look-mx:1.95;--mo-look-my:0.80;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="user-meta"><div class="user-name">Сора Накагава</div><div class="user-email">s.nakagawa@example.com</div></div></div></td><td class="muted">Разработчик</td><td><span class="chip">приглашён</span></td><td class="user-time">никогда</td></tr><tr><td><div class="user-cell"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2736ms;--mo-bob-phase:-1524ms;--mo-blink:-5278ms;--mo-blink-phase:-666ms;--mo-saccade:5494ms;--mo-saccade-phase:-2429ms;--mo-look-x:1.16;--mo-look-y:0.02;--mo-look-mx:2.14;--mo-look-my:1.28;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="user-meta"><div class="user-name">Иван Петров</div><div class="user-email">i.petrov@example.com</div></div></div></td><td class="muted">Биллинг</td><td><span class="chip">приостановлен</span></td><td class="user-time">3 недели назад</td></tr></tbody></table></div></div>
+              <div class="component-code-slot" data-comp="users" data-ready="1">
+      <button type="button" class="component-code-toggle" data-toggle="users" aria-expanded="false">код html</button>
+      <div class="component-code" data-panel="users" hidden="">
+        <div class="component-code-head">
+          <div class="code-tabs" role="group" aria-label="Формат вывода">
+            <button type="button" class="code-tab" data-cmode="html" aria-pressed="true">фрагмент</button>
+            <button type="button" class="code-tab" data-cmode="standalone" aria-pressed="false">страница</button>
+          </div>
+          <button type="button" class="copy-btn-inline" data-ccopy="users">Копировать</button>
+        </div>
+        <pre><code></code></pre>
+      </div></div>
             </article>
             <article id="password-field" class="component-card">
               <h3>Поле пароля</h3>
               <p>Пока ввод скрыт — Broot смотрит на каретку; как только открываете пароль — отворачивается.</p>
-              <div class="component-preview"><div class="password-demo" id="password-demo-slot"></div></div>
-              <div class="component-code-slot" data-comp="password"></div>
+              <div class="component-preview"><div class="password-demo" id="password-demo-slot">
+    <div class="password-blob"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="password-blob-inner" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1694ms;--mo-bob-phase:-86ms;--mo-blink:-5115ms;--mo-blink-phase:-1600ms;--mo-saccade:4932ms;--mo-saccade-phase:-5150ms;--mo-look-x:2.18;--mo-look-y:-1.42;--mo-look-mx:2.20;--mo-look-my:1.41;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div>
+    <div class="password-field">
+      <label for="broot-password">Пароль</label>
+      <div class="password-input-wrap">
+        <input id="broot-password" class="password-input" type="password" autocomplete="current-password" placeholder="Введите что-нибудь, затем нажмите Показать">
+        <button type="button" class="password-show" id="password-show-btn" tabindex="-1" aria-pressed="false">Показать</button>
+      </div>
+      <p class="password-hint">Слежу за вводом.</p>
+    </div></div></div>
+              <div class="component-code-slot" data-comp="password" data-ready="1">
+      <button type="button" class="component-code-toggle" data-toggle="password" aria-expanded="false">код html</button>
+      <div class="component-code" data-panel="password" hidden="">
+        <div class="component-code-head">
+          <div class="code-tabs" role="group" aria-label="Формат вывода">
+            <button type="button" class="code-tab" data-cmode="html" aria-pressed="true">фрагмент</button>
+            <button type="button" class="code-tab" data-cmode="standalone" aria-pressed="false">страница</button>
+          </div>
+          <button type="button" class="copy-btn-inline" data-ccopy="password">Копировать</button>
+        </div>
+        <pre><code></code></pre>
+      </div></div>
             </article>
             <article id="group-chat" class="component-card">
               <h3>Групповой чат</h3>
               <p>В чате имена проскакивают мимо глаз. Что реально несёт «кто что сказал» — левая колонка.</p>
-              <div class="component-preview"><div id="group-chat-slot"></div></div>
-              <div class="component-code-slot" data-comp="chat"></div>
+              <div class="component-preview"><div id="group-chat-slot">
+    <div class="chat">
+      <div class="chat-header"><span><span class="prefix">#</span> релиз</span><div class="chat-members"><span class="mini"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1247ms;--mo-bob-phase:-1321ms;--mo-blink:-4264ms;--mo-blink-phase:-4452ms;--mo-saccade:7148ms;--mo-saccade-phase:-1693ms;--mo-look-x:1.10;--mo-look-y:0.20;--mo-look-mx:1.95;--mo-look-my:1.24;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></span><span class="mini"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-184ms;--mo-bob-phase:-3387ms;--mo-blink:-4643ms;--mo-blink-phase:-128ms;--mo-saccade:6060ms;--mo-saccade-phase:-6841ms;--mo-look-x:1.43;--mo-look-y:-1.30;--mo-look-mx:1.37;--mo-look-my:1.16;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></span><span class="mini"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1311ms;--mo-bob-phase:-3081ms;--mo-blink:-4222ms;--mo-blink-phase:-4734ms;--mo-saccade:4783ms;--mo-saccade-phase:-2949ms;--mo-look-x:2.00;--mo-look-y:0.43;--mo-look-mx:2.01;--mo-look-my:1.17;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></span><span class="mini"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2026ms;--mo-bob-phase:-2161ms;--mo-blink:-4444ms;--mo-blink-phase:-213ms;--mo-saccade:6548ms;--mo-saccade-phase:-5523ms;--mo-look-x:1.65;--mo-look-y:-0.40;--mo-look-mx:1.44;--mo-look-my:0.96;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></span><span class="more">+12</span></div></div>
+      <div class="chat-messages">
+        <div class="chat-msg"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2254ms;--mo-bob-phase:-3047ms;--mo-blink:-3590ms;--mo-blink-phase:-4603ms;--mo-saccade:6677ms;--mo-saccade-phase:-736ms;--mo-look-x:2.06;--mo-look-y:-1.26;--mo-look-mx:2.35;--mo-look-my:0.84;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="msg-body"><div class="msg-head"><span class="msg-author">laura</span><span class="msg-time">9:41</span></div><div class="msg-text">аватары живые, у каждой учётки свой<br>без загрузок, без серых инициалов</div></div></div><div class="chat-msg"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2403ms;--mo-bob-phase:0ms;--mo-blink:-4491ms;--mo-blink-phase:-1141ms;--mo-saccade:6894ms;--mo-saccade-phase:-996ms;--mo-look-x:1.86;--mo-look-y:-0.79;--mo-look-mx:1.16;--mo-look-my:1.19;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="msg-body"><div class="msg-head"><span class="msg-author">tobias</span><span class="msg-time">9:42</span></div><div class="msg-text">генерируется из имени пользователя?</div></div></div><div class="chat-msg"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1730ms;--mo-bob-phase:-1118ms;--mo-blink:-5332ms;--mo-blink-phase:-2824ms;--mo-saccade:7086ms;--mo-saccade-phase:-4918ms;--mo-look-x:1.77;--mo-look-y:0.30;--mo-look-mx:1.54;--mo-look-my:1.05;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="msg-body"><div class="msg-head"><span class="msg-author">svea</span><span class="msg-time">9:43</span></div><div class="msg-text">одна строка — одно лицо, навсегда. моё такое с самого регистрации</div></div></div><div class="chat-msg"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-351ms;--mo-bob-phase:-803ms;--mo-blink:-3608ms;--mo-blink-phase:-2972ms;--mo-saccade:6252ms;--mo-saccade-phase:-2164ms;--mo-look-x:1.40;--mo-look-y:-0.24;--mo-look-mx:2.12;--mo-look-my:0.80;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="msg-body"><div class="msg-head"><span class="msg-author">ivan</span><span class="msg-time">9:43</span></div><div class="msg-text">то есть staging-я и prod-я — разные люди 😅</div></div></div><div class="chat-msg"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-498ms;--mo-bob-phase:-2007ms;--mo-blink:-4396ms;--mo-blink-phase:-268ms;--mo-saccade:4668ms;--mo-saccade-phase:-356ms;--mo-look-x:1.69;--mo-look-y:-0.27;--mo-look-mx:1.62;--mo-look-my:1.05;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><div class="msg-body"><div class="msg-head"><span class="msg-author">svea</span><span class="msg-time">9:44</span></div><div class="msg-text">другая строка — другой человек. вот и весь фокус</div></div></div>
+        <div class="chat-typing"><div class="avatar-wrap"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1939ms;--mo-bob-phase:-1160ms;--mo-blink:-3638ms;--mo-blink-phase:-3029ms;--mo-saccade:5119ms;--mo-saccade-phase:-6467ms;--mo-look-x:1.65;--mo-look-y:0.11;--mo-look-mx:1.74;--mo-look-my:1.12;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div><span class="text">tobias печатает</span></div>
+      </div>
+    </div></div></div>
+              <div class="component-code-slot" data-comp="chat" data-ready="1">
+      <button type="button" class="component-code-toggle" data-toggle="chat" aria-expanded="false">код html</button>
+      <div class="component-code" data-panel="chat" hidden="">
+        <div class="component-code-head">
+          <div class="code-tabs" role="group" aria-label="Формат вывода">
+            <button type="button" class="code-tab" data-cmode="html" aria-pressed="true">фрагмент</button>
+            <button type="button" class="code-tab" data-cmode="standalone" aria-pressed="false">страница</button>
+          </div>
+          <button type="button" class="copy-btn-inline" data-ccopy="chat">Копировать</button>
+        </div>
+        <pre><code></code></pre>
+      </div></div>
             </article>
           </div>
         </div>
@@ -1277,7 +1757,37 @@
           <h2>Состояния</h2>
           <span class="pill">5 состояний — отражают текущую настройку</span>
         </header>
-        <div class="states-grid" id="states-grid"></div>
+        <div class="states-grid" id="states-grid"><div class="state-card"><div class="avatar" role="img" aria-label="в сети"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1867ms;--mo-bob-phase:-3393ms;--mo-blink:-4925ms;--mo-blink-phase:-4243ms;--mo-saccade:6729ms;--mo-saccade-phase:-4633ms;--mo-look-x:2.23;--mo-look-y:-0.77;--mo-look-mx:1.74;--mo-look-my:1.29;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status online" aria-hidden="true"></span></div><span class="label">в сети</span></div><div class="state-card"><div class="avatar" role="img" aria-label="в сети, 3 непрочитанных"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1697ms;--mo-bob-phase:-2898ms;--mo-blink:-3754ms;--mo-blink-phase:-3180ms;--mo-saccade:7043ms;--mo-saccade-phase:-4553ms;--mo-look-x:1.16;--mo-look-y:0.18;--mo-look-mx:2.37;--mo-look-my:1.50;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status online" aria-hidden="true"></span><span class="unread" aria-hidden="true">3</span></div><span class="label">в сети, 3 непрочитанных</span></div><div class="state-card"><div class="avatar" role="img" aria-label="размышляет"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-785ms;--mo-bob-phase:-1444ms;--mo-blink:-5139ms;--mo-blink-phase:-2630ms;--mo-saccade:6865ms;--mo-saccade-phase:-4624ms;--mo-look-x:1.12;--mo-look-y:-0.88;--mo-look-mx:1.35;--mo-look-my:1.15;" aria-hidden="true">
+    <g class="mo-root mo-always mo-expr" style="--mo-esx: 1.15; --mo-esy: 0.62; --mo-edy: 4.2; --mo-edx: 0.4; --mo-esx2: 0.02; --mo-esy2: 0.06; --mo-edy2: -8.4; --mo-lock: 1; --mo-rock: 0.8; --mo-bdy: -0.4; --mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -0.4)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.02 52.8C44.02 57.13 43.85 57.33 40.22 57.33C36.6 57.33 36.43 57.13 36.43 52.8C36.43 48.48 36.6 48.27 40.22 48.27C43.85 48.27 44.02 48.48 44.02 52.8Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.51 43.41C63.51 49.04 63.32 49.3 59.34 49.3C55.35 49.3 55.17 49.04 55.17 43.41C55.17 37.78 55.35 37.51 59.34 37.51C63.32 37.51 63.51 37.78 63.51 43.41Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="typing-dots" aria-hidden="true"><i class="typing-dot"></i><i class="typing-dot"></i><i class="typing-dot"></i></span></div><span class="label">размышляет</span></div><div class="state-card"><div class="avatar" role="img" aria-label="отошёл"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1090ms;--mo-bob-phase:-2513ms;--mo-blink:-5121ms;--mo-blink-phase:-1210ms;--mo-saccade:5460ms;--mo-saccade-phase:-6095ms;--mo-look-x:2.08;--mo-look-y:-1.30;--mo-look-mx:1.76;--mo-look-my:1.34;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status away" aria-hidden="true"></span></div><span class="label">отошёл</span></div><div class="state-card"><div class="avatar" role="img" aria-label="не в сети, 128 непрочитанных"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1260ms;--mo-bob-phase:-1776ms;--mo-blink:-4742ms;--mo-blink-phase:-1741ms;--mo-saccade:5420ms;--mo-saccade-phase:-1882ms;--mo-look-x:2.26;--mo-look-y:0.16;--mo-look-mx:1.00;--mo-look-my:0.92;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="status offline" aria-hidden="true"></span><span class="unread" aria-hidden="true">99+</span></div><span class="label">не в сети, 128 непрочитанных</span></div></div>
       </section>
 
       <section id="expressions-section">
@@ -1286,7 +1796,91 @@
           <span class="pill">14 выражений — отражают текущую настройку</span>
         </header>
         <div class="expressions-panel">
-          <div class="expressions-grid" id="expressions-grid" role="group" aria-label="Все выражения"></div>
+          <div class="expressions-grid" id="expressions-grid" role="group" aria-label="Все выражения"><button type="button" class="expr-btn" aria-pressed="true" aria-label="покой" data-expr="idle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-385ms;--mo-bob-phase:-2002ms;--mo-blink:-5602ms;--mo-blink-phase:-2344ms;--mo-saccade:5373ms;--mo-saccade-phase:-5838ms;--mo-look-x:2.13;--mo-look-y:-0.87;--mo-look-mx:2.14;--mo-look-my:0.95;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">покой</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="радость" data-expr="happy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-248ms;--mo-bob-phase:-1911ms;--mo-blink:-5238ms;--mo-blink-phase:-3760ms;--mo-saccade:6399ms;--mo-saccade-phase:-4112ms;--mo-look-x:1.02;--mo-look-y:0.24;--mo-look-mx:2.36;--mo-look-my:1.20;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -2.2)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.75 46.31C45.04 48.38 44.8 48.51 39.43 49.27C34.06 50.02 33.8 49.96 33.5 47.89C33.21 45.82 33.45 45.69 38.82 44.93C44.19 44.18 44.45 44.24 44.75 46.31Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M66.79 45.21C67.2 48.08 66.93 48.26 60.86 49.11C54.79 49.97 54.49 49.87 54.08 47C53.68 44.13 53.94 43.96 60.02 43.1C66.09 42.25 66.39 42.34 66.79 45.21Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">радость</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="грусть" data-expr="sad"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-247ms;--mo-bob-phase:-3398ms;--mo-blink:-4593ms;--mo-blink-phase:-4209ms;--mo-saccade:5902ms;--mo-saccade-phase:-1966ms;--mo-look-x:1.79;--mo-look-y:-0.24;--mo-look-mx:1.28;--mo-look-my:1.08;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 2.6)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M40.5 51.33C42.22 54.84 42.22 55.05 40.52 55.87C38.82 56.7 38.66 56.58 36.94 53.07C35.23 49.56 35.23 49.36 36.93 48.53C38.63 47.7 38.79 47.82 40.5 51.33Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.69 51.85C61.37 55.68 61.23 55.83 59.46 55.22C57.68 54.61 57.66 54.41 58.98 50.57C60.31 46.73 60.45 46.58 62.22 47.19C63.99 47.8 64.01 48.01 62.69 51.85Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">грусть</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="злость" data-expr="mad"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2314ms;--mo-bob-phase:-2956ms;--mo-blink:-5359ms;--mo-blink-phase:-4327ms;--mo-saccade:7168ms;--mo-saccade-phase:-5698ms;--mo-look-x:2.05;--mo-look-y:-1.12;--mo-look-mx:1.59;--mo-look-my:1.16;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 0.8)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M45.14 52.33C44.16 53.85 43.88 53.77 38.99 50.59C34.1 47.42 33.92 47.2 34.9 45.68C35.89 44.15 36.17 44.23 41.06 47.41C45.95 50.59 46.13 50.8 45.14 52.33Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M65.36 44.91C66.26 46.59 66.04 46.81 60.47 49.77C54.91 52.73 54.61 52.79 53.71 51.1C52.82 49.42 53.04 49.21 58.6 46.25C64.17 43.29 64.47 43.23 65.36 44.91Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">злость</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="удивление" data-expr="surprised"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1545ms;--mo-bob-phase:-272ms;--mo-blink:-4617ms;--mo-blink-phase:-786ms;--mo-saccade:5697ms;--mo-saccade-phase:-4961ms;--mo-look-x:1.61;--mo-look-y:-0.56;--mo-look-mx:1.08;--mo-look-my:1.28;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1.4)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.52 48.01C43.65 56.34 43.41 56.7 39.21 56.26C35.01 55.82 34.85 55.41 35.73 47.09C36.6 38.76 36.84 38.4 41.04 38.84C45.24 39.28 45.4 39.69 44.52 48.01Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.39 46.3C64.94 56.8 64.74 57.3 60.01 57.55C55.29 57.8 55.04 57.32 54.49 46.82C53.94 36.31 54.13 35.81 58.86 35.57C63.59 35.32 63.84 35.79 64.39 46.3Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">удивление</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="подмигивание" data-expr="wink"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-540ms;--mo-bob-phase:-570ms;--mo-blink:-5537ms;--mo-blink-phase:-4713ms;--mo-saccade:6281ms;--mo-saccade-phase:-3506ms;--mo-look-x:2.40;--mo-look-y:0.42;--mo-look-mx:1.06;--mo-look-my:0.92;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1.1)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.16 47.62C44.63 52.9 44.45 53.16 40.31 53.53C36.16 53.89 35.95 53.66 35.49 48.38C35.02 43.1 35.19 42.84 39.34 42.47C43.49 42.11 43.7 42.34 44.16 47.62Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M65.34 46.42C65.51 48.07 65.27 48.17 59.92 48.73C54.57 49.29 54.31 49.24 54.14 47.6C53.96 45.95 54.2 45.85 59.56 45.28C64.91 44.72 65.17 44.77 65.34 46.42Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">подмигивание</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="сонный" data-expr="sleepy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1635ms;--mo-bob-phase:-3216ms;--mo-blink:-4647ms;--mo-blink-phase:-4373ms;--mo-saccade:4903ms;--mo-saccade-phase:-3843ms;--mo-look-x:2.26;--mo-look-y:-0.34;--mo-look-mx:1.32;--mo-look-my:0.99;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 1.2)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.09 51C44.09 52.54 43.92 52.61 40.32 52.61C36.73 52.61 36.56 52.54 36.56 51C36.56 49.47 36.73 49.39 40.32 49.39C43.92 49.39 44.09 49.47 44.09 51Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.15 50.28C63.01 52.35 62.83 52.43 59.09 52.17C55.35 51.91 55.18 51.8 55.33 49.73C55.47 47.67 55.65 47.58 59.39 47.85C63.13 48.11 63.29 48.22 63.15 50.28Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">сонный</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="самодовольный" data-expr="smug"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-946ms;--mo-bob-phase:-163ms;--mo-blink:-4948ms;--mo-blink-phase:-3990ms;--mo-saccade:4769ms;--mo-saccade-phase:-5222ms;--mo-look-x:1.98;--mo-look-y:-1.32;--mo-look-mx:2.12;--mo-look-my:1.34;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.2 46.78C45.11 49.56 44.97 49.75 41.07 51.02C37.17 52.28 36.95 52.21 36.04 49.43C35.14 46.64 35.28 46.45 39.18 45.18C43.08 43.92 43.3 43.99 44.2 46.78Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.05 45.61C64.97 48.44 64.81 48.64 60.4 50.08C56 51.51 55.75 51.44 54.83 48.61C53.91 45.77 54.07 45.57 58.47 44.14C62.88 42.71 63.13 42.77 64.05 45.61Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">самодовольный</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="неуверенный" data-expr="unsure"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2526ms;--mo-bob-phase:-211ms;--mo-blink:-3685ms;--mo-blink-phase:-177ms;--mo-saccade:6169ms;--mo-saccade-phase:-4177ms;--mo-look-x:1.89;--mo-look-y:-1.01;--mo-look-mx:1.85;--mo-look-my:1.43;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.45 48.18C43.95 55.28 43.83 55.62 40.84 55.83C37.86 56.04 37.69 55.72 37.2 48.62C36.7 41.52 36.82 41.18 39.81 40.97C42.79 40.76 42.96 41.08 43.45 48.18Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.35 46.38C64.52 51.04 64.39 51.3 60.45 52.29C56.52 53.27 56.28 53.09 55.12 48.43C53.96 43.77 54.09 43.51 58.02 42.53C61.96 41.55 62.19 41.72 63.35 46.38Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">неуверенный</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="испуган" data-expr="scared"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2613ms;--mo-bob-phase:-1604ms;--mo-blink:-5315ms;--mo-blink-phase:-1698ms;--mo-saccade:5282ms;--mo-saccade-phase:-468ms;--mo-look-x:1.07;--mo-look-y:-1.46;--mo-look-mx:1.57;--mo-look-my:1.47;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -0.6)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.94 47.64C42.55 54.19 42.37 54.47 39.97 53.96C37.56 53.44 37.51 53.12 38.91 46.57C40.3 40.02 40.48 39.73 42.88 40.25C45.29 40.76 45.33 41.09 43.94 47.64Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M60.75 45.74C61.91 54.02 61.85 54.43 59.36 54.78C56.86 55.13 56.69 54.76 55.53 46.47C54.36 38.19 54.42 37.79 56.92 37.44C59.42 37.09 59.59 37.46 60.75 45.74Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">испуган</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="любовь" data-expr="love"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1951ms;--mo-bob-phase:-2752ms;--mo-blink:-4157ms;--mo-blink-phase:-1374ms;--mo-saccade:4637ms;--mo-saccade-phase:-1993ms;--mo-look-x:1.79;--mo-look-y:-1.03;--mo-look-mx:1.03;--mo-look-my:0.92;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1.6)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.73 48.79C41.57 57.45 41.35 57.82 38.71 57.17C36.08 56.51 36.06 56.08 38.22 47.41C40.38 38.75 40.6 38.38 43.23 39.03C45.87 39.69 45.89 40.12 43.73 48.79Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M61.8 46.66C63.35 57.65 63.27 58.18 60.2 58.61C57.13 59.04 56.92 58.55 55.38 47.56C53.83 36.57 53.9 36.04 56.97 35.61C60.04 35.18 60.26 35.67 61.8 46.66Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">любовь</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="стеснительный" data-expr="shy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-703ms;--mo-bob-phase:-1039ms;--mo-blink:-5539ms;--mo-blink-phase:-3142ms;--mo-saccade:5971ms;--mo-saccade-phase:-1816ms;--mo-look-x:1.85;--mo-look-y:-0.81;--mo-look-mx:1.75;--mo-look-my:1.39;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 0.9)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M42.84 49.65C43.44 53.08 43.38 53.26 41.46 53.6C39.53 53.93 39.42 53.79 38.81 50.36C38.2 46.92 38.27 46.75 40.19 46.41C42.12 46.07 42.23 46.21 42.84 49.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M60.77 49.08C60.64 52.89 60.54 53.06 58.6 52.99C56.66 52.92 56.57 52.74 56.71 48.94C56.84 45.13 56.94 44.96 58.88 45.02C60.82 45.09 60.9 45.27 60.77 49.08Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">стеснительный</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="больной" data-expr="sick"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-2070ms;--mo-bob-phase:-1879ms;--mo-blink:-4918ms;--mo-blink-phase:-3525ms;--mo-saccade:5388ms;--mo-saccade-phase:-6486ms;--mo-look-x:1.74;--mo-look-y:0.23;--mo-look-mx:2.02;--mo-look-my:1.23;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 1.4)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.7 48.99C44.51 51.22 44.38 51.38 40.67 52.73C36.97 54.08 36.76 54.04 35.95 51.81C35.14 49.58 35.27 49.42 38.98 48.07C42.68 46.72 42.89 46.76 43.7 48.99Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.24 50.53C63.65 52.86 63.43 52.92 59.13 51.85C54.83 50.78 54.66 50.62 55.24 48.29C55.82 45.96 56.05 45.9 60.35 46.97C64.64 48.04 64.82 48.2 64.24 50.53Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">больной</span></button><button type="button" class="expr-btn" aria-pressed="false" aria-label="размышление" data-expr="thinking"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1729ms;--mo-bob-phase:-2574ms;--mo-blink:-4293ms;--mo-blink-phase:-4452ms;--mo-saccade:5886ms;--mo-saccade-phase:-1856ms;--mo-look-x:1.62;--mo-look-y:-0.81;--mo-look-mx:1.72;--mo-look-my:1.45;" aria-hidden="true">
+    <g class="mo-root mo-always mo-expr" style="--mo-esx: 1.15; --mo-esy: 0.62; --mo-edy: 4.2; --mo-edx: 0.4; --mo-esx2: 0.02; --mo-esy2: 0.06; --mo-edy2: -8.4; --mo-lock: 1; --mo-rock: 0.8; --mo-bdy: -0.4; --mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -0.4)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.02 52.8C44.02 57.13 43.85 57.33 40.22 57.33C36.6 57.33 36.43 57.13 36.43 52.8C36.43 48.48 36.6 48.27 40.22 48.27C43.85 48.27 44.02 48.48 44.02 52.8Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M63.51 43.41C63.51 49.04 63.32 49.3 59.34 49.3C55.35 49.3 55.17 49.04 55.17 43.41C55.17 37.78 55.35 37.51 59.34 37.51C63.32 37.51 63.51 37.78 63.51 43.41Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg><span class="label">размышление</span></button></div>
         </div>
       </section>
     </div>
@@ -1307,13 +1901,103 @@
         <div class="theme-studio">
           <div class="theme-block">
             <h3>палитры</h3>
-            <div class="theme-presets" id="theme-presets"></div>
+            <div class="theme-presets" id="theme-presets">
+      <button type="button" class="theme-swatch" data-theme="github-dark" aria-pressed="true">
+        <div class="theme-preview" style="background:#0a0a0b;border-color:#232327;">
+          <span class="tp-dot" style="background:#fafaf8"></span>
+          <span class="tp-bar" style="background:#131315;border:1px solid #232327;"></span>
+        </div>
+        <span class="label">стандарт</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="github-light" aria-pressed="false">
+        <div class="theme-preview" style="background:#ffffff;border-color:#d0d7de;">
+          <span class="tp-dot" style="background:#1f2328"></span>
+          <span class="tp-bar" style="background:#f6f8fa;border:1px solid #d0d7de;"></span>
+        </div>
+        <span class="label">светлая</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="midnight" aria-pressed="false">
+        <div class="theme-preview" style="background:#060913;border-color:#1c2438;">
+          <span class="tp-dot" style="background:#e6ecff"></span>
+          <span class="tp-bar" style="background:#0f1420;border:1px solid #1c2438;"></span>
+        </div>
+        <span class="label">midnight</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="nord" aria-pressed="false">
+        <div class="theme-preview" style="background:#2e3440;border-color:#434c5e;">
+          <span class="tp-dot" style="background:#eceff4"></span>
+          <span class="tp-bar" style="background:#3b4252;border:1px solid #434c5e;"></span>
+        </div>
+        <span class="label">nord</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="dracula" aria-pressed="false">
+        <div class="theme-preview" style="background:#191a21;border-color:#3a3d4d;">
+          <span class="tp-dot" style="background:#f8f8f2"></span>
+          <span class="tp-bar" style="background:#282a36;border:1px solid #3a3d4d;"></span>
+        </div>
+        <span class="label">dracula</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="solarized" aria-pressed="false">
+        <div class="theme-preview" style="background:#002b36;border-color:#0f4c5c;">
+          <span class="tp-dot" style="background:#eee8d5"></span>
+          <span class="tp-bar" style="background:#073642;border:1px solid #0f4c5c;"></span>
+        </div>
+        <span class="label">solarized</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="amber" aria-pressed="false">
+        <div class="theme-preview" style="background:#1a1206;border-color:#3a2a12;">
+          <span class="tp-dot" style="background:#ffe9b8"></span>
+          <span class="tp-bar" style="background:#241a0a;border:1px solid #3a2a12;"></span>
+        </div>
+        <span class="label">amber</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="forest" aria-pressed="false">
+        <div class="theme-preview" style="background:#0a1410;border-color:#1c3428;">
+          <span class="tp-dot" style="background:#d7f0e2"></span>
+          <span class="tp-bar" style="background:#0f1e17;border:1px solid #1c3428;"></span>
+        </div>
+        <span class="label">forest</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="rose" aria-pressed="false">
+        <div class="theme-preview" style="background:#190f14;border-color:#3a1e28;">
+          <span class="tp-dot" style="background:#ffe4ec"></span>
+          <span class="tp-bar" style="background:#231318;border:1px solid #3a1e28;"></span>
+        </div>
+        <span class="label">rose</span>
+      </button>
+      <button type="button" class="theme-swatch" data-theme="paper" aria-pressed="false">
+        <div class="theme-preview" style="background:#f4efe6;border-color:#ded6c8;">
+          <span class="tp-dot" style="background:#2a2520"></span>
+          <span class="tp-bar" style="background:#fbf7ee;border:1px solid #ded6c8;"></span>
+        </div>
+        <span class="label">paper</span>
+      </button></div>
           </div>
           <div class="theme-block">
             <h3>цвета</h3>
-            <div class="theme-pickers" id="theme-pickers"></div>
+            <div class="theme-pickers" id="theme-pickers">
+    <label class="theme-picker">
+      <input type="color" data-tcolor="ground" value="#0a0a0b">
+      <span>фон</span>
+    </label>
+    <label class="theme-picker">
+      <input type="color" data-tcolor="raised" value="#131315">
+      <span>панель</span>
+    </label>
+    <label class="theme-picker">
+      <input type="color" data-tcolor="ink" value="#fafaf8">
+      <span>текст</span>
+    </label>
+    <label class="theme-picker">
+      <input type="color" data-tcolor="muted" value="#8a8a93">
+      <span>приглушённый</span>
+    </label>
+    <label class="theme-picker">
+      <input type="color" data-tcolor="line" value="#232327">
+      <span>линия</span>
+    </label></div>
             <h3 style="margin-top:16px">фон</h3>
-            <div class="gradient-swatches" id="gradient-swatches"></div>
+            <div class="gradient-swatches" id="gradient-swatches"><button type="button" class="gradient-swatch" data-grad="none" aria-pressed="false" style="background: #0a0a0b;" title="сплошной" aria-label="сплошной"></button><button type="button" class="gradient-swatch" data-grad="radial" aria-pressed="true" style="background: radial-gradient(circle at 50% 30%, rgba(255,255,255,.07), transparent 60%);" title="радиал" aria-label="радиал"></button><button type="button" class="gradient-swatch" data-grad="corner" aria-pressed="false" style="background: radial-gradient(circle at 100% 0%, rgba(255,255,255,.10), transparent 55%);" title="угол" aria-label="угол"></button><button type="button" class="gradient-swatch" data-grad="linear" aria-pressed="false" style="background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 45%);" title="линия" aria-label="линия"></button><button type="button" class="gradient-swatch" data-grad="conic" aria-pressed="false" style="background: conic-gradient(from 220deg at 50% 50%, rgba(255,255,255,.05), transparent 60%);" title="конический" aria-label="конический"></button><button type="button" class="gradient-swatch" data-grad="duo" aria-pressed="false" style="background: radial-gradient(circle at 15% 20%, rgba(255,255,255,.07), transparent 40%), radial-gradient(circle at 85% 80%, rgba(255,255,255,.05), transparent 45%);" title="двойной" aria-label="двойной"></button></div>
           </div>
         </div>
       </section>
@@ -1331,7 +2015,60 @@
           <h2>Команда</h2>
           <span class="pill">разработка · поддержка · telegram</span>
         </header>
-        <div class="team-grid" id="team-grid"></div>
+        <div class="team-grid" id="team-grid">
+    <div class="tg-hero">
+      <div class="tg-hero-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-258ms;--mo-bob-phase:-1868ms;--mo-blink:-3765ms;--mo-blink-phase:-4134ms;--mo-saccade:6420ms;--mo-saccade-phase:-4305ms;--mo-look-x:2.36;--mo-look-y:-0.03;--mo-look-mx:1.01;--mo-look-my:1.23;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M43.92 48.65C43.83 55.62 43.68 55.94 40.53 55.9C37.37 55.86 37.23 55.53 37.32 48.56C37.42 41.58 37.57 41.26 40.72 41.3C43.88 41.34 44.02 41.67 43.92 48.65Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M62.5 47.56C62.62 55.84 62.46 56.23 59.06 56.27C55.65 56.32 55.49 55.94 55.37 47.66C55.26 39.38 55.41 38.99 58.82 38.94C62.23 38.89 62.39 39.28 62.5 47.56Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div>
+      <div class="tg-hero-info">
+        <p class="tg-label">// telegram</p>
+        <h3>@verifure</h3>
+        <p>Написать напрямую — быстрее всего. Отвечаю в течение дня, обычно в течение часа.</p>
+      </div>
+      <a class="tg-hero-cta" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.46l-.38 5.35c.54 0 .78-.23 1.06-.51l2.55-2.44 5.28 3.87c.97.53 1.66.25 1.92-.9l3.48-16.3.01-.01c.3-1.41-.51-1.96-1.45-1.61L1.55 9.7c-1.38.53-1.36 1.3-.23 1.65l5.12 1.6 11.9-7.49c.56-.37 1.07-.17.65.2l-9.95 9.8z"></path></svg>
+        Открыть Telegram
+      </a>
+    </div>
+    <div class="team-card" style="--tc-glow: rgba(34,158,217,.16)">
+      <div class="team-head">
+        <div class="team-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-1617ms;--mo-bob-phase:-2487ms;--mo-blink:-4060ms;--mo-blink-phase:-1305ms;--mo-saccade:4766ms;--mo-saccade-phase:-5033ms;--mo-look-x:1.90;--mo-look-y:0.24;--mo-look-mx:1.68;--mo-look-my:0.97;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -1)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.2 46.78C45.11 49.56 44.97 49.75 41.07 51.02C37.17 52.28 36.95 52.21 36.04 49.43C35.14 46.64 35.28 46.45 39.18 45.18C43.08 43.92 43.3 43.99 44.2 46.78Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M64.05 45.61C64.97 48.44 64.81 48.64 60.4 50.08C56 51.51 55.75 51.44 54.83 48.61C53.91 45.77 54.07 45.57 58.47 44.14C62.88 42.71 63.13 42.77 64.05 45.61Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div>
+        <div class="team-info"><h3 class="team-name">Verifure</h3><p class="team-role">// developer · maintainer</p></div>
+      </div>
+      <p class="team-bio">Придумал Broot и собрал движок: от «глаза смотрят на курсор» до пресетов и студии темы. Отвечает за релизы, API и всё, что под капотом.</p>
+      <div class="team-links">
+        <a class="team-link tg" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">@verifure</a>
+        <a class="team-link" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">Написать</a>
+      </div>
+    </div>
+    <div class="team-card" style="--tc-glow: rgba(16,185,129,.14)">
+      <div class="team-head">
+        <div class="team-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="blob" style="--mo-head:#ffffff;--mo-eye:#051215;--mo-phase:-676ms;--mo-bob-phase:-1123ms;--mo-blink:-5276ms;--mo-blink-phase:-3236ms;--mo-saccade:7267ms;--mo-saccade-phase:-2826ms;--mo-look-x:1.22;--mo-look-y:-0.87;--mo-look-mx:1.17;--mo-look-my:1.22;" aria-hidden="true">
+    <g class="mo-root mo-always" style="--mo-track-hold: 0;">
+      <g class="mo-breathe"><g class="mo-bob"><g transform="translate(0 -2.2)">
+        <g transform="translate(50 50) scale(1.0000 1.0000) rotate(0) translate(-50 -50)"><g class="mo-body"><path d="M43.15 17.56Q48.66 13.82 54.54 16.9L73.76 26.97Q79.64 30.05 80.01 36.88L81.23 59.22Q81.6 66.05 76.09 69.8L58.08 82.06Q52.58 85.81 46.7 82.73L27.47 72.65Q21.59 69.57 21.22 62.74L20.01 40.41Q19.64 33.57 25.14 29.83L43.15 17.56Z"></path></g><g class="mo-eyes"><g transform="translate(0.000 0.000) translate(40.62 48.6) scale(1.0000) translate(-40.62 -48.6)"><g class="mo-eye" style="--mo-wrap:-1;--mo-lean:0;transform-origin:40.62px 48.6px"><path d="M44.75 46.31C45.04 48.38 44.8 48.51 39.43 49.27C34.06 50.02 33.8 49.96 33.5 47.89C33.21 45.82 33.45 45.69 38.82 44.93C44.19 44.18 44.45 44.24 44.75 46.31Z"></path></g></g><g transform="translate(0.000 0.000) translate(58.94 47.61) scale(1.0000) translate(-58.94 -47.61)"><g class="mo-eye" style="--mo-wrap:1;--mo-lean:0;transform-origin:58.94px 47.61px"><path d="M66.79 45.21C67.2 48.08 66.93 48.26 60.86 49.11C54.79 49.97 54.49 49.87 54.08 47C53.68 44.13 53.94 43.96 60.02 43.1C66.09 42.25 66.39 42.34 66.79 45.21Z"></path></g></g></g></g>
+      </g></g></g>
+    </g>
+  </svg></div>
+        <div class="team-info"><h3 class="team-name">Поддержка</h3><p class="team-role">// tech support</p></div>
+      </div>
+      <p class="team-bio">Помогает с интеграцией, отвечает на вопросы по API, разбирается с нестандартными случаями. Пишите с описанием задачи и скриншотом, если возможно.</p>
+      <div class="team-links">
+        <a class="team-link tg" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">@verifure</a>
+        <a class="team-link" href="https://t.me/verifure" target="_blank" rel="noopener noreferrer">Поддержка</a>
+      </div>
+    </div>
+  </div>
       </section>
 
       <section id="discussion-section">
@@ -2550,6 +3287,22 @@ function wireColorPicker() {
   });
 }
 
+/* Раскрывающиеся control-group (форма / тело) */
+function wireCollapsibles() {
+  document.querySelectorAll('.control-group.collapsible').forEach(group => {
+    const head = group.querySelector('.collapsible-head');
+    if (!head) return;
+    const toggle = () => {
+      const open = group.classList.toggle('is-open');
+      head.setAttribute('aria-expanded', String(open));
+    };
+    head.addEventListener('click', toggle);
+    head.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+}
+
 function renderAll() {
   renderEditor(); renderStates(); renderExpressions();
   renderShapePicker(); renderExprPicker(); renderHuePicker();
@@ -2781,6 +3534,7 @@ wireColorPicker();
 wirePngPanel();
 wireResizers();
 wireRegistration();
+wireCollapsibles();
 
 document.getElementById('seed-input').addEventListener('input', (e) => {
   state.name = e.target.value || 'кто-то';
@@ -2838,5 +3592,5 @@ if (storedUser) {
 setTimeout(() => { renderAll(); }, 0);
 </script>
 
-</body>
-</html>
+
+</body></html>
