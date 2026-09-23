@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="dark">
-<title>Broot — редактор + темы + команда + панель разработчика</title>
+<title>Broot — редактор + темы + команда + панель разработчика + тур</title>
 <link rel="icon" type="image/png" href="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png">
 <link rel="apple-touch-icon" href="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png">
 <link rel="shortcut icon" href="https://i.postimg.cc/fWr9KdzT/photo-5303449218406096243-c-round-corners.png">
@@ -1199,6 +1199,7 @@
     cursor: pointer;
     transition: transform .15s, border-color .15s, background .15s;
     -webkit-tap-highlight-color: transparent;
+    position: relative;
   }
   .gallery-tile:hover { transform: translateY(-2px); border-color: #3a3a42; background: rgba(255,255,255,.02); }
   .gallery-tile:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
@@ -1229,6 +1230,31 @@
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     text-align: center;
   }
+  .gallery-tile .tile-share-btn {
+    position: absolute;
+    top: 18px; right: 18px;
+    width: 28px; height: 28px;
+    border-radius: 10px;
+    border: 1px solid var(--color-line);
+    background: rgba(20,20,22,.8);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    color: var(--color-muted);
+    cursor: pointer;
+    display: grid; place-items: center;
+    font-size: 12px; line-height: 1;
+    opacity: 0;
+    transition: opacity .15s, background .15s, color .15s, border-color .15s;
+    z-index: 2;
+    padding: 0;
+  }
+  .gallery-tile:hover .tile-share-btn { opacity: 1; }
+  .gallery-tile .tile-share-btn:hover {
+    color: var(--color-ink);
+    border-color: #3a3a42;
+    background: rgba(30,30,34,.95);
+  }
+  .gallery-tile .tile-share-btn svg { width: 14px; height: 14px; }
   .gallery-grid .gallery-message {
     grid-column: 1 / -1;
     padding: 40px 20px;
@@ -1306,6 +1332,38 @@
   .gallery-modal-actions .btn-secondary { flex: 1; justify-content: center; }
   .gallery-modal-actions .btn-primary { flex: 1; justify-content: center; }
 
+  /* ==================== SHARE FALLBACK MODAL ==================== */
+  .share-fallback-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    z-index: 1600;
+    animation: fadeIn .22s ease;
+  }
+  .share-fallback-backdrop[hidden] { display: none; }
+  .share-fallback-modal {
+    position: fixed;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: min(400px, 92vw);
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 20px;
+    padding: 24px;
+    z-index: 1601;
+    display: flex; flex-direction: column; gap: 14px;
+    box-shadow: 0 40px 90px -20px rgba(0,0,0,.8);
+    animation: winIn .28s cubic-bezier(.2,.9,.3,1.1);
+  }
+  .share-fallback-modal[hidden] { display: none; }
+  .share-fallback-modal h3 { font-size: 16px; margin: 0; }
+  .share-fallback-modal p { font-size: 12px; color: var(--color-muted); margin: 0; line-height: 1.5; }
+  .share-fallback-modal .actions {
+    display: flex; flex-direction: column; gap: 8px; margin-top: 4px;
+  }
+  .share-fallback-modal .actions button { width: 100%; justify-content: center; }
+
   /* ==================== ПАНЕЛЬ РАЗРАБОТЧИКА ==================== */
   .dev-panel-grid {
     display: grid;
@@ -1326,9 +1384,7 @@
     display: flex; align-items: center; gap: 8px;
   }
   .dev-card p { font-size: 12px; color: var(--color-muted); line-height: 1.6; margin: 0; }
-  .dev-kv {
-    display: flex; flex-direction: column; gap: 6px;
-  }
+  .dev-kv { display: flex; flex-direction: column; gap: 6px; }
   .dev-kv-row {
     display: flex; align-items: baseline; gap: 8px;
     font-size: 12px; padding: 6px 10px;
@@ -1387,19 +1443,6 @@
     white-space: pre;
     margin: 0;
   }
-  .dev-code .c { color: #6b7280; }
-  .dev-code .s { color: #a5d6ff; }
-  .dev-code .k { color: #ff7b72; }
-  .dev-badge {
-    display: inline-flex; align-items: center; gap: 4px;
-    padding: 2px 8px; border-radius: 9999px;
-    font-size: 10px; font-family: ui-monospace, monospace;
-    border: 1px solid var(--color-line);
-    color: var(--color-muted);
-  }
-  .dev-badge.ok { border-color: #1f4436; color: #6ee7b7; background: rgba(16,185,129,.08); }
-  .dev-badge.warn { border-color: #78350f; color: #fbbf24; background: rgba(245,158,11,.08); }
-  .dev-badge.err { border-color: #7f1d1d; color: #f87171; background: rgba(239,68,68,.08); }
   .dev-actions { display: flex; flex-wrap: wrap; gap: 8px; }
   .dev-mini-btn {
     border: 1px solid var(--color-line); background: transparent;
@@ -1474,31 +1517,202 @@
   }
   .dev-snippet-head .copy-btn-inline { font-size: 10px; padding: 3px 8px; }
 
-  .gallery-tile .tile-share-btn {
-    position: absolute;
-    top: 8px; right: 8px;
-    width: 28px; height: 28px;
-    border-radius: 10px;
-    border: 1px solid var(--color-line);
-    background: rgba(20,20,22,.8);
-    -webkit-backdrop-filter: blur(6px);
-    backdrop-filter: blur(6px);
-    color: var(--color-muted);
-    cursor: pointer;
-    display: grid; place-items: center;
-    font-size: 12px; line-height: 1;
-    opacity: 0;
-    transition: opacity .15s, background .15s, color .15s, border-color .15s;
-    z-index: 2;
-    padding: 0;
+  /* ==================== GUIDED TOUR ==================== */
+  .tour-root {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    pointer-events: none;
   }
-  .gallery-tile:hover .tile-share-btn { opacity: 1; }
-  .gallery-tile .tile-share-btn:hover {
+  .tour-root[hidden] { display: none; }
+  .tour-root.is-active { display: block; }
+
+  .tour-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.72);
+    z-index: 3000;
+    pointer-events: auto;
+    animation: fadeIn .25s ease;
+    transition: background .3s ease;
+  }
+
+  .tour-spotlight {
+    position: fixed;
+    border-radius: 14px;
+    box-shadow:
+      0 0 0 9999px rgba(0,0,0,.72),
+      0 0 0 2px var(--color-ink),
+      0 0 50px rgba(255,255,255,.22);
+    z-index: 3001;
+    pointer-events: none;
+    transition:
+      top .45s cubic-bezier(.4,0,.2,1),
+      left .45s cubic-bezier(.4,0,.2,1),
+      width .45s cubic-bezier(.4,0,.2,1),
+      height .45s cubic-bezier(.4,0,.2,1);
+    display: none;
+  }
+  .tour-spotlight.is-pulsing::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(255,255,255,.35);
+    animation: tourPulse 1.8s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes tourPulse {
+    0%   { opacity: .8; transform: scale(1); }
+    100% { opacity: 0;  transform: scale(1.06); }
+  }
+
+  .tour-tooltip {
+    position: fixed;
+    z-index: 3002;
+    width: 360px;
+    max-width: calc(100vw - 24px);
+    background: var(--color-raised);
+    border: 1px solid var(--color-line);
+    border-radius: 16px;
+    padding: 18px 20px 16px;
+    box-shadow:
+      0 30px 80px -20px rgba(0,0,0,.85),
+      0 0 0 1px rgba(255,255,255,.04) inset;
+    pointer-events: auto;
+    animation: tourIn .3s cubic-bezier(.2,.9,.3,1.1);
+  }
+  @keyframes tourIn {
+    from { opacity: 0; transform: translateY(8px) scale(.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .tour-tooltip[data-placement="center"] {
+    animation: tourInCenter .35s cubic-bezier(.2,.9,.3,1.1);
+  }
+  @keyframes tourInCenter {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(.94); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+
+  .tour-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .tour-step-label {
+    font-family: ui-monospace, monospace;
+    font-size: 10px;
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .tour-skip {
+    border: 0;
+    background: transparent;
+    color: var(--color-muted);
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    padding: 3px 7px;
+    border-radius: 6px;
+    transition: background .15s, color .15s;
+  }
+  .tour-skip:hover { color: var(--color-ink); background: rgba(255,255,255,.06); }
+
+  .tour-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    line-height: 1.3;
+  }
+  .tour-text {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--color-muted);
+    margin: 0 0 16px;
+  }
+
+  .tour-progress {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+  .tour-dot {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--color-line);
+    transition: background .3s;
+  }
+  .tour-dot.is-done { background: var(--color-muted); }
+  .tour-dot.is-active { background: var(--color-ink); }
+
+  .tour-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .tour-btn {
+    border: 1px solid var(--color-line);
+    background: transparent;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background .15s, border-color .15s, transform .1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .tour-btn:hover { border-color: #3a3a42; background: rgba(255,255,255,.04); }
+  .tour-btn:active { transform: scale(.97); }
+  .tour-btn.primary {
+    background: var(--color-ink);
+    color: var(--color-ground);
+    border-color: var(--color-ink);
+    margin-left: auto;
+  }
+  .tour-btn.primary:hover { opacity: .9; }
+  .tour-btn[disabled] { opacity: .3; cursor: not-allowed; pointer-events: none; }
+
+  .tour-restart-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: transparent;
+    color: var(--color-muted);
+    border: 1px dashed var(--color-line);
+    border-radius: 12px;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s;
+    margin-top: 4px;
+  }
+  .tour-restart-btn:hover {
     color: var(--color-ink);
     border-color: #3a3a42;
-    background: rgba(30,30,34,.95);
+    background: rgba(255,255,255,.03);
   }
-  .gallery-tile .tile-share-btn svg { width: 14px; height: 14px; }
+  .tour-restart-btn .arrow {
+    font-size: 9px;
+    transition: transform .2s;
+  }
+  .tour-restart-btn:hover .arrow { transform: translateX(2px); }
+
+  @media (max-width: 520px) {
+    .tour-tooltip { width: calc(100vw - 24px); }
+  }
 </style>
 </head>
 <body>
@@ -1557,6 +1771,10 @@
       <button type="button" class="u-out" id="sidebar-user-out" title="Выйти" aria-label="Выйти">⎋</button>
     </div>
 
+    <button type="button" class="tour-restart-btn" id="restart-tour" title="Пройти обучающий тур заново">
+      <span class="arrow">▶</span> Пройти тур
+    </button>
+
     <nav class="sidebar-nav" id="sidebar-nav" aria-label="Разделы">
       <div class="nav-group is-open" data-tab="editor">
         <button type="button" class="nav-head" aria-expanded="true">
@@ -1599,7 +1817,6 @@
         </div>
       </div>
 
-      <!-- НОВАЯ ВКЛАДКА: ПАНЕЛЬ РАЗРАБОТЧИКА -->
       <div class="nav-group" data-tab="developer">
         <button type="button" class="nav-head" aria-expanded="false">
           <span>Панель разработчика</span><span class="chev" aria-hidden="true">▾</span>
@@ -1935,7 +2152,6 @@
         Все запросы выполняются из вашего браузера напрямую к NocoDB.
       </p>
 
-      <!-- Быстрая навигация -->
       <nav class="dev-toc" aria-label="Разделы панели разработчика">
         <a href="#dev-config">Конфигурация</a>
         <a href="#dev-fields">Поля таблицы</a>
@@ -1945,7 +2161,6 @@
         <a href="#dev-integration">Интеграция</a>
       </nav>
 
-      <!-- Конфигурация -->
       <section id="dev-config">
         <h2 class="dev-section-title">// конфигурация API NocoDB</h2>
         <div class="dev-panel-grid">
@@ -1955,7 +2170,7 @@
             <div class="dev-kv">
               <div class="dev-kv-row">
                 <span class="k">API Token</span>
-                <span class="v secret" id="dev-token" data-secret="i6hxbFlI4rKWdZndk2d3U-Wr4BHZzvz1H43aKnqN">i6hxbFlI4rKWdZndk2d3U-Wr4BHZzvz1H43aKnqN</span>
+                <span class="v secret" id="dev-token">i6hxbFlI4rKWdZndk2d3U-Wr4BHZzvz1H43aKnqN</span>
               </div>
               <div class="dev-kv-row">
                 <span class="k">Table ID</span>
@@ -1971,7 +2186,7 @@
               </div>
               <div class="dev-kv-row">
                 <span class="k">Полный URL</span>
-                <span class="v" id="dev-full-url">https://nocodb.puzzlebot.top/api/v2/tables/m2ockzkupf65cre/records</span>
+                <span class="v">https://nocodb.puzzlebot.top/api/v2/tables/m2ockzkupf65cre/records</span>
               </div>
             </div>
             <div class="dev-actions">
@@ -1983,7 +2198,7 @@
           <div class="dev-card">
             <h3>📊 Статус подключения</h3>
             <p>Проверьте доступность таблицы и количество записей.</p>
-            <div class="dev-output info" id="dev-status">// нажмите «Проверить» для теста подключения</div>
+            <pre class="dev-output info" id="dev-status">// нажмите «Проверить» для теста подключения</pre>
             <div class="dev-actions">
               <button type="button" class="dev-mini-btn primary" id="dev-check-status">↻ Проверить</button>
               <button type="button" class="dev-mini-btn" id="dev-clear-status">✕ Очистить</button>
@@ -1992,7 +2207,6 @@
         </div>
       </section>
 
-      <!-- Поля таблицы -->
       <section id="dev-fields">
         <h2 class="dev-section-title">// поля таблицы</h2>
         <div class="dev-panel-grid">
@@ -2037,7 +2251,7 @@
                   <td class="fn">broot_avtor_name</td>
                   <td class="fd">SingleLineText</td>
                   <td class="fd">нет</td>
-                  <td class="fd">Отдельное поле для имени автора. Дублирует <code>user_name</code> для совместимости с внешними системами.</td>
+                  <td class="fd">Отдельное поле для имени автора. Имеет приоритет над <code>user_name</code> при отображении.</td>
                 </tr>
               </tbody>
             </table>
@@ -2045,16 +2259,14 @@
         </div>
       </section>
 
-      <!-- Методы API -->
       <section id="dev-methods">
         <h2 class="dev-section-title">// методы API</h2>
         <div class="dev-panel-grid">
           <div class="dev-card">
             <h3>📥 GET — список записей</h3>
             <p>Получить все записи галереи с сортировкой по убыванию ID.</p>
-            <pre class="dev-code"><span class="c">// Запрос</span>
-<span class="k">GET</span> <span class="s">/api/v2/tables/m2ockzkupf65cre/records?limit=200&sort=-Id</span>
-<span class="k">xc-token:</span> i6hxbF...</pre>
+            <pre class="dev-code">GET /api/v2/tables/m2ockzkupf65cre/records?limit=200&sort=-Id
+xc-token: i6hxbF...</pre>
             <div class="dev-actions">
               <button type="button" class="dev-mini-btn" data-dev-method="GET">▶ Выполнить</button>
             </div>
@@ -2063,16 +2275,15 @@
           <div class="dev-card">
             <h3>➕ POST — создать запись</h3>
             <p>Добавить нового персонажа в галерею.</p>
-            <pre class="dev-code"><span class="c">// Запрос</span>
-<span class="k">POST</span> <span class="s">/api/v2/tables/m2ockzkupf65cre/records</span>
-<span class="k">xc-token:</span> i6xbF...
-<span class="k">Content-Type:</span> application/json
+            <pre class="dev-code">POST /api/v2/tables/m2ockzkupf65cre/records
+xc-token: i6xbF...
+Content-Type: application/json
 
 [{
-  <span class="s">"user_name"</span>: <span class="s">"verifure"</span>,
-  <span class="s">"broot_name"</span>: <span class="s">"halo"</span>,
-  <span class="s">"broot_avatar_link"</span>: <span class="s">"data:image/svg+xml;base64,..."</span>,
-  <span class="s">"broot_avtor_name"</span>: <span class="s">"verifure"</span>
+  "user_name": "verifure",
+  "broot_name": "halo",
+  "broot_avatar_link": "data:image/svg+xml;base64,...",
+  "broot_avtor_name": "verifure"
 }]</pre>
             <div class="dev-actions">
               <button type="button" class="dev-mini-btn" data-dev-method="POST">▶ Выполнить</button>
@@ -2082,14 +2293,13 @@
           <div class="dev-card">
             <h3>✏️ PATCH — обновить запись</h3>
             <p>Обновить поля существующей записи по ID.</p>
-            <pre class="dev-code"><span class="c">// Запрос</span>
-<span class="k">PATCH</span> <span class="s">/api/v2/tables/m2ockzkupf65cre/records/{id}</span>
-<span class="k">xc-token:</span> i6xbF...
-<span class="k">Content-Type:</span> application/json
+            <pre class="dev-code">PATCH /api/v2/tables/m2ockzkupf65cre/records/{id}
+xc-token: i6xbF...
+Content-Type: application/json
 
 [{
-  <span class="s">"Id"</span>: 1,
-  <span class="s">"broot_name"</span>: <span class="s">"new-name"</span>
+  "Id": 1,
+  "broot_name": "new-name"
 }]</pre>
             <div class="dev-actions">
               <button type="button" class="dev-mini-btn" data-dev-method="PATCH">▶ Выполнить</button>
@@ -2099,12 +2309,11 @@
           <div class="dev-card">
             <h3>🗑 DELETE — удалить запись</h3>
             <p>Удалить запись по ID (массово).</p>
-            <pre class="dev-code"><span class="c">// Запрос</span>
-<span class="k">DELETE</span> <span class="s">/api/v2/tables/m2ockzkupf65cre/records</span>
-<span class="k">xc-token:</span> i6xbF...
-<span class="k">Content-Type:</span> application/json
+            <pre class="dev-code">DELETE /api/v2/tables/m2ockzkupf65cre/records
+xc-token: i6xbF...
+Content-Type: application/json
 
-[{ <span class="s">"Id"</span>: 1 }]</pre>
+[{ "Id": 1 }]</pre>
             <div class="dev-actions">
               <button type="button" class="dev-mini-btn" data-dev-method="DELETE">▶ Выполнить</button>
             </div>
@@ -2112,7 +2321,6 @@
         </div>
       </section>
 
-      <!-- Песочница -->
       <section id="dev-sandbox">
         <h2 class="dev-section-title">// песочница запросов</h2>
         <div class="dev-panel-grid">
@@ -2145,7 +2353,6 @@
         </div>
       </section>
 
-      <!-- Сниппеты -->
       <section id="dev-snippets">
         <h2 class="dev-section-title">// готовые сниппеты</h2>
         <div class="dev-panel-grid">
@@ -2193,7 +2400,6 @@ const created = await res.json();</pre>
         </div>
       </section>
 
-      <!-- Интеграция -->
       <section id="dev-integration">
         <h2 class="dev-section-title">// руководство по интеграции</h2>
         <div class="dev-panel-grid">
@@ -2368,6 +2574,37 @@ const created = await res.json();</pre>
   <div class="gallery-modal-actions">
     <button type="button" class="btn-primary" id="gallery-modal-share">📤 Поделиться</button>
     <button type="button" class="btn-secondary" id="gallery-modal-close-2">Закрыть</button>
+  </div>
+</div>
+
+<!-- ==================== SHARE FALLBACK MODAL ==================== -->
+<div class="share-fallback-backdrop" id="share-fallback-backdrop" hidden></div>
+<div class="share-fallback-modal" id="share-fallback-modal" hidden role="dialog" aria-modal="true" aria-label="Поделиться">
+  <h3 id="share-fallback-title">Поделиться</h3>
+  <p id="share-fallback-text">Выберите способ.</p>
+  <div class="actions">
+    <button type="button" class="btn-primary" id="share-fallback-download">⬇ Скачать PNG</button>
+    <button type="button" class="btn-secondary" id="share-fallback-copy">⧉ Копировать ссылку</button>
+    <button type="button" class="btn-secondary" id="share-fallback-close">Закрыть</button>
+  </div>
+</div>
+
+<!-- ==================== GUIDED TOUR ==================== -->
+<div class="tour-root" id="tour-root" hidden aria-live="polite">
+  <div class="tour-backdrop" id="tour-backdrop" aria-hidden="true"></div>
+  <div class="tour-spotlight" id="tour-spotlight" aria-hidden="true"></div>
+  <div class="tour-tooltip" id="tour-tooltip" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+    <div class="tour-head">
+      <span class="tour-step-label" id="tour-step-label">Шаг 1 из 9</span>
+      <button type="button" class="tour-skip" id="tour-btn-skip" title="Пропустить тур (Esc)">пропустить ✕</button>
+    </div>
+    <h3 class="tour-title" id="tour-title">—</h3>
+    <p class="tour-text" id="tour-text">—</p>
+    <div class="tour-progress" id="tour-progress" aria-hidden="true"></div>
+    <div class="tour-actions">
+      <button type="button" class="tour-btn" id="tour-btn-back">← Назад</button>
+      <button type="button" class="tour-btn primary" id="tour-btn-next">Далее →</button>
+    </div>
   </div>
 </div>
 
@@ -4009,7 +4246,6 @@ function initDevPanel() {
   if (devPanelInit) return;
   devPanelInit = true;
 
-  // Показать/скрыть токен
   const tokenEl = document.getElementById('dev-token');
   const revealBtn = document.getElementById('dev-reveal-token');
   if (revealBtn && tokenEl) {
@@ -4025,7 +4261,6 @@ function initDevPanel() {
     });
   }
 
-  // Проверка статуса
   const statusBtn = document.getElementById('dev-check-status');
   const statusEl = document.getElementById('dev-status');
   if (statusBtn && statusEl) {
@@ -4051,7 +4286,6 @@ function initDevPanel() {
     });
   }
 
-  // Кнопки методов
   document.querySelectorAll('[data-dev-method]').forEach(btn => {
     btn.addEventListener('click', () => {
       const method = btn.dataset.devMethod;
@@ -4061,7 +4295,6 @@ function initDevPanel() {
     });
   });
 
-  // Песочница
   document.querySelectorAll('[data-sandbox]').forEach(btn => {
     btn.addEventListener('click', () => applySandboxMethod(btn.dataset.sandbox));
   });
@@ -4078,7 +4311,6 @@ function initDevPanel() {
     if (url) copyText(url.value, sandboxCopyUrl);
   });
 
-  // Копирование сниппетов
   document.querySelectorAll('[data-copy-snippet]').forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.dataset.copySnippet;
@@ -4268,7 +4500,7 @@ function closeGalleryModal() {
 }
 
 /* =========================================================
-   ПОДЕЛИТЬСЯ (Web Share API + fallback)
+   ПОДЕЛИТЬСЯ
    ========================================================= */
 async function shareGalleryItem(idx) {
   const r = galleryRecords[idx];
@@ -4278,10 +4510,8 @@ async function shareGalleryItem(idx) {
   const author = pickField(r, 'broot_avtor_name', 'user_name', 'User_name', 'userName', 'author') || 'аноним';
   const link   = pickField(r, 'broot_avatar_link', 'Broot_avatar_link') || '';
 
-  // Сначала проверим, поддерживает ли браузер Web Share API
   if (navigator.share) {
     try {
-      // Пробуем поделиться с файлом, если есть картинка
       if (link && link.startsWith('data:') && navigator.canShare) {
         const blob = dataUrlToBlob(link);
         const file = new File([blob], `${name.replace(/\s+/g, '-').toLowerCase()}.png`, { type: blob.type });
@@ -4294,7 +4524,6 @@ async function shareGalleryItem(idx) {
           return;
         }
       }
-      // Без файла — просто текст + ссылка
       await navigator.share({
         title: `Broot: ${name}`,
         text: `Персонаж «${name}» от @${author} — собран в Broot.`,
@@ -4302,13 +4531,11 @@ async function shareGalleryItem(idx) {
       });
       return;
     } catch (e) {
-      // Пользователь отменил или share не сработал — идём в fallback
       if (e.name === 'AbortError') return;
       console.warn('[share] navigator.share failed, fallback', e);
     }
   }
 
-  // Fallback: скачать PNG + скопировать ссылку
   showShareFallback(name, author, link);
 }
 
@@ -4324,7 +4551,6 @@ function dataUrlToBlob(dataUrl) {
 }
 
 function showShareFallback(name, author, link) {
-  // Модальное окно с вариантами fallback
   const backdrop = document.getElementById('share-fallback-backdrop');
   const modal = document.getElementById('share-fallback-modal');
   const title = document.getElementById('share-fallback-title');
@@ -4336,7 +4562,6 @@ function showShareFallback(name, author, link) {
   title.textContent = `Поделиться «${name}»`;
   text.textContent = `Персонаж «${name}» от @${author}. PNG можно скачать, а ссылку — скопировать.`;
 
-  // Скачать PNG
   dlBtn.onclick = () => {
     if (link && link.startsWith('data:')) {
       const a = document.createElement('a');
@@ -4348,7 +4573,6 @@ function showShareFallback(name, author, link) {
     }
   };
 
-  // Копировать ссылку на персонажа
   copyBtn.onclick = () => {
     const url = location.href.split('#')[0] + '#gallery';
     copyText(url, copyBtn);
@@ -4427,7 +4651,6 @@ function wireGallery() {
   const bd = document.getElementById('gallery-modal-backdrop');
   if (bd) bd.addEventListener('click', closeGalleryModal);
 
-  // Кнопка «Поделиться» в модальном окне
   const shareBtn = document.getElementById('gallery-modal-share');
   if (shareBtn) {
     shareBtn.addEventListener('click', () => {
@@ -4454,6 +4677,7 @@ function showRegistration() {
 function hideRegistration() {
   document.getElementById('reg-overlay').hidden = true;
   document.getElementById('app-shell').style.visibility = 'visible';
+  maybeStartTour();
 }
 
 function applyUser(user) {
@@ -4642,6 +4866,357 @@ function loadStoredTheme() {
 }
 
 /* =========================================================
+   GUIDED TOUR
+   ========================================================= */
+const TOUR_KEY = 'broot_tour_completed_v1';
+
+const TOUR_STEPS = [
+  {
+    id: 'welcome',
+    target: null,
+    title: 'Добро пожаловать в Broot 👋',
+    text: 'Проведу вас за 9 шагов: от пустого редактора до персонажа в галерее. Это займёт меньше минуты.',
+    placement: 'center',
+  },
+  {
+    id: 'preview',
+    target: '#editor-blob-slot',
+    title: 'Это ваш Broot',
+    text: 'Он живой: глаза следят за курсором, тело дышит, периодически моргает. Сейчас разберём, как его настроить.',
+    placement: 'right',
+    beforeEnter: () => selectTab('editor'),
+  },
+  {
+    id: 'name',
+    target: '#seed-input',
+    title: '1 · Дайте имя',
+    text: 'Имя влияет на «авто»-оттенок. Введите что-нибудь — персонаж перекрасится на глазах.',
+    placement: 'right',
+    beforeEnter: () => {
+      const inp = document.getElementById('seed-input');
+      if (inp) setTimeout(() => { try { inp.focus(); } catch(e){} }, 450);
+    },
+  },
+  {
+    id: 'color',
+    target: '#hue-row',
+    title: '2 · Выберите цвет',
+    text: 'Ткните любой кружок — или «авто», чтобы оттенок подобрался из имени. Ниже — точные ползунки светлоты и насыщенности.',
+    placement: 'right',
+  },
+  {
+    id: 'shape',
+    target: '[aria-controls="cg-shape"]',
+    title: '3 · Форма тела',
+    text: 'Раскройте секцию и выберите: круг, органику, облако, капсулу или что-то более экзотическое.',
+    placement: 'right',
+    beforeEnter: () => {
+      const group = document.querySelector('.control-group.collapsible');
+      if (group && !group.classList.contains('is-open')) {
+        group.classList.add('is-open');
+        const head = group.querySelector('.collapsible-head');
+        if (head) head.setAttribute('aria-expanded', 'true');
+      }
+    },
+  },
+  {
+    id: 'expression',
+    target: '#expr-grid',
+    title: '4 · Выражение',
+    text: '14 эмоций — от «покоя» до «любви». Выберите ту, что отражает характер вашего персонажа.',
+    placement: 'left',
+  },
+  {
+    id: 'save',
+    target: '#save-to-gallery',
+    title: '5 · Сохранить в галерею',
+    text: 'Нажмите сюда — персонаж уйдёт в общую галерею. Имя автора подставится из вашего профиля автоматически.',
+    placement: 'bottom',
+    spotlightPad: 10,
+  },
+  {
+    id: 'gallery',
+    target: '.nav-group[data-tab="gallery"]',
+    title: '6 · Проверьте галерею',
+    text: 'Откройте вкладку — ваш персонаж уже там. Другие увидят его и смогут поделиться кнопкой 📤.',
+    placement: 'right',
+    beforeEnter: () => selectTab('gallery'),
+  },
+  {
+    id: 'done',
+    target: null,
+    title: 'Готово! 🎉',
+    text: 'Теперь у вас есть собственный Broot. Возвращайтесь в редактор, создавайте новых и делитесь с друзьями.',
+    placement: 'center',
+  },
+];
+
+const tour = {
+  active: false,
+  stepIndex: 0,
+  els: null,
+  resizeHandler: null,
+  scrollHandler: null,
+  keyHandler: null,
+  repositionRaf: 0,
+};
+
+function tourEls() {
+  if (tour.els) return tour.els;
+  tour.els = {
+    root: document.getElementById('tour-root'),
+    backdrop: document.getElementById('tour-backdrop'),
+    spotlight: document.getElementById('tour-spotlight'),
+    tooltip: document.getElementById('tour-tooltip'),
+    title: document.getElementById('tour-title'),
+    text: document.getElementById('tour-text'),
+    stepLabel: document.getElementById('tour-step-label'),
+    progress: document.getElementById('tour-progress'),
+    btnBack: document.getElementById('tour-btn-back'),
+    btnNext: document.getElementById('tour-btn-next'),
+    btnSkip: document.getElementById('tour-btn-skip'),
+  };
+  return tour.els;
+}
+
+function startTour() {
+  const els = tourEls();
+  if (tour.active) return;
+
+  tour.active = true;
+  tour.stepIndex = 0;
+  els.root.hidden = false;
+  els.root.classList.add('is-active');
+  document.body.style.overflow = 'hidden';
+
+  els.tooltip.style.top = '';
+  els.tooltip.style.left = '';
+  els.tooltip.style.transform = '';
+
+  renderTourStep();
+}
+
+function endTour(completed) {
+  const els = tourEls();
+  if (!tour.active) return;
+
+  tour.active = false;
+  els.root.classList.remove('is-active');
+  els.root.hidden = true;
+  document.body.style.overflow = '';
+
+  els.spotlight.classList.remove('is-pulsing');
+
+  if (completed) {
+    try { localStorage.setItem(TOUR_KEY, '1'); } catch(e) {}
+  }
+}
+
+function renderTourStep() {
+  const els = tourEls();
+  const step = TOUR_STEPS[tour.stepIndex];
+  if (!step) return;
+
+  if (step.beforeEnter) {
+    try { step.beforeEnter(); } catch (e) { console.warn('[tour] beforeEnter failed', e); }
+  }
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const target = step.target ? document.querySelector(step.target) : null;
+
+      els.title.textContent = step.title;
+      els.text.textContent = step.text;
+      els.stepLabel.textContent = 'Шаг ' + (tour.stepIndex + 1) + ' из ' + TOUR_STEPS.length;
+      els.progress.innerHTML = TOUR_STEPS.map((_, i) =>
+        '<span class="tour-dot' +
+        (i === tour.stepIndex ? ' is-active' : '') +
+        (i < tour.stepIndex ? ' is-done' : '') +
+        '"></span>'
+      ).join('');
+
+      els.btnBack.disabled = tour.stepIndex === 0;
+      els.btnNext.textContent = tour.stepIndex === TOUR_STEPS.length - 1
+        ? 'Завершить ✓'
+        : 'Далее →';
+
+      els.tooltip.style.animation = 'none';
+      // eslint-disable-next-line no-unused-expressions
+      els.tooltip.offsetHeight;
+      els.tooltip.style.animation = '';
+
+      if (!target) {
+        els.spotlight.style.display = 'none';
+        els.spotlight.classList.remove('is-pulsing');
+        els.backdrop.style.background = 'rgba(0,0,0,.72)';
+        els.tooltip.setAttribute('data-placement', 'center');
+        positionTooltipCenter(els.tooltip);
+      } else {
+        const inSidebar = !!target.closest('.sidebar');
+        if (!inSidebar) {
+          try { target.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch(e){}
+        }
+
+        setTimeout(() => {
+          if (!tour.active) return;
+          const rect = target.getBoundingClientRect();
+          const pad = step.spotlightPad || 8;
+          els.spotlight.style.display = 'block';
+          els.backdrop.style.background = 'transparent';
+          els.spotlight.style.top = (rect.top - pad) + 'px';
+          els.spotlight.style.left = (rect.left - pad) + 'px';
+          els.spotlight.style.width = (rect.width + pad * 2) + 'px';
+          els.spotlight.style.height = (rect.height + pad * 2) + 'px';
+
+          if (step.id === 'save' || step.id === 'name') {
+            els.spotlight.classList.add('is-pulsing');
+          } else {
+            els.spotlight.classList.remove('is-pulsing');
+          }
+
+          positionTooltip(els.tooltip, rect, step.placement || 'bottom');
+        }, 420);
+      }
+    });
+  });
+}
+
+function positionTooltipCenter(tooltip) {
+  tooltip.style.top = '50%';
+  tooltip.style.left = '50%';
+  tooltip.style.transform = 'translate(-50%, -50%)';
+}
+
+function positionTooltip(tooltip, rect, placement) {
+  const GAP = 16;
+  const MARGIN = 14;
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+
+  tooltip.style.transform = 'none';
+
+  const tw = tooltip.offsetWidth || 360;
+  const th = tooltip.offsetHeight || 220;
+
+  let top = 0, left = 0;
+  let finalPlacement = placement;
+
+  if (placement === 'right') {
+    left = rect.right + GAP;
+    top = rect.top + rect.height / 2 - th / 2;
+    if (left + tw > vw - MARGIN) {
+      finalPlacement = 'left';
+      left = rect.left - GAP - tw;
+    }
+  } else if (placement === 'left') {
+    left = rect.left - GAP - tw;
+    top = rect.top + rect.height / 2 - th / 2;
+    if (left < MARGIN) {
+      finalPlacement = 'right';
+      left = rect.right + GAP;
+    }
+  } else if (placement === 'top') {
+    left = rect.left + rect.width / 2 - tw / 2;
+    top = rect.top - GAP - th;
+    if (top < MARGIN) {
+      finalPlacement = 'bottom';
+      top = rect.bottom + GAP;
+    }
+  } else {
+    left = rect.left + rect.width / 2 - tw / 2;
+    top = rect.bottom + GAP;
+    if (top + th > vh - MARGIN) {
+      finalPlacement = 'top';
+      top = rect.top - GAP - th;
+    }
+  }
+
+  left = Math.max(MARGIN, Math.min(left, vw - tw - MARGIN));
+  top  = Math.max(MARGIN, Math.min(top,  vh - th - MARGIN));
+
+  tooltip.style.top = top + 'px';
+  tooltip.style.left = left + 'px';
+  tooltip.setAttribute('data-placement', finalPlacement);
+}
+
+function nextTourStep() {
+  if (tour.stepIndex >= TOUR_STEPS.length - 1) {
+    endTour(true);
+    return;
+  }
+  tour.stepIndex++;
+  renderTourStep();
+}
+function prevTourStep() {
+  if (tour.stepIndex <= 0) return;
+  tour.stepIndex--;
+  renderTourStep();
+}
+
+function repositionTour() {
+  if (!tour.active) return;
+  cancelAnimationFrame(tour.repositionRaf);
+  tour.repositionRaf = requestAnimationFrame(() => {
+    const els = tourEls();
+    const step = TOUR_STEPS[tour.stepIndex];
+    if (!step || !step.target) return;
+    const target = document.querySelector(step.target);
+    if (!target) return;
+    const rect = target.getBoundingClientRect();
+    const pad = step.spotlightPad || 8;
+    els.spotlight.style.top = (rect.top - pad) + 'px';
+    els.spotlight.style.left = (rect.left - pad) + 'px';
+    els.spotlight.style.width = (rect.width + pad * 2) + 'px';
+    els.spotlight.style.height = (rect.height + pad * 2) + 'px';
+    positionTooltip(els.tooltip, rect, step.placement || 'bottom');
+  });
+}
+
+function wireTour() {
+  const els = tourEls();
+  if (els.btnNext) els.btnNext.addEventListener('click', nextTourStep);
+  if (els.btnBack) els.btnBack.addEventListener('click', prevTourStep);
+  if (els.btnSkip) els.btnSkip.addEventListener('click', () => endTour(false));
+
+  tour.resizeHandler = () => { if (tour.active) repositionTour(); };
+  tour.scrollHandler = () => { if (tour.active) repositionTour(); };
+  window.addEventListener('resize', tour.resizeHandler);
+  window.addEventListener('scroll', tour.scrollHandler, true);
+
+  tour.keyHandler = (e) => {
+    if (!tour.active) return;
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') {
+      if (e.key === 'Escape') { e.preventDefault(); endTour(false); }
+      return;
+    }
+    if (e.key === 'Escape')      { e.preventDefault(); endTour(false); }
+    if (e.key === 'ArrowRight' || e.key === 'Enter') { e.preventDefault(); nextTourStep(); }
+    if (e.key === 'ArrowLeft')   { e.preventDefault(); prevTourStep(); }
+  };
+  document.addEventListener('keydown', tour.keyHandler);
+
+  const restartBtn = document.getElementById('restart-tour');
+  if (restartBtn) {
+    restartBtn.addEventListener('click', () => {
+      try { localStorage.removeItem(TOUR_KEY); } catch(e) {}
+      try { closeAdvanced(); } catch(e){}
+      try { closeGalleryModal(); } catch(e){}
+      startTour();
+    });
+  }
+}
+
+function maybeStartTour() {
+  try {
+    if (localStorage.getItem(TOUR_KEY)) return;
+  } catch(e) {}
+  setTimeout(() => {
+    if (!tour.active) startTour();
+  }, 900);
+}
+
+/* =========================================================
    Горячие клавиши
    ========================================================= */
 function wireKeyboard() {
@@ -4650,6 +5225,7 @@ function wireKeyboard() {
     const typing = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
 
     if (e.key === 'Escape') {
+      if (tour.active) return;
       if (!document.getElementById('gallery-modal').hidden) {
         e.preventDefault(); closeGalleryModal(); return;
       }
@@ -4670,6 +5246,7 @@ function wireKeyboard() {
       return;
     }
     if ((e.key === 'e' || e.key === 'E' || e.key === 'у' || e.key === 'У') && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      if (tour.active) return;
       e.preventDefault();
       if (advWin.isOpen) closeAdvanced(); else openAdvanced();
     }
@@ -4702,6 +5279,7 @@ wireAdvColorPicker();
 wireAdvancedButtons();
 wireGallery();
 wireKeyboard();
+wireTour();
 pushHistory();
 
 const openAdvBtn = document.getElementById('open-advanced');
